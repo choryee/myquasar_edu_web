@@ -1,31 +1,50 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/ex/network">네트워크 예제</router-link> |
-    <router-link to="/ex/utils">유틸 예제</router-link>
-  </nav>
-  <router-view/>
+  <body class="sb-nav-fixed">
+    <Header />
+    <div id="layoutSidenav">
+      <Left />
+      <div id="layoutSidenav_content">
+        <main>
+          <router-view/>
+        </main>
+      </div>
+    </div>
+  </body>
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
+@import "../src/assets/css/styles.css";
 </style>
+<script setup>
+import Header from "@/components/layout/Header.vue";
+import Left from "@/components/layout/Left.vue";
+</script>
+<script>
+
+export default {
+  name: 'App',
+  mounted() {
+    this.loadScripts();
+  },
+  methods: {
+    loadScripts() {
+      const scripts = [
+        "https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js",
+        "js/scripts.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js",
+        "assets/demo/chart-area-demo.js",
+        "assets/demo/chart-bar-demo.js",
+        "https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js",
+        "js/datatables-simple-demo.js",
+        "https://use.fontawesome.com/releases/v6.3.0/js/all.js"
+      ];
+
+      scripts.forEach(script => {
+        const scriptElement = document.createElement('script');
+        scriptElement.src = script;
+        document.body.appendChild(scriptElement);
+      });
+    }
+  }
+};
+</script>
