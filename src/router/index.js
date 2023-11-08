@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
+
 const routes = [
   {
     path: '/',
@@ -17,6 +18,7 @@ const routes = [
     name: 'UtilsEx',
     component: () => import('@/views/initEx/UtilsEx')
   },
+
 ]
 
 const router = createRouter({
