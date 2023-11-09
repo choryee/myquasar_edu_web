@@ -18,6 +18,11 @@ const routes = [
     name: 'UtilsEx',
     component: () => import('@/views/initEx/UtilsEx')
   },
+  {
+    path: '/holiday-work',
+    name: "holidayWork",
+    component: () => import('@/views/HolidayWorkView.vue')
+  }
 
 ]
 
