@@ -13,8 +13,6 @@ C
 src/router/index.js,0\5\05dc69393f11c15b01b3283d5d501694c999875c
 ;
 src/App.vue,5\4\5441d5289c77ce615f0e420c266cdee5d78f3ecd
-D
-src/router/routes.js,c\8\c87406d5a02559934dad087edf45543c03a211cc
 B
 src/utils/utils.js,8\3\834ac17c5746ea7353922890b8abc29952856cc2
 L
