@@ -39,5 +39,11 @@ export default{
             const instance = defaultAPI.delete(url, {params: params, headers: headers || {}})
             processing(instance, resolve, reject)
         })
+    },
+    PATCH:function(url,params,headers){
+        return new Promise((resolve, reject)=>{
+            const instance = defaultAPI.patch(url, {params: params, headers: headers || {}})
+            processing(instance, resolve, reject)
+        })
     }
 }

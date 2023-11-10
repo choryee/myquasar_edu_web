@@ -18,6 +18,7 @@
 <script setup>
 import Header from "@/components/layout/Header.vue";
 import Left from "@/components/layout/Left.vue";
+
 </script>
 <script>
 
