@@ -2,6 +2,7 @@ const { defineConfig } = require('@vue/cli-service')
 
 module.exports = defineConfig({
   transpileDependencies: true,
+
   lintOnSave : false, //ESLint 검사 비활성화
 
   // npm run build 타겟 디렉토리 (백엔드쪽!)
@@ -19,6 +20,7 @@ module.exports = defineConfig({
   //     }
   //   }
   // }//devServer
+
 
 })
 
