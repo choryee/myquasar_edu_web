@@ -31,22 +31,4 @@ export default {
 };
 </script>
 
-<style>
-.table-container {
-  overflow-x: auto;
-}
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-table, th, td {
-  border: 1px solid #ddd;
-}
-th, td {
-  padding: 8px;
-  text-align: left;
-}
-thead {
-  background-color: #f4f4f4;
-}
-</style>
+
