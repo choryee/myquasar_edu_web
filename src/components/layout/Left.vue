@@ -56,10 +56,10 @@
               </div>
             </nav>
           </div>
-          <a class="nav-link" href="charts.html">
-            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-            휴일출근관리
-          </a>
+          <router-link class="nav-link" style="text-decoration:none" to="/holiday-work">
+              <div class="sb-nav-link-icon"></div>
+              휴일출근관리
+          </router-link>
           <a class="nav-link" href="tables.html">
             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
             관리자설정
