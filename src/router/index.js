@@ -21,7 +21,7 @@ const routes = [
   {
     path: '/holiday-work',
     name: "holidayWork",
-    component: () => import('@/views/HolidayWorkView.vue')
+    component: () => import('@/views/holidayWork/HolidayWorkView.vue')
   }
 
 ]

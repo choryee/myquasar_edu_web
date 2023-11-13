@@ -51,18 +51,3 @@ export const unitUtil = {
     secondToTime: (second) => Math.floor(parseInt(second) / 3600).toString().padStart(2, '0') + ':' + Math.floor(parseInt(second) % 3600 / 60).toString().padStart(2, '0'),
     removeSecond: (time) => time.split(':').filter((e, i)=>i<2).join(':')
 }
-
-//테이블 Item 관련 유틸
-export const tableItemUtil = {
-    createTableItem: (propertyName, content, isModify, inputType, selectBoxList) => {
-        return {
-            propertyName,
-            isModify: isModify,
-            modifyType: {
-                inputType: inputType ? inputType : "",
-                selectBoxList: Array.isArray(selectBoxList) ? selectBoxList: [],
-            },
-            content : content ? content : "",
-        }
-    }
-}
