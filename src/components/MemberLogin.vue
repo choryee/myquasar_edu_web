@@ -24,7 +24,7 @@
 
     <form @submit.prevent="login()">
       <label>
-       아이디 :  <input type="text" placeholder="username" v-model="user">
+       아이디 :  <input type="text" placeholder="username" v-model="username">
       </label>
       <br/>
       <label>
@@ -50,11 +50,10 @@ export default {
   //   // ... other components you may need
   // },
   data() {
-
     return {
       loginSuccess: false,
       loginError: false,
-      user: '',
+      username: '',
       password: '',
       error: false
       //token: jwtToken
@@ -62,10 +61,11 @@ export default {
   },
   methods: {
     async login() {
-      console.log(this.user, this.password);
+      console.log(this.username, this.password);
 
-      await axios.post('http://localhost:8080/login', {
-        name: this.user,
+      await axios.post('http://localhost:8080/login', { // 8080/login은 아예 컨트럴러 안 탐.
+      //await axios.post('http://localhost:8080/api/v1/users/join', {
+        name: this.username,
         password: this.password,
       })
       .then((res) => {
@@ -82,6 +82,7 @@ export default {
         }
       })
       .catch((err) => {
+        console.log('login error >>', err);
         this.loginError = true;
         throw new Error(err);
       });
@@ -89,14 +90,20 @@ export default {
 
 
     async users() {
+      console.log('username>>',this.username);
+
       try {
         const result = await axios.post(
             'http://localhost:8080/api/v1/users/user',
-            {},
+            {
+              name: this.username,
+              password: this.password,
+              //token : localStorage.getItem('Authorization')
+            },
             {
               headers: {
                 Authorization: localStorage.getItem('Authorization'),
-              },
+              }
             }
         );
         if (result.status === 200) {

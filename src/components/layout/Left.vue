@@ -60,10 +60,15 @@
             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
             휴일출근관리
           </a>
-          <a class="nav-link" href="tables.html">
+<!--          <a class="nav-link" href="tables.html">-->
+<!--            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>-->
+<!--            관리자설정-->
+<!--          </a>-->
+          <router-link to="/adminInfo" class="nav-link">
             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
             관리자설정
-          </a>
+          </router-link>
+
         </div>
       </div>
       <div class="sb-sidenav-footer">

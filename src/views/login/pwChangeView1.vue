@@ -29,29 +29,29 @@
             </div>
         </div>
 
-        <popup-alert
-            ref="popupDefault"
-            :opt="popupDefaultOpt"
-            @confirmCallback="alertConfirm"
-        />
+<!--        <popup-alert-->
+<!--            ref="popupDefault"-->
+<!--            :opt="popupDefaultOpt"-->
+<!--            @confirmCallback="alertConfirm"-->
+<!--        />-->
 
     </div>
 </template>
 
 <script>
-import CommonUtils from '@/utils/CommonUtils.js';
-import call from '@/common/call.js';
-import PopupAlert from '@/components/popup/popup-alert.vue';
-import {DialogOption} from '@/components/popup/DialogModels';
-import CallUrl from '@/constants/callUrl.js';
+
+import header from "@/components/layout/Header.vue";
+import left from "@/components/layout/Left.vue";
+
 
 export default {
-    name: 'pwChange',
+    name: 'pw-change',
     components: {
-        PopupAlert
+        // header,
+        // left
     },
     data: () => ({
-        popupDefaultOpt: new DialogOption(),
+        //popupDefaultOpt: new DialogOption(),
         userId: '',         // 사용자 ID
         userTelno: '',      // SMS 인증번호 요청 전화번호
         authNo: '',         // SMS 인증번호
