@@ -23,6 +23,7 @@ export default {
     orderedHeaders() {
       return this.headerInfos
       .sort((a, b) => a.propertyOrder - b.propertyOrder)
+      .filter((item) => item.isVisible)
       .map((item) => item.columnName);
     }
   }

@@ -27,7 +27,7 @@ export const holidayWorkStore = {
   actions: {
     async getHolidayWorkList({commit}) {
       try {
-        const response = await Protocol.GET('http://localhost:8080/holiday/work/list/test');
+        const response = await Protocol.GET('http://localhost:8080/holiday/work/list');
         commit('setHolidayWorkList', response.result);
       }catch (error) {
         commit('setHolidayWorkList', [])

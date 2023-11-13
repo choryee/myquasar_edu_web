@@ -1,41 +1,61 @@
 <template>
   <tr>
     <td v-if="useIndex">{{ index }}</td>
-    <td v-for="columnInfo in headerInfos">
+    <template v-for="columnInfo in headerInfos">
       <template v-if="columnInfo.isVisible">
         <template v-if="columnInfo.isModify && isUpdate">
-          <template v-if="columnInfo.modifyType === 'text'">
+          <td v-if="columnInfo.modifyType === 'text'" class="editable-td">
             <input class="text-input" type="text" v-model="item[columnInfo.propertyName]">
-          </template>
-          <template v-else-if="columnInfo.modifyType === 'selectBox'">
+          </td>
+          <td v-else-if="columnInfo.modifyType === 'selectBox'" class="editable-td">
             <select @change="selectBoxChangeEvent($event, columnInfo)">
+              <option disabled>사번/이름</option>
               <option v-for="selectBoxItem in columnInfo.selectBoxInfo.selectBoxListItems" :key="selectBoxItem.key"
                       :value="selectBoxItem.key">{{ selectBoxItem.view }}
               </option>
             </select>
-          </template>
-          <template v-else-if="columnInfo.modifyType === 'date'">
+          </td>
+          <td v-else-if="columnInfo.modifyType === 'date'" class="editable-td">
             <input class="date-input" type="date" v-model="item[columnInfo.propertyName]">
-          </template>
-          <template v-else>
+          </td>
+          <td v-else class="editable-td">
             {{ item[columnInfo.propertyName] }}
-          </template>
+          </td>
         </template>
         <template v-else>
-          {{ item[columnInfo.propertyName] }}
+          <td v-if="columnInfo.modifyType === 'text'" class="editable-td">
+            {{ item[columnInfo.propertyName] }}
+          </td>
+          <td v-else-if="columnInfo.modifyType === 'selectBox'" class="editable-td">
+            {{ item[columnInfo.propertyName] }}
+          </td>
+          <td v-else-if="columnInfo.modifyType === 'date'" class="editable-td">
+            {{ item[columnInfo.propertyName] }}
+          </td>
+          <td v-else class="editable-td">
+            {{ item[columnInfo.propertyName] }}
+          </td>
         </template>
       </template>
-    </td>
-    <td>
-      <template v-if="isUpdate">
+    </template>
+    <td class="editable-button">
+      <template v-if="isUpdate && !isInsert">
         <button type="button" @click="updateButtonClickEvent">확인</button>
       </template>
-      <template v-else>
+      <template v-else-if="isUpdate && isInsert">
+        <button type="button" @click="insertButtonClickEvent">등록</button>
+      </template>
+      <template v-else-if="!isUpdate">
         <button type="button" @click="updateButtonClickEvent">수정</button>
       </template>
     </td>
-    <td>
-      <button type="button" @click="deleteButtonClickEvent">삭제</button>
+    <td class="editable-button">
+      <template v-if="isInsert">
+        <button type="button" @click="cancelButtonClickEvent">취소</button>
+      </template>
+      <template v-else>
+        <button type="button" @click="deleteButtonClickEvent">삭제</button>
+      </template>
     </td>
   </tr>
 </template>
@@ -56,23 +76,36 @@ export default {
         return array.every((item) => item instanceof TableColumn);
       }
     },
-    initItem: {
+    item: {
       type: Object,
     },
+    initIsInsert: {
+      type: Boolean,
+    }
   },
   data: function () {
     return {
       isUpdate: this.initIsUpdate,
-      item: this.initItem,
+      isInsert: this.initIsInsert
     }
   },
   methods: {
+    cancelButtonClickEvent() {
+      this.$emit('cancelInsert');
+    },
     selectBoxChangeEvent(e, columnInfo) {
       const selectBoxInfo = columnInfo.selectBoxInfo;
       const changeInfos = selectBoxInfo.changeInfos;
       const selectItemList = selectBoxInfo.selectBoxListItems;
       const selectItem = selectItemList.find((item) => item.key === e.target.value);
-      selectItem.change(this.item, changeInfos);
+      if (selectItem) {
+        selectItem.change(this.item, changeInfos);
+      }
+    },
+    insertButtonClickEvent() {
+      this.$emit('insertItem', this.item);
+      this.isInsert = false;
+      this.isUpdate = false;
     },
     updateButtonClickEvent() {
       if (this.isUpdate) {
@@ -88,6 +121,7 @@ export default {
       }
     }
   },
+
   computed: {
     id() {
       const info = this.headerInfos.find((info) => info.isId);

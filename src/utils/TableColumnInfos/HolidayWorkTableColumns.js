@@ -1,52 +1,5 @@
 import {SelectBoxListItem, TableColumn, SelectBoxChangeInfo, SelectBoxInfo} from "@/utils/EditableTableColumnUtil";
 
-export class HolidayWork {
-  constructor(holidayWorkId, employeeNo, name, workDate, memo, rankName) {
-    this._holidayWorkId = holidayWorkId ? holidayWorkId : 99999999999;
-    this._employeeNo = employeeNo ? employeeNo : "없음";
-    this._name = name ? name : "없음";
-    this._workDate = workDate ? workDate : "2999-12-31";
-    this._memo = memo ? memo : "없음";
-    this._rankName = rankName ? rankName : "없음";
-  }
-
-  get holidayWorkId() {
-    return this._holidayWorkId;
-  }
-
-  get employeeNo() {
-    return this._employeeNo;
-  }
-
-  get name() {
-    return this._name;
-  }
-
-  get workDate() {
-    return this._workDate;
-  }
-
-  get memo() {
-    return this._memo;
-  }
-
-  get rankName() {
-    return this._rankName;
-  }
-}
-
-export function convertHolidayWork({
-  holidayWorkId,
-  employeeNo,
-  name,
-  workDate,
-  memo,
-  rankName
-}) {
-  return new HolidayWork(holidayWorkId, employeeNo, name, workDate, memo,
-      rankName);
-}
-
 /**
  * @typedef employeeList
  * @property {string} employeeNo - 사번
