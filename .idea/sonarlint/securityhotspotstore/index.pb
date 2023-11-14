@@ -33,3 +33,21 @@ M
 src/components/HelloWorld.vue,0\7\07f886859652bdac6e57b790c40e8d9ef0a0721e
 F
 src/views/HomeView.vue,9\9\99762d844ac520a898fe382aaa9ad653d1dba35c
+K
+src/network/ErrorHandler.js,8\0\801c1debd9d8ab07308cc883512aef4379e2e475
+G
+src/network/Protocol.js,e\3\e34eb62a5cdb7a7e89b30121b429fb9a8c684a8a
+D
+src/network/index.js,d\6\d66e59d404a65c56f6594b825065666c309f0c15
+B
+src/store/index.js,8\9\89922cab3a870ea7fc32984014e74ed044f89469
+S
+#src/components/table/columTable.vue,d\d\dddab18f29cab95ce47a2c0dbf90b15b2a474d5b
+X
+(src/components/Title/simpleInfotitle.vue,f\2\f2722a20ed3911053d7b4646792a1559280edfb8
+H
+src/assets/css/table.css,7\3\73fe9313dff645718ce651bb9333aa313f732967
+H
+src/views/DayoffView.vue,f\c\fcd44d391502fd308f0568dcde32b14b3c460a76
+N
+src/components/table/table.vue,5\6\56d4f49ba6f9a8bfa179e310e863dd839f46945e

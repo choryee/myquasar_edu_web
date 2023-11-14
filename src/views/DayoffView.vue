@@ -1,5 +1,6 @@
 <template>
    <div class="dayoffTable">
+     <SimpleInfoTitle :data="dayoffInfo"/>
      <div class="inner_wrap">
        <p class="title">계정 정보</p>
       <ColumTable :headers="authInfo" :tableData="authData"/>
@@ -34,7 +35,7 @@ export default {
       authData:[ ],
       employeeData:[],
       employeeDayoffData: [],
-    
+      dayoffInfo: {},
     };
 
   },
@@ -51,8 +52,17 @@ created() {
 
       try {
         const response = await network.dayoff.dayoffRemaining(params, headers);
+        const employeRes = await network.dayoff.dayoffUse(params,headers);
 
-         this.authData = [
+        this.dayoffInfo =
+          {
+            name: employeRes.result.name,
+            totalDayoff : employeRes.result.totalDayoff,
+            usedDayoff : employeRes.result.usedDayoff,
+            leftDayOff : employeRes.result.leftDayOff
+          }
+        ;
+        this.authData = [
           {
             권한: response.result[0].rankName,
             사번: response.result[0].employeeNo,

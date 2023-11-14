@@ -6,6 +6,7 @@
       <div id="layoutSidenav_content">
         <main>
           <router-view/>
+          <dayoff-view/>
         </main>
       </div>
     </div>
@@ -18,11 +19,13 @@
 <script setup>
 import Header from "@/components/layout/Header.vue";
 import Left from "@/components/layout/Left.vue";
+import DayoffView from './views/DayoffView.vue';
 
 </script>
 <script>
 
 export default {
+  components: { DayoffView },
   name: 'App',
   mounted() {
     this.loadScripts();
