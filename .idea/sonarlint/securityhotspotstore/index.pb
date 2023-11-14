@@ -35,3 +35,7 @@ M
 src/components/HelloWorld.vue,0\7\07f886859652bdac6e57b790c40e8d9ef0a0721e
 F
 src/views/HomeView.vue,9\9\99762d844ac520a898fe382aaa9ad653d1dba35c
+B
+src/views/calendar,3\a\3a7639f53ba1bb430702fe46804eec197249b4b5
+O
+src/views/calendar/calendar.vue,6\3\63683365502cd180220efd0c6b3e6c0fbda1b38f
