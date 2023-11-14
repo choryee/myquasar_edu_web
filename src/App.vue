@@ -23,6 +23,7 @@ import Left from "@/components/layout/Left.vue";
 <script>
 
 export default {
+  components: { DayoffView },
   name: 'App',
   mounted() {
     this.loadScripts();

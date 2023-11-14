@@ -1,24 +1,41 @@
 <template>
-  <div class="home">
    <div class="dayoffTable">
-      <TableComponent :headers="tableHeaders" :tableData="employeeData" />
+     <SimpleInfoTitle :data="dayoffInfo"/>
+     <div class="inner_wrap">
+       <p class="title">계정 정보</p>
+      <ColumTable :headers="authInfo" :tableData="authData"/>
+     </div>
+       <div class="inner_wrap">
+       <p class="title">사원 정보</p>
+      <ColumTable :headers="employeeImfo" :tableData="employeeData"/>
+     </div>
+     <div class="inner_wrap">
+      <TableComponent :headers="tableHeaders" :tableData="employeeDayoffData" />
     </div>
-  </div>
+   </div>
 </template>
 
 <script>
 import TableComponent from '@/components/table/table.vue'
 import network from '@/network';
-import {onMounted, ref} from "vue";
+import SimpleInfoTitle from "@/components/Title/simpleInfotitle.vue";
+import ColumTable from '@/components/table/columTable.vue';
 export default {
   name: 'DayoffView',
   components: {
-    TableComponent
+    SimpleInfoTitle,
+    TableComponent,
+    ColumTable
   },
   data() {
     return {
-      tableHeaders: ['사번', '이름', '직급', '총 연차', '사용 연차', '남은연차'],
-      employeeData: [],
+      authInfo : ['권한','사번','wid'],
+      employeeImfo:['이름','입사년도','직급'],
+      tableHeaders: ['연차종류', '시작날짜', '종료날짜', '기한'],
+      authData:[ ],
+      employeeData:[],
+      employeeDayoffData: [],
+      dayoffInfo: {},
     };
 
   },
@@ -26,30 +43,67 @@ created() {
     this.fetchDayoffRemaining();
   },
   methods: {
-    fetchDayoffRemaining() {
-       const params = {
-        employeeNo: 'M045', 
-        year: 2023 
+    async fetchDayoffRemaining() {
+      const params = {
+        employeeNo: 'M045',
+        year: 2023
       };
-      const headers = {
-      };
-        network.dayoff.dayoffRemaining(params, headers)
-        .then(response => {
-          console.log("어디갔니...");
-            const employeeInfo = {
-              사번: 'M045', // 예시 데이터, 실제 데이터로 대체 필요
-              이름: '홍길동', // 예시 데이터, 실제 데이터로 대체 필요
-              직급: '대리', // 예시 데이터, 실제 데이터로 대체 필요
-              총연차: response.totalDayoff,
-              사용연차: response.usedDayoff,
-              남은연차: response.leftDayOff
-            };
-            this.employeeData.push(employeeInfo);         
-            })
-        .catch(error => {
-          console.error('Failed to fetch data:', error);
-        });
+      const headers = {};
+
+      try {
+        const response = await network.dayoff.dayoffRemaining(params, headers);
+        const employeRes = await network.dayoff.dayoffUse(params,headers);
+
+        this.dayoffInfo =
+          {
+            name: employeRes.result.name,
+            totalDayoff : employeRes.result.totalDayoff,
+            usedDayoff : employeRes.result.usedDayoff,
+            leftDayOff : employeRes.result.leftDayOff
+          }
+        ;
+        this.authData = [
+          {
+            권한: response.result[0].rankName,
+            사번: response.result[0].employeeNo,
+            wid: response.result[0].wid,
+          }
+        ];
+          this.employeeData = [
+          {
+            이름: response.result[0].name,
+            입사년도: response.result[0].joiningDt,
+            직급: response.result[0].rankName,
+          }
+        ];
+        this.employeeDayoffData = response.result.map(item => ({
+              연차종류: item.codeName,
+              시작날짜: item.startDayoffDt,
+              종료날짜: item.endDayoffDt,
+              기한: item.usedDayoff,
+            }));
+            
+      
+      } catch (error) {
+        console.error('Failed to fetch data:', error);
+      }
     }
-  }
+}
 };
+
 </script>
+
+<style>
+@import "@/assets/css/table.css";
+.inner_wrap{
+  width: 90%;
+  margin: 20px auto;
+}
+.title{
+  font-size: 16px;
+  font-weight: bold;
+  padding-left: 10px;
+  margin-bottom: 5px;
+  border-left: 1px solid black;
+}
+</style>
