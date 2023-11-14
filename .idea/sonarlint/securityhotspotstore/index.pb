@@ -13,6 +13,8 @@ C
 src/router/index.js,0\5\05dc69393f11c15b01b3283d5d501694c999875c
 ;
 src/App.vue,5\4\5441d5289c77ce615f0e420c266cdee5d78f3ecd
+D
+src/router/routes.js,c\8\c87406d5a02559934dad087edf45543c03a211cc
 B
 src/utils/utils.js,8\3\834ac17c5746ea7353922890b8abc29952856cc2
 L
@@ -33,5 +35,3 @@ M
 src/components/HelloWorld.vue,0\7\07f886859652bdac6e57b790c40e8d9ef0a0721e
 F
 src/views/HomeView.vue,9\9\99762d844ac520a898fe382aaa9ad653d1dba35c
-O
-src/views/calendar/calendar.vue,6\3\63683365502cd180220efd0c6b3e6c0fbda1b38f
