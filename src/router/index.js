@@ -22,6 +22,11 @@ const routes = [
     path: '/holiday-work',
     name: "holidayWork",
     component: () => import('@/views/holidayWork/HolidayWorkView.vue')
+  },
+  {
+    path: '/calendar',
+    name: 'calendar',
+    component: () => import('@/views/calendar/calendar.vue')
   }
 
 ]
