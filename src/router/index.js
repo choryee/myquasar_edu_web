@@ -18,6 +18,11 @@ const routes = [
     name: 'UtilsEx',
     component: () => import('@/views/initEx/UtilsEx')
   },
+  {
+    path: '/calendar',
+    name: 'calendar',
+    component: () => import('@/views/calendar/calendar.vue')
+  }
 
 ]
 
