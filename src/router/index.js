@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import pwChangeView from "@/views/login/pwChangeView.vue";
+import AdminInfoView from "@/views/login/AdminInfoView.vue";
 
 
 const routes = [
@@ -16,8 +18,9 @@ const routes = [
   {
     path: '/ex/utils',
     name: 'UtilsEx',
-    component: () => import('@/views/initEx/UtilsEx')
+    component: ()=>import('@/views/initEx/UtilsEx.vue')
   },
+<<<<<<< HEAD
   {
     path: '/holiday-work',
     name: "holidayWork",
@@ -27,6 +30,15 @@ const routes = [
     path: '/calendar',
     name: 'calendar',
     component: () => import('@/views/calendar/calendar.vue')
+=======
+  { path: '/adminInfo',
+    name: 'adminInfo',
+    component: AdminInfoView
+  },
+  { path: '/pw-change',
+    name: 'pw-change',
+    component: pwChangeView
+>>>>>>> feature/#5
   }
 
 ]

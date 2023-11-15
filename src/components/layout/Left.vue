@@ -56,14 +56,27 @@
               </div>
             </nav>
           </div>
+<<<<<<< HEAD
           <router-link class="nav-link" style="text-decoration:none" to="/holiday-work">
               <div class="sb-nav-link-icon"></div>
               휴일출근관리
           </router-link>
           <a class="nav-link" href="tables.html">
+=======
+          <a class="nav-link" href="charts.html">
+            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+            휴일출근관리
+          </a>
+<!--          <a class="nav-link" href="tables.html">-->
+<!--            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>-->
+<!--            관리자설정-->
+<!--          </a>-->
+          <router-link to="/adminInfo" class="nav-link">
+>>>>>>> feature/#5
             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
             관리자설정
-          </a>
+          </router-link>
+
         </div>
       </div>
       <div class="sb-sidenav-footer">

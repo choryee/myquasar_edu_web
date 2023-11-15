@@ -1,0 +1,12 @@
+
+MWeb:TableWithoutCaptionCheck
+" Add a description to this table.(¼ëùÏþÿÿÿÿ
+?	Web:S5256
+"%Add "<th>" headers to this "<table>".(¼ëùÏþÿÿÿÿ
+Njavascript:S1128="&Remove this unused import of 'header'.(ø†Á¨üÿÿÿÿ8‰È‘±¼1
+Ljavascript:S1128>"$Remove this unused import of 'left'.(“ß÷µýÿÿÿÿ8ŠÈ‘±¼1
+Bjavascript:S125„"Remove this commented out code.(Ï‡šœ8ŠÈ‘±¼1
+Gjavascript:S125 "Remove this commented out code.(»€šÛûÿÿÿÿ8‹È‘±¼1
+`javascript:S6353Ç"<Use concise character class syntax '\D' instead of '[^0-9]'.(ë¥ÖÛ8ŒÈ‘±¼1
+Gjavascript:S125È"Remove this commented out code.(‚ØñÞûÿÿÿÿ8ŒÈ‘±¼1
+Bjavascript:S125Ë"Remove this commented out code.(àöÂð8È‘±¼1
