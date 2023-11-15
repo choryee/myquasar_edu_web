@@ -105,10 +105,11 @@ export default {
           return;
         }
 
-        await axios.post('http://localhost:8080/api/v1/users/user/update',{
+        await axios.post('http://localhost:8080/api/v1/users/user/update',
+            {
               name: this.user_name,
               password: this.new_pwd
-            },
+                 },
             {
               headers: {
                 Authorization: localStorage.getItem('Authorization')

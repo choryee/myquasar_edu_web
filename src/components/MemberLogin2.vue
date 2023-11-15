@@ -9,9 +9,9 @@
     </h1>
     <label >
 <!--      <h5 @click="showPopup">로그인 성공!</h5>-->
-
+      
       <h5 @click="openWindow">로그인 성공!</h5>
-<!--        <NotePad :username="username"/>-->
+        <NotePad :username="username"/>
 <!--      <div v-if="isPopupVisible" class="popup">-->
 <!--      </div>-->
     </label>
@@ -54,7 +54,6 @@
 import axios from 'axios'
 import Tiptap from "@/views/login/Tiptap.vue";
 import NotePad from "@/views/login/NotePad.vue";
-import {reactive} from "vue";
 
 
 
@@ -85,28 +84,8 @@ export default {
     },
 
     openWindow() {
-      // const newin = window.open('', 'width=200', 'height=300');
-      // newin.document.write('<head><title>View Image111</title></head><body onclick="self.close()">');
-        axios.post('http://localhost:8080/api/v1/users/user/showNotePad',
-            {
-              name: this.username
-            },
-            { // 8080/login은 아예 컨트럴러 안 탐.
-          headers: {
-            Authorization: localStorage.getItem('Authorization'),
-          },
-        })
-            .then((res) => {
-              if (res.status === 200) {
-                console.log(' res.data.memo >> ', res.data.memo);
-
-              }
-            })
-            .catch((err) => {
-              // loginError.value = true;
-              console.error(err);
-            });
-
+      const newin = window.open('', 'width=200', 'height=300');
+      newin.document.write('<head><title>View Image111</title></head><body onclick="self.close()">');
     },
 
     async login() {
