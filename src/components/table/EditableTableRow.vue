@@ -9,7 +9,7 @@
           </td>
           <td v-else-if="columnInfo.modifyType === 'selectBox'" class="editable-td">
             <select @change="selectBoxChangeEvent($event, columnInfo)">
-              <option disabled>사번/이름</option>
+              <option disabled>선택해주세요</option>
               <option v-for="selectBoxItem in columnInfo.selectBoxInfo.selectBoxListItems" :key="selectBoxItem.key"
                       :value="selectBoxItem.key">{{ selectBoxItem.view }}
               </option>
