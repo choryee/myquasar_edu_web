@@ -20,7 +20,7 @@ const routes = [
     name: 'UtilsEx',
     component: ()=>import('@/views/initEx/UtilsEx.vue')
   },
-<<<<<<< HEAD
+
   {
     path: '/holiday-work',
     name: "holidayWork",
@@ -28,9 +28,11 @@ const routes = [
   },
   {
     path: '/calendar',
-    name: 'calendar',
-    component: () => import('@/views/calendar/calendar.vue')
-=======
+        name  :    'calendar',
+        component  :    () => import('@/views/calendar/calendar.vue')
+  },
+
+
   { path: '/adminInfo',
     name: 'adminInfo',
     component: AdminInfoView
@@ -38,7 +40,7 @@ const routes = [
   { path: '/pw-change',
     name: 'pw-change',
     component: pwChangeView
->>>>>>> feature/#5
+
   }
 
 ]
