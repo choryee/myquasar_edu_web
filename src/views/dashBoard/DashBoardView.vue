@@ -1,63 +1,106 @@
 <template>
   <div class="content-header">
-    <h1>
+    <h1 class="title">
       대시보드
     </h1>
   </div>
-  <table>
-    <tr>
-      <td><div id="totalDayoffGage"></div></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-    </tr>
-  </table>
+  <div class="content-container">
+    <div class="content-group">
+      <div class="content">
+        <div id="totalDayoffGage"/>
+      </div>
+      <div class="content">
+        <CommonInfoCard :title="'최근 사용 연차 정보'"
+                       :content="`이름: ${dashBoardInfo.recentUseDayoffName}\n사용일: ${dashBoardInfo.recentUseDayoffDate}\n등록일: ${dashBoardInfo.recentUseDayoffCreateDt}`"/>
+      </div>
+    </div>
+    <div class="content-group">
+      <div class="content">
+        <CommonInfoCard :title="'가장 많은 연차 보유자'"
+                        :content="`이름: ${dashBoardInfo.mostRemainingDayoffName}\n 남은 일수: ${dashBoardInfo.mostRemainingDayoffCount}`"></CommonInfoCard>
+      </div>
+      <div class="content">
+        <CommonInfoCard :title="'가장 많은 휴일 근무자'"
+                        :content="`이름: ${dashBoardInfo.muchHolidayWorkerName}\n 출근 일수: ${dashBoardInfo.muchHolidayWorkerWorkDateCount}`"></CommonInfoCard>
+      </div>
+    </div>
+  </div>
+
 </template>
 
 <script>
 import bb, {gauge} from "billboard.js"
 import DashBoardProtocol from "@/network/dashBoardProtocol";
+import CommonInfoBox from "@/views/dashBoard/CommonInfoBox.vue";
+import CommonInfoCard from "@/views/dashBoard/CommonCard.vue";
 export default {
   name: 'DashBoardView',
+  components: {CommonInfoCard, CommonInfoBox},
   data () {
     return {
-      dashBoardInfo: new DashBoardProtocol.DashBoardInfo({})
+      year: new Date().getFullYear(),
+      dashBoardInfo: new DashBoardProtocol.DashBoardInfo({}),
+      contentHeight: this.contentHeight,
+      contentWidth: this.contentWidth
     }
   },
   methods: {
     async getDashBoardInfo(){
-      this.dashBoardInfo = await DashBoardProtocol.getDashBoardInfo({})
-      const gauge1 = this.createTotalDayoffCountGauge();
-      gauge1.load({});
+      this.dashBoardInfo = await DashBoardProtocol.getDashBoardInfo({year:this.year});
+
+      const totalDayoffCountGauge = this.createTotalDayoffCountGauge();
+      totalDayoffCountGauge.load({});
     },
     createTotalDayoffCountGauge() {
       return bb.generate({
         data: {
           columns: [
-            ["사용한 총 연차", 30],
-            ["남은 총 연차", 20],
+            ["사용한 총 연차", this.dashBoardInfo.totalUseDayoffCount],
+            ["남은 총 연차", this.dashBoardInfo.totalRemainingDayoffCount],
           ],
           type:gauge(),
         },
         gauge: {
-          max:50,
+          label:{
+            format(value) {
+              return value;
+            }
+          },
+          title:"전사원 합계 연차 정보",
+          max:this.dashBoardInfo.totalRemainingDayoffCount + this.dashBoardInfo.totalUseDayoffCount,
           min:0
         },
         size: {
+          width: 260,
           height: 180
         },
         bindto: "#totalDayoffGage"
       });
-    }
+    },
   },
   mounted() {
     this.getDashBoardInfo();
   },
 };
 </script>
+<style>
+.title{
+  margin: 1rem 0 0 1rem;
+}
+.content-container {
+  padding: 50px;
+  margin: 0 0 0 200px;
+  border-style: solid;
+  border-width: 2px;
+  width: 900px;
+}
+.content-group {
+  display: flex;
+}
+.content{
+  width: 400px;
+  margin-bottom: 100px;
+  max-width: 300px;
+  margin-right: 100px;
+}
+</style>

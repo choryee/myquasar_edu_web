@@ -11,6 +11,5 @@ export default createStore({
   actions: {
   },
   modules: {
-    holidayWorkStore: holidayWorkStore
   }
 });
