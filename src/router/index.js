@@ -31,8 +31,11 @@ const routes = [
         name  :    'calendar',
         component  :    () => import('@/views/calendar/calendar.vue')
   },
-
-
+  {
+    path: '/dayoff',
+    name: `dayoff`,
+    component: ()=>import('@/views/dayoff/DayoffView.vue')
+  },
   { path: '/adminInfo',
     name: 'adminInfo',
     component: AdminInfoView
