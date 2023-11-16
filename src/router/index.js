@@ -28,8 +28,13 @@ const routes = [
   },
   {
     path: '/calendar',
-        name  :    'calendar',
-        component  :    () => import('@/views/calendar/calendar.vue')
+    name: 'calendar',
+    component: () => import('@/views/calendar/calendar.vue')
+  },
+  {
+    path: '/dash-board',
+    name: 'dashboard',
+    component: () => import('@/views/dashBoard/DashBoardView.vue')
   },
   {
     path: '/dayoff',
@@ -40,12 +45,11 @@ const routes = [
     name: 'adminInfo',
     component: AdminInfoView
   },
-  { path: '/pw-change',
+  {
+    path: '/pw-change',
     name: 'pw-change',
     component: pwChangeView
-
   }
-
 ]
 
 const router = createRouter({

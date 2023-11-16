@@ -4,6 +4,10 @@
       <div class="sb-sidenav-menu">
         <div class="nav">
           <div class="sb-sidenav-menu-heading">Core</div>
+          <router-link class="nav-link" style="text-decoration:none" to="/dash-board">
+            <div class="sb-nav-link-icon"></div>
+            대시보드
+          </router-link>
           <a class="nav-link" href="index.html">
             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
             <router-link class="nav-link" style="text-decoration:none" to="/dayoff">

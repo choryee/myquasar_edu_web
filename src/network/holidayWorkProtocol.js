@@ -1,7 +1,5 @@
 import Protocol from "@/network/Protocol";
 
-
-
 export default {
   HolidayWork: class {
     constructor({holidayWorkId, employeeNo, name, workDate, memo, rankName}) {

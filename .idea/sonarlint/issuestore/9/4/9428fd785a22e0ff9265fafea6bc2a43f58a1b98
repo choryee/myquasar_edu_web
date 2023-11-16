@@ -1,9 +1,0 @@
-
-HWeb:AvoidCommentedOutCodeCheck!"Remove this commented out code.(Òαυ
-IWeb:AvoidCommentedOutCodeCheck""Remove this commented out code.(κσωθ
-NWeb:AvoidCommentedOutCodeCheck#"Remove this commented out code.(½ƒχώÿÿÿÿ
-NWeb:AvoidCommentedOutCodeCheck$"Remove this commented out code.(‡ϊέΉÿÿÿÿÿ
-Gjavascript:S1128+"&Remove this unused import of 'header'.(ψ†Α¨όÿÿÿÿ
-Ejavascript:S1128,"$Remove this unused import of 'left'.(“ίχµύÿÿÿÿ
-8javascript:S3626½"Remove this redundant jump.(ϋΑέ…
-Yjavascript:S6353Ψ"<Use concise character class syntax '\D' instead of '[^0-9]'.(λ¥ΦΫ
