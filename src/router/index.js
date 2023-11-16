@@ -32,6 +32,11 @@ const routes = [
     component: () => import('@/views/calendar/calendar.vue')
   },
   {
+    path: '/dayoffs',
+    name: 'DayoffListView',
+    component: () => import('@/views/dayoff/DayoffListView.vue')
+  },
+  {
     path: '/dash-board',
     name: 'dashboard',
     component: () => import('@/views/dashBoard/DashBoardView.vue')

@@ -20,19 +20,7 @@ export default {
   },
 }
 </script>
+<style scoped>
+@import "@/assets/css/task.css";
 
-<style>
-@import "@/assets/css/bootstrap-style.css";
-
-.content-header {
-  margin: 2rem;
-}
-
-.content-container {
-  margin: 3rem;
-}
-
-.search-input-container {
-  text-align: right;
-}
 </style>

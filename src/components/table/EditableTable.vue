@@ -89,39 +89,3 @@ export default {
   },
 }
 </script>
-
-<style>
-
-.editable-td {
-  width: 9rem;
-  max-width: 9rem;
-}
-
-.editable-button {
-  width: 4rem;
-  max-width: 4rem;
-}
-
-.select-box-td {
-  width: 7rem;
-  overflow: hidden;
-}
-
-.ta-c {
-  text-align: center;
-}
-
-
-.clickable:hover {
-  cursor: pointer;
-}
-
-.mg-t-3 {
-  margin-top: 3rem;
-}
-
-.bd-solid {
-  border-style: solid;
-  border-width: 1px;
-}
-</style>

@@ -174,29 +174,3 @@ export default {
   },
 }
 </script>
-
-<style>
-
-.mgb-1r{
-  margin-bottom: 1rem;
-}
-
-.mgr-1r{
-  margin-right: 1rem;
-}
-
-.select-box-td {
-  width: 8rem;
-}
-
-.month-input {
-  width: 5rem;
-  margin-right: 1rem;
-}
-
-.year-input {
-  width: 4rem;
-  margin-right: 1rem;
-}
-
-</style>
