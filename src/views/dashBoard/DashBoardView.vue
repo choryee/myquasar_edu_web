@@ -4,22 +4,22 @@
       대시보드
     </h1>
   </div>
-  <div class="content-container">
-    <div class="content-group">
-      <div class="content">
+  <div class="dashboard-content-container">
+    <div class="dashboard-content-group">
+      <div class="dashboard-content">
         <div id="totalDayoffGage"/>
       </div>
-      <div class="content">
+      <div class="dashboard-content">
         <CommonInfoCard :title="'최근 사용 연차 정보'"
                        :content="`이름: ${dashBoardInfo.recentUseDayoffName}\n사용일: ${dashBoardInfo.recentUseDayoffDate}\n등록일: ${dashBoardInfo.recentUseDayoffCreateDt}`"/>
       </div>
     </div>
-    <div class="content-group">
-      <div class="content">
+    <div class="dashboard-content-group">
+      <div class="dashboard-content">
         <CommonInfoCard :title="'가장 많은 연차 보유자'"
                         :content="`이름: ${dashBoardInfo.mostRemainingDayoffName}\n 남은 일수: ${dashBoardInfo.mostRemainingDayoffCount}`"></CommonInfoCard>
       </div>
-      <div class="content">
+      <div class="dashboard-content">
         <CommonInfoCard :title="'가장 많은 휴일 근무자'"
                         :content="`이름: ${dashBoardInfo.muchHolidayWorkerName}\n 출근 일수: ${dashBoardInfo.muchHolidayWorkerWorkDateCount}`"></CommonInfoCard>
       </div>
@@ -83,24 +83,7 @@ export default {
   },
 };
 </script>
-<style>
-.title{
-  margin: 1rem 0 0 1rem;
-}
-.content-container {
-  padding: 50px;
-  margin: 0 0 0 200px;
-  border-style: solid;
-  border-width: 2px;
-  width: 900px;
-}
-.content-group {
-  display: flex;
-}
-.content{
-  width: 400px;
-  margin-bottom: 100px;
-  max-width: 300px;
-  margin-right: 100px;
-}
+
+<style scoped>
+@import "@/assets/css/task.css";
 </style>

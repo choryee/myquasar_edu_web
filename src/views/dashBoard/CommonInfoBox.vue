@@ -25,17 +25,3 @@ export default {
   }
 };
 </script>
-
-<style>
-.ta-c{
-  text-align: center;
-}
-.center {
-  display: flex;
-  align-items: center;
-  text-align: center;
-}
-.card-container {
-  display: flex;
-}
-</style>

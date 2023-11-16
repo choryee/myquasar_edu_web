@@ -1,0 +1,91 @@
+@import "@/assets/css/bootstrap-style.css";
+
+.clickable:hover {
+  cursor: pointer;
+}
+
+.dashboard-content-container{
+  padding: 50px;
+  margin: 0 0 0 200px;
+  border-style: solid;
+  border-width: 2px;
+  width: 900px;
+}
+
+.dashboard-content-group {
+  display: flex;
+}
+
+.dashboard-content{
+  width: 400px;
+  margin-bottom: 100px;
+  max-width: 300px;
+  margin-right: 100px;
+}
+
+.editable-td {
+  width: 9rem;
+  max-width: 9rem;
+}
+
+.editable-button {
+  width: 4rem;
+  max-width: 4rem;
+}
+
+.select-box-td {
+  width: 7rem;
+  overflow: hidden;
+}
+
+.ta-c {
+  text-align: center;
+}
+
+.mg-t-3 {
+  margin-top: 3rem;
+}
+
+.content-header {
+  margin: 2rem;
+}
+
+.content-container {
+  margin: 3rem;
+}
+
+.search-input-container {
+  text-align: right;
+}
+
+.mgb-1r{
+  margin-bottom: 1rem;
+}
+
+.mgr-1r{
+  margin-right: 1rem;
+}
+
+.month-input {
+  width: 5rem;
+  margin-right: 1rem;
+}
+
+.year-input {
+  width: 4rem;
+  margin-right: 1rem;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.card-container {
+  display: flex;
+}
+
+.title{
+  margin: 1rem 0 0 1rem;
+}
