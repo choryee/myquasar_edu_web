@@ -37,7 +37,11 @@ const routes = [
     component: () => import('@/views/dashBoard/DashBoardView.vue')
   },
   {
-    path: '/adminInfo',
+    path: '/dayoff',
+    name: `dayoff`,
+    component: ()=>import('@/views/dayoff/DayoffView.vue')
+  },
+  { path: '/adminInfo',
     name: 'adminInfo',
     component: AdminInfoView
   },

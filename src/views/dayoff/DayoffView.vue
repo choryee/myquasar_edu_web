@@ -1,4 +1,20 @@
 <template>
+  <div class="input-field">
+    <select v-model="params.year">
+      <option v-for="year in years" :key="year" :value="year">
+        {{ year }}
+      </option>
+    </select>
+    <div>
+    <label for="employeeNo">사원번호 테스트 조회</label>
+    <select id="employeeSelect" v-model="selectedEmployee">
+      <option v-for="info in infos" :key="info.employeeNo" :value="info.employeeNo">
+        {{ `${info.employeeNo}/${info.name}` }}
+      </option>
+    </select>
+    <button @click="fetchDayoffRemaining">조회</button>
+    </div>
+  </div>
    <div class="dayoffTable">
      <SimpleInfoTitle :data="dayoffInfo"/>
      <div class="inner_wrap">
@@ -20,6 +36,8 @@ import TableComponent from '@/components/table/table.vue'
 import network from '@/network';
 import SimpleInfoTitle from "@/components/Title/simpleInfotitle.vue";
 import ColumTable from '@/components/table/columTable.vue';
+import holidayWorkProtocol from "@/network/holidayWorkProtocol";
+import {getHolidayTableWorksColumns} from "@/utils/TableColumnInfos/HolidayWorkTableColumns";
 export default {
   name: 'DayoffView',
   components: {
@@ -35,24 +53,38 @@ export default {
       authData:[ ],
       employeeData:[],
       employeeDayoffData: [],
+      selectedEmployee: '',
+      infos: [],
       dayoffInfo: {},
+      params: {
+        employeeNo: '',
+        year: new Date().getFullYear(),
+      },
     };
 
   },
-created() {
-    this.fetchDayoffRemaining();
+  computed:{
+    years() {
+      const currentYear = new Date().getFullYear();
+      const array = [];
+      for (let i = 2021; i <= currentYear; i++) {
+        array.push(i);
+      }
+      return array;
+    },
+  },
+mounted() {
+    this.initSimpleEmployeeList();
   },
   methods: {
     async fetchDayoffRemaining() {
-      const params = {
-        employeeNo: 'M045',
-        year: 2023
-      };
+      this.params.employeeNo = this.selectedEmployee;
+
       const headers = {};
 
       try {
-        const response = await network.dayoff.dayoffRemaining(params, headers);
-        const employeRes = await network.dayoff.dayoffUse(params,headers);
+        const response = await network.dayoff.dayoffRemaining(this.params, headers);
+        const employeRes = await network.dayoff.dayoffUse(this.params,headers);
 
         this.dayoffInfo =
           {
@@ -87,8 +119,22 @@ created() {
       } catch (error) {
         console.error('Failed to fetch data:', error);
       }
-    }
+
+    },
+    async initSimpleEmployeeList(){
+
+      try {
+        const response = await holidayWorkProtocol.getSimpleEmployeeList();
+          this.infos = response.map(employee => ({
+            employeeNo: employee.employeeNo,
+            name: employee.name,
+          }));
+      } catch (error) {
+        console.error(error);
+      }
+    },
 }
+
 };
 
 </script>
@@ -98,6 +144,11 @@ created() {
 .inner_wrap{
   width: 90%;
   margin: 20px auto;
+}
+.input-field{
+  display: flex;
+  justify-content: space-around;
+  padding: 30px;
 }
 .title{
   font-size: 16px;

@@ -10,7 +10,9 @@
           </router-link>
           <a class="nav-link" href="index.html">
             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+            <router-link class="nav-link" style="text-decoration:none" to="/dayoff">
             연차사용내역조회
+            </router-link>
           </a>
           <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
              aria-expanded="false" aria-controls="collapseLayouts">
