@@ -60,14 +60,19 @@
               </div>
             </nav>
           </div>
+
           <router-link class="nav-link" style="text-decoration:none" to="/holiday-work">
               <div class="sb-nav-link-icon"></div>
               휴일출근관리
           </router-link>
-          <a class="nav-link" href="tables.html">
+
+
+          <router-link to="/adminInfo" class="nav-link">
+
             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
             관리자설정
-          </a>
+          </router-link>
+
         </div>
       </div>
       <div class="sb-sidenav-footer">

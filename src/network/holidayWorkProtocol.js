@@ -18,13 +18,8 @@ export default {
       if (year) url = url + `&year=${year}`;
       if (month) url = url + `&month=${month}`;
       const response = await Protocol.GET(url);
-
-      if (response.result) {
-        return response.result.map((item) => new this.HolidayWork(item));
-      }
-      return [];
+      return response.result;
     } catch (error) {
-      return [];
     }
   },
   async insertHolidayWork(holidayWorkData) {

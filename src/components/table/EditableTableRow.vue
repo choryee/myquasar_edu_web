@@ -5,18 +5,18 @@
       <template v-if="columnInfo.isVisible">
         <template v-if="columnInfo.isModify && isUpdate">
           <td v-if="columnInfo.modifyType === 'text'" class="editable-td">
-            <input class="text-input" type="text" v-model="item[columnInfo.propertyName]">
+            <input class="form-control" type="text" v-model="item[columnInfo.propertyName]">
           </td>
           <td v-else-if="columnInfo.modifyType === 'selectBox'" class="editable-td">
-            <select @change="selectBoxChangeEvent($event, columnInfo)">
-              <option disabled>선택해주세요</option>
+            <select class="form-select" @change="selectBoxChangeEvent($event, columnInfo)">
+              <option>선택</option>
               <option v-for="selectBoxItem in columnInfo.selectBoxInfo.selectBoxListItems" :key="selectBoxItem.key"
                       :value="selectBoxItem.key">{{ selectBoxItem.view }}
               </option>
             </select>
           </td>
           <td v-else-if="columnInfo.modifyType === 'date'" class="editable-td">
-            <input class="date-input" type="date" v-model="item[columnInfo.propertyName]">
+            <input class="form-control" type="date" v-model="item[columnInfo.propertyName]">
           </td>
           <td v-else class="editable-td">
             {{ item[columnInfo.propertyName] }}
@@ -40,21 +40,21 @@
     </template>
     <td class="editable-button">
       <template v-if="isUpdate && !isInsert">
-        <button type="button" @click="updateButtonClickEvent">확인</button>
+        <button type="button" class="btn btn-primary" @click="updateButtonClickEvent">확인</button>
       </template>
       <template v-else-if="isUpdate && isInsert">
-        <button type="button" @click="insertButtonClickEvent">등록</button>
+        <button type="button" class="btn btn-primary" @click="insertButtonClickEvent">등록</button>
       </template>
       <template v-else-if="!isUpdate">
-        <button type="button" @click="updateButtonClickEvent">수정</button>
+        <button type="button" class="btn btn-warning" @click="updateButtonClickEvent">수정</button>
       </template>
     </td>
     <td class="editable-button">
       <template v-if="isInsert">
-        <button type="button" @click="cancelButtonClickEvent">취소</button>
+        <button type="button" class="btn btn-dark" @click="cancelButtonClickEvent">취소</button>
       </template>
       <template v-else>
-        <button type="button" @click="deleteButtonClickEvent">삭제</button>
+        <button type="button" class="btn btn-danger" @click="deleteButtonClickEvent">삭제</button>
       </template>
     </td>
   </tr>
@@ -94,6 +94,7 @@ export default {
       this.$emit('cancelInsert');
     },
     selectBoxChangeEvent(e, columnInfo) {
+      if (!e.target.value) return;
       const selectBoxInfo = columnInfo.selectBoxInfo;
       const changeInfos = selectBoxInfo.changeInfos;
       const selectItemList = selectBoxInfo.selectBoxListItems;
