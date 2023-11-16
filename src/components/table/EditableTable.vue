@@ -1,14 +1,14 @@
 <template>
-  <div class="table-container bd-solid mg-t-3 pd-lr-1r">
+  <div class="table-container bd-solid pd-lr-1r">
     <table class="table" id="holiday-work-table">
       <EditableTableHeader :header-infos="headerInfos" :use-index="useIndex"/>
       <tbody>
       <template v-for="(item, index) in tableData">
         <EditableTableRow
             :use-index="useIndex"
-            :item="item"
             :init-is-update="false"
             :is-insert="false"
+            :item="item"
             :header-infos="headerInfos"
             :index="index + 1"
             @update-item="updateItem"
@@ -42,8 +42,6 @@
 import {TableColumn} from "@/utils/EditableTableColumnUtil";
 import EditableTableHeader from "@/components/table/EditableTableHeader.vue";
 import EditableTableRow from "@/components/table/EditableTableRow.vue";
-import * as punycode from "punycode";
-import {HolidayWork} from "@/utils/TableColumnInfos/HolidayWorkTableColumns";
 
 export default {
   name: 'EditableTable',
@@ -61,7 +59,7 @@ export default {
   },
   data: function () {
     return {
-      isInsert:false,
+      isInsert: false,
     }
   },
   methods: {
