@@ -1,7 +1,7 @@
 <template>
   <div class="content-container">
     <div class="search-input-container">
-      <div class="input-group">
+      <div class="input-group mgb-1r">
         <select v-model="year" class="year-input">
           <option :value="year" v-for="year in years">{{year}}</option>
         </select>
@@ -14,12 +14,26 @@
           <button type="button" class="btn btn-outline-secondary" @click="searchQuery">검색</button>
         </div>
       </div>
+      <div class="paging-button-container">
+        <template v-if="hasPreviousPage">
+          <button type="button" class="btn btn-info mgb-1r mgr-1r" @click="doPreviousPage">이전</button>
+        </template>
+        <template v-else>
+          <button type="button" class="btn btn-secondary mgb-1r mgr-1r">이전</button>
+        </template>
+        <template v-if="hasNextPage">
+          <button type="button" class="btn btn-info mgb-1r" @click="doNextPage">다음</button>
+        </template>
+        <template v-else>
+          <button type="button" class="btn btn-secondary mgb-1r">다음</button>
+        </template>
+      </div>
     </div>
     <EditableTable
         :use-index="false"
         :header-infos="headerInfos"
         :table-data="holidayWorkList"
-        :empty-item="getEmptyItem()"
+        :empty-item="emptyItem"
         @insert-item="insertItem"
         @update-item="updateItem"
         @delete-item="deleteItem"
@@ -38,10 +52,15 @@ export default {
   data: () => {
     return {
       year: new Date().getFullYear(),
+      pageNum:0,
+      pageSize:10,
       month: null,
       query: "",
+      emptyItem: new holidayWorkProtocol.HolidayWork({}),
       headerInfos: [],
       holidayWorkList: [],
+      hasNextPage: false,
+      hasPreviousPage: false
     }
   },
   computed:{
@@ -59,20 +78,47 @@ export default {
         array.push(i);
       }
       return array;
-    }
+    },
   },
   methods: {
     async searchQuery() {
-      const holidayWorkList = await holidayWorkProtocol.getHolidayWorkList(
-          {query:this.query, month:this.month, year:this.year});
-      if (Array.isArray(holidayWorkList)) {
-        this.holidayWorkList = this.orderedData(this.headerInfos, holidayWorkList);
+      const holidayWorkListPageInfo = await holidayWorkProtocol.getHolidayWorkList(
+          {pageSize: this.pageSize,
+            pageNum: this.pageNum,
+            query:this.query, month:this.month, year:this.year});
+
+      this.hasNextPage = holidayWorkListPageInfo.hasNextPage;
+      this.hasPreviousPage = holidayWorkListPageInfo.hasPreviousPage;
+      const holidayWorks = this.convertObjects2HolidayWorks(holidayWorkListPageInfo.content);
+
+      if (Array.isArray(holidayWorks)) {
+        this.holidayWorkList = this.orderedData(this.headerInfos, holidayWorks);
+        console.log(this.holidayWorkList);
       } else {
         this.holidayWorkList = [];
       }
+      this.emptyItem = new holidayWorkProtocol.HolidayWork({});
     },
-    getEmptyItem() {
-      return new holidayWorkProtocol.HolidayWork({});
+    convertObjects2HolidayWorks(objects) {
+      if (Array.isArray(objects)) {
+        const result = objects.map((item) => new holidayWorkProtocol.HolidayWork(item));
+        console.log(result);
+        return result;
+      }
+
+      return [];
+    },
+    doNextPage() {
+      this.pageNum++;
+      this.searchQuery();
+
+    },
+    doPreviousPage() {
+      this.pageNum--;
+      if (this.pageNum <= 0) {
+        this.hasPreviousPage = false;
+      }
+      this.searchQuery();
     },
     orderedHeadersInfo(headerInfos) {
       return headerInfos
@@ -92,22 +138,16 @@ export default {
       });
       return array;
     },
-    async initHolidayWork() {
+    async initSimpleEmployeeList() {
       const simpleEmployeeList = await holidayWorkProtocol.getSimpleEmployeeList();
       this.headerInfos = this.orderedHeadersInfo(getHolidayTableWorksColumns(simpleEmployeeList));
-      const holidayWorkList = await holidayWorkProtocol.getHolidayWorkList({});
-      if (Array.isArray(holidayWorkList)) {
-        this.holidayWorkList = this.orderedData(this.headerInfos, holidayWorkList);
-      } else {
-        this.holidayWorkList = [];
-      }
     },
 
     async insertItem(holidayWorkData) {
       if (!holidayWorkData) alert("업데이트 할 데이터가 없습니다.")
       const result = await holidayWorkProtocol.insertHolidayWork(holidayWorkData);
       if (result) {
-        await this.initHolidayWork();
+        await this.searchQuery();
       }
     },
     async updateItem(holidayWorkId, holidayWorkData) {
@@ -115,24 +155,35 @@ export default {
       if (!holidayWorkData) alert("업데이트 할 데이터가 없습니다.")
       const result = await holidayWorkProtocol.updateHolidayWork(holidayWorkId, holidayWorkData);
       if (result) {
-        await this.initHolidayWork();
+        await this.searchQuery();
       }
     },
     async deleteItem(holidayWorkId) {
       if (!holidayWorkId) alert("workId가 없습니다.")
       const result = await holidayWorkProtocol.deleteHolidayWork(holidayWorkId);
       if (result) {
-        await this.initHolidayWork();
+        await this.searchQuery();
       }
     }
   },
   mounted() {
-    this.initHolidayWork();
+    this.pageNum = 0;
+    this.query = "";
+    this.searchQuery();
+    this.initSimpleEmployeeList();
   },
 }
 </script>
 
 <style>
+
+.mgb-1r{
+  margin-bottom: 1rem;
+}
+
+.mgr-1r{
+  margin-right: 1rem;
+}
 
 .select-box-td {
   width: 8rem;
