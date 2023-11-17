@@ -36,7 +36,6 @@ export default {
   },
   methods:{
     clickEvent(key) {
-      console.log(this.clickAbleEventKeys);
       this.$emit("clickRow", key);
     }
   }
