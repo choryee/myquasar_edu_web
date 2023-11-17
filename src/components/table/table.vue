@@ -26,7 +26,7 @@ export default {
     tableData: {
       type: Array,
       required: true
-    }
+    },
   },
 };
 </script>

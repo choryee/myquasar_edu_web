@@ -10,10 +10,6 @@
         <select v-model="year" class="year-input">
           <option :value="year" v-for="year in years">{{year}}</option>
         </select>
-        <select v-model="month" class="month-input">
-          <option :value="null">월</option>
-          <option :value="month" v-for="month in months">{{month}}</option>
-        </select>
         <input type="text" class="form-control" v-model="query">
         <div class="input-group-append">
           <button type="button" class="btn btn-outline-secondary" @click="">검색</button>
@@ -34,40 +30,72 @@
         </template>
       </div>
     </div>
-    <TableComponent :table-data="[['M006','홍길동','매니저','2015-12-32','15','12','3']]" :headers="columns"/>
+    <cli :table-data="tableInfo" :headers="columns"/>
+    <ClickableRowTable :table-data="tableInfo" :headers="columns"
+                       :is-clickable="true"
+                       :click-able-event-keys="tableKeys"
+                       @click-row="clickEvent"
+    />
   </div>
-
 </template>
 
 <script>
-import TableComponent from "@/components/table/table.vue";
+import employeeDayoffProtocol from "@/network/employeeDayoffProtocol";
+import ClickableRowTable from "@/components/table/ClickableTable.vue";
 
 export default {
   name: 'DayoffListView',
-  components: {TableComponent},
+  components: {ClickableRowTable},
+  mounted() {
+    this.getEmployeeDayoffInfo();
+  },
   data() {
     return {
       year: new Date().getFullYear(),
       pageNum:0,
       pageSize:10,
-      month: null,
+      info:[],
       query: "",
       hasNextPage: false,
       hasPreviousPage: false,
       columns:['사번','이름','직급','입사일','총연차','사용연차','남은연차'],
+      columnsProperty:['employeeNo','name','rankName','joiningDt','totalDayoffCount','usedDayoffCount','remainingDayoffCount'],
     }
   },
   methods: {
-    doNextPage() {
-      this.pageNum++;
-
-    },
-    doPreviousPage() {
-      this.pageNum--;
-      if (this.pageNum <= 0) {
-        this.hasPreviousPage = false;
+    async getEmployeeDayoffInfo() {
+      const result = await employeeDayoffProtocol.getEmployeeDayoffInfo({
+        year:this.year,
+        pageNum:this.pageNum,
+        pageSize:this.pageSize,
+        month:this.month,
+        query:this.query});
+      if (!result) {
+        return;
+      }
+      if (typeof result.hasNextPage === 'boolean') {
+        this.hasNextPage = result.hasNextPage;
+      }
+      if (typeof result.hasPreviousPage === 'boolean') {
+        this.hasPreviousPage = result.hasPreviousPage;
+      }
+      if (result.content) {
+        this.info = result.content;
       }
     },
+    doNextPage() {
+      this.pageNum++;
+      this.getEmployeeDayoffInfo();
+    },
+    doPreviousPage() {
+      if (this.pageNum === 0) return;
+      this.pageNum--;
+      this.getEmployeeDayoffInfo();
+    },
+    clickEvent(key) {
+      console.log(key);
+      this.$router.push(`/dayoff/${key}`);
+    }
   },
   computed: {
     years() {
@@ -78,12 +106,18 @@ export default {
       }
       return array;
     },
-    months() {
-      const array = [];
-      for (let i = 1; i <= 12; i++) {
-        array.push(i);
+    tableInfo() {
+      if (this.info != null) {
+        return this.info.map((item) => {
+          const properties = [];
+          this.columnsProperty.forEach((propertyName) => properties.push(item[propertyName]));
+          return properties;
+        })
       }
-      return array;
+      return [];
+    },
+    tableKeys() {
+      return this.info.map((item) => item.employeeNo);
     }
   }
 }
