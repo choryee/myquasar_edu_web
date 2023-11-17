@@ -9,7 +9,7 @@
           <option :value="null">월</option>
           <option :value="month" v-for="month in months">{{month}}</option>
         </select>
-        <input type="text" class="form-control" v-model="query">
+        <input type="text" class="form-control" v-model="query" @keydown.enter="searchQuery">
         <div class="input-group-append">
           <button type="button" class="btn btn-outline-secondary" @click="searchQuery">검색</button>
         </div>

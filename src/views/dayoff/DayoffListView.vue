@@ -10,9 +10,9 @@
         <select v-model="year" class="year-input">
           <option :value="year" v-for="year in years">{{year}}</option>
         </select>
-        <input type="text" class="form-control" v-model="query">
+        <input type="text" class="form-control" v-model="query" @keydown.enter="getEmployeeDayoffInfo">
         <div class="input-group-append">
-          <button type="button" class="btn btn-outline-secondary" @click="">검색</button>
+          <button type="button" class="btn btn-outline-secondary" @click="getEmployeeDayoffInfo">검색</button>
         </div>
       </div>
       <div class="paging-button-container">
