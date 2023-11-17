@@ -7,6 +7,9 @@ export default createStore({
   getters: {
   },
   mutations: {
+      setUserName(state, userName) {
+      state.userName = userName;
+    },
   },
   actions: {
   },

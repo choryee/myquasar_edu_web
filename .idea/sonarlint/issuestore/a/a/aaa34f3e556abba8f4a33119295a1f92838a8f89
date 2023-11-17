@@ -1,0 +1,14 @@
+
+MWeb:TableWithoutCaptionCheck
+" Add a description to this table.(¼ëùÏşÿÿÿÿ
+TWeb:TableWithoutCaptionCheckZ" Add a description to this table.(¼ëùÏşÿÿÿÿ8õ€Û”½1
+Ojavascript:S1128"&Remove this unused import of 'header'.(ø†Á¨üÿÿÿÿ8¤™š½1
+Mjavascript:S1128"$Remove this unused import of 'left'.(“ß÷µıÿÿÿÿ8©ƒö™½1
+9javascript:S108Ó"Empty block statement.(Õ…áÉ8Ò›Õ›½1
+Bjavascript:S125Ù"Remove this commented out code.(É¼…Ğ8˜ó×š½1
+Bjavascript:S125ó"Remove this commented out code.(É¼…Ğ8ó²Å›½1
+Bjavascript:S125"Remove this commented out code.(Ï‡šœ8¤™š½1
+Gjavascript:S125«"Remove this commented out code.(»€šÛûÿÿÿÿ8¤™š½1
+`javascript:S6353Ò"<Use concise character class syntax '\D' instead of '[^0-9]'.(ë¥ÖÛ8¤™š½1
+Gjavascript:S125Ó"Remove this commented out code.(‚ØñŞûÿÿÿÿ8¤™š½1
+Bjavascript:S125Ö"Remove this commented out code.(àöÂğ8¤™š½1

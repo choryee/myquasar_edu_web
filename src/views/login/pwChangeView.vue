@@ -1,5 +1,3 @@
-
-    <!--    <div id="content" class="pwChange" style="display: none">-->
     <template>
       <div>
         <div id="content" class="pwChange">
@@ -8,12 +6,23 @@
 
             <!-- 부트스트랩 테이블 적용 -->
             <table class="table">
+              <thead>
+              <tr>
+                <th></th>
+                <th></th>
+              </tr>
+              </thead>
+
               <tbody>
 
               <tr>
                 <td>
                   <label class="inp_normal">
                     <span>현재 비밀번호</span>
+                  </label>
+                </td>
+                <td>
+                  <label class="inp_normal">
                     <input type="text" id="current_pwd" name="current_pwd" placeholder="현재 비밀번호"
                            v-model="current_pwd" ref="current_pwd">
                   </label>
@@ -22,21 +31,21 @@
 
               <tr>
                 <td>
-                  <label class="inp_normal">
                     <span>새 비밀번호</span>
+                </td>
+                    <td>
                     <input type="text" id="new_pwd" name="new_pwd" placeholder="새 비밀번호"
                            v-model="new_pwd" ref="new_pwd">
-                  </label>
-                </td>
+                    </td>
               </tr>
 
               <tr>
                 <td>
-                  <label class="inp_normal">
                     <span>새 비밀번호 확인</span>
+                </td>
+                  <td>
                     <input type="text" id="confirm_pwd" name="confirm_pwd" placeholder="새 비밀번호 확인"
                            v-model="confirm_pwd" ref="confirm_pwd">
-                  </label>
                 </td>
               </tr>
 
@@ -50,8 +59,6 @@
                   </label>
                 </td>
               </tr>
-
-
               </tbody>
             </table>
           </div>
@@ -60,16 +67,8 @@
     </template>
 
 
-  <!--        <popup-alert-->
-<!--            ref="popupDefault"-->
-<!--            :opt="popupDefaultOpt"-->
-<!--            @confirmCallback="alertConfirm"-->
-<!--        />-->
 
 <script>
-
-import header from "@/components/layout/Header.vue";
-import left from "@/components/layout/Left.vue";
 import axios from "axios";
 
 
@@ -83,14 +82,18 @@ export default {
       current_pwd :'',
       new_pwd:'',
       confirm_pwd:'',
-      user_name:'jjj'
+      user_name : 'mmm'
 
     }),
 
+
+
   created() {
-    // 세션에서 사용자 정보를 가져와 user_name에 할당
-    //this.user_name = sessionStorage.getItem('user_name');
+
   },
+
+  computed: {
+     },
 
   methods: {
 
@@ -119,7 +122,7 @@ export default {
                 console.log('update res.data >> ', res);
               if (res.data.success === 200) {
                 let jwtToken = res.data.user.token;
-                localStorage.setItem('Authorization', jwtToken);
+                //localStorage.setItem('Authorization', jwtToken);
 
                 //this.getNewToken(); //update후 새 토큰 받아야 한다 해서.
 
@@ -159,53 +162,9 @@ export default {
                 throw new Error(err);
               });
         },
-
-        init() {
-            //this.userId = '';
-            this.userTelno = '';
-            this.authNo = '';
-            this.chaptchaYn = 'N';
-        },
-
-        phoneNum(event) {
-            this.userTelno = event.target.value;
-        },
-
-        confirmNum(event) {
-            this.authNo = event.target.value;
-        },
-
-        showAlert(msg) {
-            this.popupDefaultOpt = new DialogOption({
-                message: msg
-            });
-            this.$refs.popupDefault.show();
-        },
-
-
-        // alertConfirm() {
-        //     if (this.userId === '') {
-        //         this.$refs.userId.focus();
-        //     } else if (this.userTelno === '') {
-        //         this.$refs.userTelno.focus();
-        //     } else if (this.authNo === '') {
-        //         this.$refs.authNo.focus();
-        //     }
-        //
-	      //   if(this.isSuccess === true) {
-		    //     this.$router.push('/user/login');
-	      //   }
-        // },
     },
 
     watch: {
-        userTelno: function (val) {
-            this.userTelno = val.replace(/[^0-9]/g, '');
-          // CommonUtils.btnActive(val, "#pwd_sms_auth_btn");
-        },
-        authNo: function (val) {
-           // CommonUtils.btnActive(val, "#pwd_search_btn");
-        }
     }
 }
 </script>

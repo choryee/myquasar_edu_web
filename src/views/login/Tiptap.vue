@@ -35,8 +35,6 @@ console.log('getMemo>>', getMemo);
 console.log(typeof generatedText); //object
 console.log(typeof getMemo); //object
 console.log(typeof getMemo.value); //string
-
-
 console.log('state.getMemo>>', state.getMemo);
 
 
