@@ -93,7 +93,6 @@ export default {
       this.getEmployeeDayoffInfo();
     },
     clickEvent(key) {
-      console.log(key);
       this.$router.push(`/dayoff/${key}`);
     }
   },
