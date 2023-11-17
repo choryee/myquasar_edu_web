@@ -8,14 +8,40 @@
 
             <!-- 부트스트랩 테이블 적용 -->
             <table class="table">
-              <tbody>
+              <thead>
+              <tr>
+                <th></th>
+                <th></th>
+              </tr>
+              </thead>
+
+              <tbody v-for="(user, index) in filteredUsers" :key="index">
 
               <tr>
                 <td>
-                  <span>권한</span>
+                  <label class="inp_normal">
+                    <span>사원번호</span>
+                  </label>
                 </td>
+
                 <td>
-                  <span id="user_role" name="user_role" ref="userRole"> {{ user_role }} </span>
+                  <label class="inp_normal">
+                    <span id="employee_no" name="employee_no" > {{ user.employee_no }} </span>
+                  </label>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label class="inp_normal">
+                  <span>권한</span>
+                  </label>
+                </td>
+
+                <td>
+                  <label class="inp_normal">
+                    <span id="user_role" name="user_role" > {{  user.roles }} </span>
+                  </label>
                 </td>
               </tr>
 
@@ -23,8 +49,12 @@
                 <td>
                   <label class="inp_normal">
                     <span>이름</span>
+                  </label>
+                </td>
 
-                    <span id="user_name" name="user_name" ref="userName"> {{ user_name }} </span>
+                <td>
+                  <label class="inp_normal">
+                    <span id="user_name" name="user_name" > {{  user.employee_name }} </span>
                   </label>
                 </td>
               </tr>
@@ -33,78 +63,184 @@
                 <td>
                   <label class="inp_normal">
                     <span>비밀번호</span>
+                  </label>
+                </td>
+
+                <td>
+                  <label class="inp_normal">
                     <button type="submit" id="pwd_search_btn" name="pwd_search_btn" class="btn btn-info"
                             @click="navigateToPwChange">비밀번호 변경
                     </button>
-                    <span></span>
                   </label>
                 </td>
               </tr>
 
-
               </tbody>
             </table>
+
+            <br/>
+            <hr/>
+
+            <div>
+              <span>연차사용내역조회 예시 페이지(메모장과 엑셀 테스트를 위해)</span><br/>
+              <button @click="excelDownload" >엑셀 다운로드</button>
+            </div>
+            <br/>
+
+            <table class="table">
+              <colgroup>
+                <col style="width:25%;" />
+                <col style="width:25%;" />
+                <col style="width:25%;" />
+              </colgroup>
+
+              <thead>
+              <tr>
+                <th>사원번호</th>
+                <th>권한</th>
+                <th>이름</th>
+                <th>메모</th>
+              </tr>
+              </thead>
+
+              <tbody>
+                <tr v-for="(user, index) in users" :key="index" @click="handleUserClick(user)">
+                <td>
+                    <span id="employee_no " name="employee_no " ref="employee_no" :data-employee-no="user.employee_no" >
+                     {{ user.employee_no }} </span>
+                </td>
+
+                <td>
+                    <span id="user_role" name="user_role" ref="userRole"> {{ user.roles }} </span>
+                </td>
+
+                <td>
+                    <span id="user_name" name="user_name" ref="userName"> {{ user.employee_name }} </span>
+                </td>
+
+                  <td>
+                      <span id="user_memo " name="user_memo " ref="user_memo "> {{ user.memo }} </span>
+                  </td>
+              </tr>
+              </tbody>
+            </table>
+
           </div>
         </div>
       </div>
     </template>
 
 
-  <!--        <popup-alert-->
-<!--            ref="popupDefault"-->
-<!--            :opt="popupDefaultOpt"-->
-<!--            @confirmCallback="alertConfirm"-->
-<!--        />-->
-
 <script>
 
-import header from "@/components/layout/Header.vue";
-import left from "@/components/layout/Left.vue";
+
 import axios from "axios";
 
 
 export default {
-    name: 'pw-change',
-    components: {
-        // header,
-        // left
-    },
+    name: 'adminInfo',
+
     data: () => ({
-        //popupDefaultOpt: new DialogOption(),
-        user_name: '',         // 사용자 ID
-        userTelno: '',      // SMS 인증번호 요청 전화번호
-        authNo: '',         // SMS 인증번호
-        pwd_number: '',         // ID, PWD 구분 식별자
+
+        user_name : '',
+        pwd_number: '',
         user_role:'',
-       // chaptchaYn: 'N',    // Captcha 인증 여부
-	      isSuccess: false,   // 비밀번호 초기화 성공 여부
+        employee_name : '',
+        isUserNameVisible: false,
+	      isSuccess: false,
+        employee_no : '',
+        user_memo:'',
+        users: [],
+
     }),
 
   created() {
-      axios.get('http://localhost:8080/api/v1/users/user/getUser',
+    this.updateUserName();
+
+      axios.get('http://localhost:8080/api/v1/users/user/getAllUsers',
           {
             headers: {
               Authorization: localStorage.getItem('Authorization')
             }
           })
           .then((res) => {
+            if (res) {
             console.log('created() res.data >> ', res);
-            if (res.status === 200 ) {
-              this.user_name = res.data.name;
-              this.user_role = res.data.roles;
+            this.users = res.data.users;
 
-              console.log('성공함...');
+            console.log('this.data>>', this.data);
+            console.log('성공함...');
 
             }
           })
           .catch((err) => {
+            console.log('err>>', err);
             this.loginError = true;
             throw new Error(err);
           });
 
   },
 
+  computed: {
+    filteredUsers() {
+      return this.users.filter(user => user.roles.includes('ROLE_ADMIN'));
+    }
+  },
+
   methods: {
+    updateUserName() {
+      this.$store.commit('setUserName', this.user_name);
+      console.log('UserName from Store>>>', this.user_name);
+    },
+
+
+    excelDownload() {
+      console.log('excelDownload 클릭됨..')
+
+      axios.get('http://localhost:8080/api/v1/users/excel/download',
+
+          { // 8080/login은 아예 컨트럴러 안 탐.
+            headers: {
+              Authorization: localStorage.getItem('Authorization'),
+            },
+          })
+          .then((res) => {
+            if (res.status === 200) {
+
+
+            }
+          })
+          .catch((err) => {
+            // loginError.value = true;
+            console.error(err);
+          });
+    },
+
+    handleUserClick(user) {
+
+      const employeeNo = user.employee_no;
+      console.log(`Span with employee_no ${employeeNo} is clicked!`);
+
+      axios.post('http://localhost:8080/api/v1/users/user/showNotePad',
+          {
+            employee_no: user.employee_no
+          },
+          { // 8080/login은 아예 컨트럴러 안 탐.
+            headers: {
+              Authorization: localStorage.getItem('Authorization'),
+            },
+          })
+          .then((res) => {
+            if (res.status === 200) {
+              console.log(' res.data.memo >> ', res.data.memo);
+
+            }
+          })
+          .catch((err) => {
+            // loginError.value = true;
+            console.error(err);
+          });
+    },
 
     navigateToPwChange() {
       this.$router.push({ name: 'pw-change' });
@@ -128,9 +264,6 @@ export default {
               if (res.data === 'ok') {
                 console.log('성공함...');
 
-
-                //this.loginSuccess = true;
-
                 // Call the users method here
                 //this.users();
               }
@@ -140,68 +273,6 @@ export default {
               throw new Error(err);
             });
       }, // login()
-
-        // show() {
-        //     $(".pwChange").css('display', 'block');
-        //
-        //     this.$nextTick(() => {
-        //         this.$refs.userId.focus();
-        //     });
-        //
-        //     // 초기화
-        //     this.init();
-        // },
-        //
-        // hide() {
-        //     $(".pwChange").css('display', 'none');
-        // },
-
-        init() {
-            //this.userId = '';
-            this.userTelno = '';
-            this.authNo = '';
-            this.chaptchaYn = 'N';
-        },
-
-        phoneNum(event) {
-            this.userTelno = event.target.value;
-        },
-
-        confirmNum(event) {
-            this.authNo = event.target.value;
-        },
-
-        showAlert(msg) {
-            this.popupDefaultOpt = new DialogOption({
-                message: msg
-            });
-            this.$refs.popupDefault.show();
-        },
-
-
-        // alertConfirm() {
-        //     if (this.userId === '') {
-        //         this.$refs.userId.focus();
-        //     } else if (this.userTelno === '') {
-        //         this.$refs.userTelno.focus();
-        //     } else if (this.authNo === '') {
-        //         this.$refs.authNo.focus();
-        //     }
-        //
-	      //   if(this.isSuccess === true) {
-		    //     this.$router.push('/user/login');
-	      //   }
-        // },
     },
-
-    watch: {
-        userTelno: function (val) {
-            this.userTelno = val.replace(/[^0-9]/g, '');
-          // CommonUtils.btnActive(val, "#pwd_sms_auth_btn");
-        },
-        authNo: function (val) {
-           // CommonUtils.btnActive(val, "#pwd_search_btn");
-        }
-    }
 }
 </script>

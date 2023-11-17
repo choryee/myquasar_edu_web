@@ -8,12 +8,8 @@
       <p variant="success">보안 사이트에 대한 액세스가 허용되었습니다</p>
     </h1>
     <label >
-<!--      <h5 @click="showPopup">로그인 성공!</h5>-->
 
       <h5 @click="openWindow">로그인 성공!</h5>
-<!--        <NotePad :username="username"/>-->
-<!--      <div v-if="isPopupVisible" class="popup">-->
-<!--      </div>-->
     </label>
   </div>
 
@@ -32,16 +28,14 @@
 
     <form @submit.prevent="login()">
        아이디 :  <input type="text" placeholder="username" v-model="username">
-
-
-<!--      <div v-if="isPopupVisible" class="popup">-->
-<!--        <textarea class="form-control summernote" rows="5" id="content"/>-->
-<!--      </div>-->
-
       <br/>
       <label>
         비밀번호 : <input type="password" placeholder="password" v-model="password">
       </label>
+      <br/>
+<!--      <label>-->
+<!--        사원번호 : <input type="employee_no" placeholder="employee_no" v-model="employee_no">-->
+<!--      </label>-->
       <br/>
       <button variant="success" type="submit">Login</button>
       <p v-if="error" class="error">Bad login information</p>
@@ -52,10 +46,7 @@
 
 <script>
 import axios from 'axios'
-import Tiptap from "@/views/login/Tiptap.vue";
 import NotePad from "@/views/login/NotePad.vue";
-import {reactive} from "vue";
-
 
 
 export default {
@@ -74,8 +65,8 @@ export default {
       password: '',
       error: false,
       isPopupVisible:false,
-      summernoteContent: ''
-      //token: jwtToken
+      summernoteContent: '',
+      employee_no:''
     }
   },
   methods: {
@@ -85,8 +76,6 @@ export default {
     },
 
     openWindow() {
-      // const newin = window.open('', 'width=200', 'height=300');
-      // newin.document.write('<head><title>View Image111</title></head><body onclick="self.close()">');
         axios.post('http://localhost:8080/api/v1/users/user/showNotePad',
             {
               name: this.username
@@ -111,11 +100,12 @@ export default {
 
     async login() {
       console.log(this.username, this.password);
+      await axios.post('http://localhost:8080/login', { // 8080/login은 아예 컨트럴러 안 탐.<-이것은 탐.
 
-      await axios.post('http://localhost:8080/login', { // 8080/login은 아예 컨트럴러 안 탐.
       //await axios.post('http://localhost:8080/api/v1/users/join', {
         name: this.username,
         password: this.password,
+        employee_no:this.employee_no
       })
       .then((res) => {
         if (res.status === 200) {
@@ -123,7 +113,7 @@ export default {
           localStorage.setItem('Authorization', jwtToken);
 
           console.log('result.data >> ', res);
-          console.log('받은 토큰 jwtToken>> ', jwtToken);
+          console.log('받은 토큰 join jwtToken>> ', jwtToken);
           this.loginSuccess = true;
 
           // Call the users method here
@@ -169,7 +159,6 @@ export default {
 
 </script>
 <style>
-/* 팝업 스타일링은 필요에 따라 추가하십시오 */
 .popup {
   position: fixed;
   top: 50%;
