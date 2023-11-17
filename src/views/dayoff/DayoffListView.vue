@@ -10,7 +10,7 @@
         <select v-model="year" class="year-input">
           <option :value="year" v-for="year in years">{{year}}</option>
         </select>
-        <input type="text" class="form-control" v-model="query" @keydown.enter="getEmployeeDayoffInfo">
+        <input type="text" class="form-control" @input="changeQuery" @keydown.enter="getEmployeeDayoffInfo">
         <div class="input-group-append">
           <button type="button" class="btn btn-outline-secondary" @click="getEmployeeDayoffInfo">검색</button>
         </div>
@@ -63,6 +63,9 @@ export default {
     }
   },
   methods: {
+    changeQuery(event) {
+      this.query = event.target.value;
+    },
     async getEmployeeDayoffInfo() {
       const result = await employeeDayoffProtocol.getEmployeeDayoffInfo({
         year:this.year,
@@ -117,6 +120,11 @@ export default {
     },
     tableKeys() {
       return this.info.map((item) => item.employeeNo);
+    }
+  },
+  watch: {
+    query() {
+      console.log(this.query);
     }
   }
 }

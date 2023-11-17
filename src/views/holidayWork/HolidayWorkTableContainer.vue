@@ -9,7 +9,7 @@
           <option :value="null">월</option>
           <option :value="month" v-for="month in months">{{month}}</option>
         </select>
-        <input type="text" class="form-control" v-model="query" @keydown.enter="searchQuery">
+        <input type="text" class="form-control" @input="changeQuery" @keydown.enter="searchQuery">
         <div class="input-group-append">
           <button type="button" class="btn btn-outline-secondary" @click="searchQuery">검색</button>
         </div>
@@ -81,6 +81,10 @@ export default {
     },
   },
   methods: {
+    changeQuery(e) {
+      this.query = e.target.value;
+    },
+
     async searchQuery() {
       const holidayWorkListPageInfo = await holidayWorkProtocol.getHolidayWorkList(
           {pageSize: this.pageSize,
