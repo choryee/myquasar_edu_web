@@ -69,6 +69,7 @@
 
 
 <script>
+
 import axios from "axios";
 
 
@@ -93,7 +94,8 @@ export default {
   },
 
   computed: {
-     },
+
+  },
 
   methods: {
 
@@ -111,7 +113,8 @@ export default {
         await axios.post('http://localhost:8080/api/v1/users/user/update',
             {
               name: this.user_name,
-              password: this.new_pwd
+              password: this.new_pwd,
+              token : localStorage.getItem('Authorization')
                  },
             {
               headers: {
@@ -165,6 +168,7 @@ export default {
     },
 
     watch: {
+
     }
 }
 </script>
