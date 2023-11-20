@@ -90,7 +90,14 @@
   margin: 1rem 0 0 1rem;
 }
 
+td {
+  text-align: center;
+}
 td:hover {
   background-color: #0d6efd;
   color: white;
+}
+
+th {
+  text-align: center;
 }
