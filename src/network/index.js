@@ -42,6 +42,16 @@ export default{
         dayoffRemaining(params, header){
             return Protocol.GET('dayoff/employee/remaining', params, header)
         },
+        dayoffSetting(params,header){
+            return Protocol.POST('dayoff/setting',params,header);
+        },
+        updateDayoffSetting(params,header){
+            console.log(params);
+            return Protocol.PUT('dayoff/setting/update',params,header);
+        },
+        getDayoffDefault(params,header){
+            return Protocol.GET('dayoff/setting/list');
+        }
     },
     calender : {
         calenderPatternInsert(params, header){
