@@ -86,7 +86,8 @@ export class TableColumn {
    * @param propertyName : string - 각 row object 의 프로퍼티명
    * @param columnName : string - 테이블에 표시될 컬럼 명
    * @param isVisible : boolean - 보여지는 컬럼인지
-   * @param isModify : boolean - 수정가능한 컬럼인지
+   * @param canModify : boolean - 수정가능한 컬럼인지
+   * @param canInsert : boolean - 삽입가능한 컬럼인지
    * @param modifyType : string - 수정 가능했을때 수정되는 input type
    * @param selectBoxInfo : SelectBoxInfo - selectBox에 대한 변경 옵션들
    */
@@ -96,7 +97,8 @@ export class TableColumn {
     propertyName,
     columnName,
     isVisible,
-    isModify,
+    canModify,
+    canInsert,
     modifyType,
     selectBoxInfo
   }) {
@@ -105,7 +107,8 @@ export class TableColumn {
     this._propertyName = propertyName ? propertyName : "";
     this._columnName = columnName ? columnName : "";
     this._isVisible = isVisible || typeof isVisible === 'undefined';
-    this._isModify = isModify || typeof modifyType !== 'undefined';
+    this._canModify = canModify || typeof canModify === 'undefined';
+    this._canInsert = canInsert || typeof canInsert === 'undefined';
     this._modifyType = typeof modifyType === 'string' ? modifyType : "text";
     this._selectBoxInfo = selectBoxInfo ? selectBoxInfo : {}
   }
@@ -130,12 +133,16 @@ export class TableColumn {
     return this._isVisible;
   }
 
-  get isModify() {
-    return this._isModify;
+  get canModify() {
+    return this._canModify;
   }
 
   get modifyType() {
     return this._modifyType;
+  }
+
+  get canInsert() {
+    return this._canInsert;
   }
 
   get selectBoxInfo() {

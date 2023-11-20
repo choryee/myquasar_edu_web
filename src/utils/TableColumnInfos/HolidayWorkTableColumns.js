@@ -41,20 +41,23 @@ export function getHolidayTableWorksColumns(employeeList) {
       propertyName: 'employeeNo',
       columnName: '사번',
       modifyType: 'selectBox',
+      canModify: false,
       selectBoxInfo: selectBoxInfo
     }),
     new TableColumn({
       propertyOrder: 2,
       propertyName: 'name',
       columnName: '이름',
-      isModify: false,
+      canModify: false,
+      canInsert: false,
       isNonVisibleUpdate: true
     }),
     new TableColumn({
       propertyOrder: 3,
       propertyName: 'rankName',
       columnName: '직위',
-      isModify: false,
+      canModify: false,
+      canInsert: false,
       isNonVisibleUpdate: true
     }),
     new TableColumn({

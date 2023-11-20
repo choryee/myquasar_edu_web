@@ -3,36 +3,60 @@
     <td v-if="useIndex">{{ index }}</td>
     <template v-for="columnInfo in headerInfos">
       <template v-if="columnInfo.isVisible">
-        <template v-if="columnInfo.isModify && isUpdate">
-          <td v-if="columnInfo.modifyType === 'text'" class="editable-td">
-            <input class="form-control" type="text" v-model="item[columnInfo.propertyName]">
-          </td>
-          <td v-else-if="columnInfo.modifyType === 'selectBox'" class="editable-td">
-            <select class="form-select" @change="selectBoxChangeEvent($event, columnInfo)">
-              <option>선택</option>
-              <option v-for="selectBoxItem in columnInfo.selectBoxInfo.selectBoxListItems" :key="selectBoxItem.key"
-                      :value="selectBoxItem.key">{{ selectBoxItem.view }}
-              </option>
-            </select>
-          </td>
-          <td v-else-if="columnInfo.modifyType === 'date'" class="editable-td">
-            <input class="form-control" type="date" v-model="item[columnInfo.propertyName]">
-          </td>
-          <td v-else class="editable-td">
-            {{ item[columnInfo.propertyName] }}
-          </td>
+        <template v-if="isInsert && !isUpdate">
+          <template v-if="columnInfo.canInsert">
+            <td v-if="columnInfo.modifyType === 'text'" class="editable-td">
+              <input class="form-control" type="text" v-model="item[columnInfo.propertyName]">
+            </td>
+            <td v-else-if="columnInfo.modifyType === 'selectBox'" class="editable-td">
+              <select class="form-select" @change="selectBoxChangeEvent($event, columnInfo)">
+                <option>선택</option>
+                <option v-for="selectBoxItem in columnInfo.selectBoxInfo.selectBoxListItems" :key="selectBoxItem.key"
+                        :value="selectBoxItem.key">{{ selectBoxItem.view }}
+                </option>
+              </select>
+            </td>
+            <td v-else-if="columnInfo.modifyType === 'date'" class="editable-td">
+              <input class="form-control" type="date" v-model="item[columnInfo.propertyName]">
+            </td>
+            <td v-else class="editable-td">
+              {{ item[columnInfo.propertyName] }}
+            </td>
+          </template>
+          <template v-else>
+            <td class="editable-td">
+              {{ item[columnInfo.propertyName] }}
+            </td>
+          </template>
         </template>
-        <template v-else>
-          <td v-if="columnInfo.modifyType === 'text'" class="editable-td">
-            {{ item[columnInfo.propertyName] }}
-          </td>
-          <td v-else-if="columnInfo.modifyType === 'selectBox'" class="editable-td">
-            {{ item[columnInfo.propertyName] }}
-          </td>
-          <td v-else-if="columnInfo.modifyType === 'date'" class="editable-td">
-            {{ item[columnInfo.propertyName] }}
-          </td>
-          <td v-else class="editable-td">
+        <template v-if="!isInsert && isUpdate">
+          <template v-if="columnInfo.canModify">
+            <td v-if="columnInfo.modifyType === 'text'" class="editable-td">
+              <input class="form-control" type="text" v-model="item[columnInfo.propertyName]">
+            </td>
+            <td v-else-if="columnInfo.modifyType === 'selectBox'" class="editable-td">
+              <select class="form-select" @change="selectBoxChangeEvent($event, columnInfo)">
+                <option>선택</option>
+                <option v-for="selectBoxItem in columnInfo.selectBoxInfo.selectBoxListItems" :key="selectBoxItem.key"
+                        :value="selectBoxItem.key">{{ selectBoxItem.view }}
+                </option>
+              </select>
+            </td>
+            <td v-else-if="columnInfo.modifyType === 'date'" class="editable-td">
+              <input class="form-control" type="date" v-model="item[columnInfo.propertyName]">
+            </td>
+            <td v-else class="editable-td">
+              {{ item[columnInfo.propertyName] }}
+            </td>
+          </template>
+          <template v-else>
+            <td class="editable-td">
+              {{ item[columnInfo.propertyName] }}
+            </td>
+          </template>
+        </template>
+        <template v-if="!isInsert && !isUpdate">
+          <td class="editable-td">
             {{ item[columnInfo.propertyName] }}
           </td>
         </template>
@@ -42,16 +66,19 @@
       <template v-if="isUpdate && !isInsert">
         <button type="button" class="btn btn-primary" @click="updateButtonClickEvent">확인</button>
       </template>
-      <template v-else-if="isUpdate && isInsert">
+      <template v-else-if="!isUpdate && isInsert">
         <button type="button" class="btn btn-primary" @click="insertButtonClickEvent">등록</button>
       </template>
-      <template v-else-if="!isUpdate">
+      <template v-else-if="!isUpdate && !isInsert">
         <button type="button" class="btn btn-warning" @click="updateButtonClickEvent">수정</button>
       </template>
     </td>
     <td class="editable-button">
-      <template v-if="isInsert">
-        <button type="button" class="btn btn-dark" @click="cancelButtonClickEvent">취소</button>
+      <template v-if="isInsert && !isUpdate">
+        <button type="button" class="btn btn-dark" @click="cancelInsertButtonClickEvent">취소</button>
+      </template>
+      <template v-else-if="!isInsert && isUpdate">
+        <button type="button" class="btn btn-dark" @click="cancelUpdateButtonClickEvent">취소</button>
       </template>
       <template v-else>
         <button type="button" class="btn btn-danger" @click="deleteButtonClickEvent">삭제</button>
@@ -69,7 +96,6 @@ export default {
   props: {
     useIndex: Boolean,
     index: Number | undefined,
-    initIsUpdate: Boolean,
     headerInfos: {
       type: Array,
       validate(array) {
@@ -85,13 +111,16 @@ export default {
   },
   data: function () {
     return {
-      isUpdate: this.initIsUpdate,
+      isUpdate: false,
       isInsert: this.initIsInsert
     }
   },
   methods: {
-    cancelButtonClickEvent() {
+    cancelInsertButtonClickEvent() {
       this.$emit('cancelInsert');
+    },
+    cancelUpdateButtonClickEvent() {
+      this.isUpdate = false;
     },
     selectBoxChangeEvent(e, columnInfo) {
       if (!e.target.value) return;

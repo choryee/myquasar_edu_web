@@ -6,8 +6,7 @@
       <template v-for="(item, index) in tableData">
         <EditableTableRow
             :use-index="useIndex"
-            :init-is-update="false"
-            :is-insert="false"
+            :init-is-insert="false"
             :item="item"
             :header-infos="headerInfos"
             :index="index + 1"
@@ -18,7 +17,6 @@
       <template v-if="isInsert">
         <EditableTableRow
             :use-index="useIndex"
-            :init-is-update="true"
             :init-is-insert="true"
             :item="emptyItem"
             :header-infos="headerInfos"
