@@ -7,7 +7,7 @@
   <div class="content-container">
     <div class="search-input-container">
       <div class="input-group mgb-1r">
-        <select v-model="year" class="year-input">
+        <select @change="changeYear" class="year-input">
           <option :value="year" v-for="year in years">{{year}}</option>
         </select>
         <input type="text" class="form-control" @input="changeQuery" @keydown.enter="getEmployeeDayoffInfo">
@@ -30,11 +30,13 @@
         </template>
       </div>
     </div>
-    <cli :table-data="tableInfo" :headers="columns"/>
     <ClickableRowTable :table-data="tableInfo" :headers="columns"
+                       :column-properties="columnsProperty"
                        :is-clickable="true"
+                       :allow-sort="columnsSort"
                        :click-able-event-keys="tableKeys"
                        @click-row="clickEvent"
+                       @change-sort="changeSort"
     />
   </div>
 </template>
@@ -56,15 +58,24 @@ export default {
       pageSize:10,
       info:[],
       query: "",
+      sort:null,
       hasNextPage: false,
       hasPreviousPage: false,
       columns:['사번','이름','직급','입사일','총연차','사용연차','남은연차'],
       columnsProperty:['employeeNo','name','rankName','joiningDt','totalDayoffCount','usedDayoffCount','remainingDayoffCount'],
+      columnsSort:[true, false, false, true, true, true, true ]
     }
   },
   methods: {
     changeQuery(event) {
       this.query = event.target.value;
+    },
+    changeYear(e) {
+      this.year = e.target.value;
+    },
+    changeSort(sort) {
+      this.sort = sort;
+      this.getEmployeeDayoffInfo();
     },
     async getEmployeeDayoffInfo() {
       const result = await employeeDayoffProtocol.getEmployeeDayoffInfo({
@@ -72,6 +83,7 @@ export default {
         pageNum:this.pageNum,
         pageSize:this.pageSize,
         month:this.month,
+        sort:this.sort,
         query:this.query});
       if (!result) {
         return;

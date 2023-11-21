@@ -3,7 +3,20 @@
     <table>
       <thead>
       <tr>
-        <th v-for="header in headers" :key="header">{{ header }}</th>
+        <template v-for="(header, index) in headers" :key="header">
+          <th class="clickable" v-if="allowSort[index]" @click="sortChange(columnProperties[index])">
+            {{ header }}
+            <template v-if="sortProperty === columnProperties[index] && direction === 'desc'">
+              ∨
+            </template>
+            <template v-if="sortProperty === columnProperties[index] && direction === 'asc'">
+              ∧
+            </template>
+          </th>
+          <th v-else>
+            {{ header }}
+          </th>
+        </template>
       </tr>
       </thead>
       <tbody>
@@ -19,9 +32,15 @@
 export default {
   name: 'ClickableRowTable',
   props: {
+    columnProperties:{
+      type:Array,
+    },
     headers: {
       type: Array,
       required: true
+    },
+    allowSort:{
+      type: Array,
     },
     tableData: {
       type: Array,
@@ -34,9 +53,24 @@ export default {
       type: Array,
     }
   },
+  data() {
+    return {
+      direction:'asc',
+      sortProperty:'',
+    }
+  },
   methods:{
     clickEvent(key) {
       this.$emit("clickRow", key);
+    },
+    sortChange(property) {
+      if (this.sortProperty !== property) {
+        this.sortProperty = property;
+        this.direction = 'asc';
+      } else {
+        this.direction = this.direction === 'asc' ? 'desc' : 'asc';
+      }
+      this.$emit('changeSort', `${this.sortProperty},${this.direction}`);
     }
   }
 };
