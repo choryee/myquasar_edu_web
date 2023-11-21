@@ -27,5 +27,5 @@ export default {
 
 <style>
 @import "@/assets/css/task.css";
-@import "@/assets/css/table.css";
+
 </style>

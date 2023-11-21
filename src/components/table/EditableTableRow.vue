@@ -1,5 +1,5 @@
 <template>
-  <tr>
+  <tr class="hover-blue">
     <td class="ta-c" v-if="useIndex">{{ index }}</td>
     <template v-for="columnInfo in headerInfos">
       <template v-if="columnInfo.isVisible">
