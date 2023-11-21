@@ -1,19 +1,20 @@
 .table-container {
     overflow-x: auto;
 }
-table {
+.common-table {
     width: 100%;
     border-collapse: collapse;
-}
-table, th, td {
     border: 1px solid #ddd;
 }
-th, td {
+.common-th {
+    border: 1px solid #ddd;
     padding: 8px;
-}
-th{
     width: 15%;
 }
-thead {
+.common-td {
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+.common-thead {
     background-color: #f4f4f4;
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="table-container">
-    <table>
+    <table class="table">
       <thead>
       <tr>
         <template v-for="(header, index) in headers" :key="header">
@@ -20,8 +20,8 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(row, index) in tableData" :key="index" class="clickable" @click="clickEvent(clickAbleEventKeys[index])">
-        <td class="ta-c" v-for="(value, key) in row" :key="key">{{ value }}</td>
+      <tr v-for="(row, index) in tableData" :key="index" class="ta-c hover-blue clickable" @click="clickEvent(clickAbleEventKeys[index])">
+        <td v-for="(value, key) in row" :key="key">{{ value }}</td>
       </tr>
       </tbody>
     </table>

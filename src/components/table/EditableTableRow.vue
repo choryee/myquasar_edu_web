@@ -1,5 +1,5 @@
 <template>
-  <tr>
+  <tr class="hover-blue">
     <td class="ta-c" v-if="useIndex">{{ index }}</td>
     <template v-for="columnInfo in headerInfos">
       <template v-if="columnInfo.isVisible">
@@ -64,10 +64,10 @@
     </template>
     <td class="editable-button ta-c">
       <template v-if="isUpdate && !isInsert">
-        <button type="button" class="btn btn-primary" @click="updateButtonClickEvent">확인</button>
+        <button type="button" class="btn btn-info" @click="updateButtonClickEvent">확인</button>
       </template>
       <template v-else-if="!isUpdate && isInsert">
-        <button type="button" class="btn btn-primary" @click="insertButtonClickEvent">등록</button>
+        <button type="button" class="btn btn-info" @click="insertButtonClickEvent">등록</button>
       </template>
       <template v-else-if="!isUpdate && !isInsert">
         <button type="button" class="btn btn-warning" @click="updateButtonClickEvent">수정</button>
