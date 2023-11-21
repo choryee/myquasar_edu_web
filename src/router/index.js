@@ -27,11 +27,6 @@ const routes = [
     component: () => import('@/views/holidayWork/HolidayWorkView.vue')
   },
   {
-    path: '/calendar',
-    name: 'calendar',
-    component: () => import('@/views/calendar/calendar.vue')
-  },
-  {
     path: '/dayoffs',
     name: 'DayoffListView',
     component: () => import('@/views/dayoff/DayoffListView.vue')
