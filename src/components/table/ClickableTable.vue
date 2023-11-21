@@ -7,10 +7,10 @@
           <th class="clickable" v-if="allowSort[index]" @click="sortChange(columnProperties[index])">
             {{ header }}
             <template v-if="sortProperty === columnProperties[index] && direction === 'desc'">
-              ∨
+              ↓
             </template>
             <template v-if="sortProperty === columnProperties[index] && direction === 'asc'">
-              ∧
+              ↑
             </template>
           </th>
           <th v-else>

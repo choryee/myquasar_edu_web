@@ -102,3 +102,9 @@ td:hover {
 th {
   text-align: center;
 }
+
+
+th:hover {
+  background-color: #0d6efd;
+  color: white;
+}
