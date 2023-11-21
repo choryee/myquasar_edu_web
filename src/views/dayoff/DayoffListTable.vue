@@ -11,6 +11,7 @@
         </div>
       </div>
       <div class="paging-button-container">
+        <button type="button" class="btn btn-success mgb-1r mgr-1r" @click="goNewEmployee">사원 입력</button>
         <template v-if="hasPreviousPage">
           <button type="button" class="btn btn-info mgb-1r mgr-1r" @click="doPreviousPage">이전</button>
         </template>
@@ -72,6 +73,9 @@ export default {
     changeSort(sort) {
       this.sort = sort;
       this.getEmployeeDayoffInfo();
+    },
+    goNewEmployee() {
+      this.$router.push(`/dayoff/`);
     },
     async getEmployeeDayoffInfo() {
       const result = await employeeDayoffProtocol.getEmployeeDayoffInfo({
