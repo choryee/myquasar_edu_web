@@ -2,7 +2,7 @@
   <div class="content-container">
     <div class="search-input-container">
       <div class="input-group mgb-1r">
-        <select @change="changeYear" :value="year" class="year-input">
+        <select @change="changeYear" :value="year" class="select-input">
           <option :value="year" v-for="year in years">{{year}}</option>
         </select>
         <select @change="changeMonth" class="month-input">
