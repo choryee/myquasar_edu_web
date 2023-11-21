@@ -90,21 +90,11 @@
   margin: 1rem 0 0 1rem;
 }
 
-td {
+.ta-c{
   text-align: center;
 }
 
-td:hover {
-  background-color: #0d6efd;
-  color: white;
-}
-
-th {
-  text-align: center;
-}
-
-
-th:hover {
+.ta-c:hover {
   background-color: #0d6efd;
   color: white;
 }
