@@ -4,7 +4,7 @@
       <thead>
       <tr>
         <template v-for="(header, index) in headers" :key="header">
-          <th class="clickable" v-if="allowSort[index]" @click="sortChange(columnProperties[index])">
+          <th class="ta-c clickable" v-if="allowSort[index]" @click="sortChange(columnProperties[index])">
             {{ header }}
             <template v-if="sortProperty === columnProperties[index] && direction === 'desc'">
               ↓
@@ -13,7 +13,7 @@
               ↑
             </template>
           </th>
-          <th v-else>
+          <th class="ta-c" v-else>
             {{ header }}
           </th>
         </template>
@@ -21,7 +21,7 @@
       </thead>
       <tbody>
       <tr v-for="(row, index) in tableData" :key="index" class="clickable" @click="clickEvent(clickAbleEventKeys[index])">
-        <td v-for="(value, key) in row" :key="key">{{ value }}</td>
+        <td class="ta-c" v-for="(value, key) in row" :key="key">{{ value }}</td>
       </tr>
       </tbody>
     </table>

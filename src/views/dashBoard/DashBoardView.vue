@@ -14,16 +14,16 @@
                        :content="`이름: ${dashBoardInfo.recentUseDayoffName}\n사용일: ${dashBoardInfo.recentUseDayoffDate}\n등록일: ${dashBoardInfo.recentUseDayoffCreateDt}`"/>
       </div>
     </div>
-    <div class="dashboard-content-group">
-      <div class="dashboard-content">
-        <CommonInfoCard :title="'가장 많은 연차 보유자'"
-                        :content="`이름: ${dashBoardInfo.mostRemainingDayoffName}\n 남은 일수: ${dashBoardInfo.mostRemainingDayoffCount}`"></CommonInfoCard>
-      </div>
-      <div class="dashboard-content">
-        <CommonInfoCard :title="'가장 많은 휴일 근무자'"
-                        :content="`이름: ${dashBoardInfo.muchHolidayWorkerName}\n 출근 일수: ${dashBoardInfo.muchHolidayWorkerWorkDateCount}`"></CommonInfoCard>
-      </div>
-    </div>
+<!--    <div class="dashboard-content-group">-->
+<!--      <div class="dashboard-content">-->
+<!--        <CommonInfoCard :title="'가장 많은 연차 보유자'"-->
+<!--                        :content="`이름: ${dashBoardInfo.mostRemainingDayoffName}\n 남은 일수: ${dashBoardInfo.mostRemainingDayoffCount}`"></CommonInfoCard>-->
+<!--      </div>-->
+<!--      <div class="dashboard-content">-->
+<!--        <CommonInfoCard :title="'가장 많은 휴일 근무자'"-->
+<!--                        :content="`이름: ${dashBoardInfo.muchHolidayWorkerName}\n 출근 일수: ${dashBoardInfo.muchHolidayWorkerWorkDateCount}`"></CommonInfoCard>-->
+<!--      </div>-->
+<!--    </div>-->
   </div>
 
 </template>
