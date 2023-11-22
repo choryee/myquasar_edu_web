@@ -73,7 +73,7 @@ export default {
       return array;
     },
   },
-mounted() {
+  mounted() {
     this.initSimpleEmployeeList();
   },
   methods: {
@@ -83,39 +83,37 @@ mounted() {
       const headers = {};
 
       try {
-        const response = await network.dayoff.dayoffRemaining(this.params, headers);
-        const employeRes = await network.dayoff.dayoffUse(this.params,headers);
+        const response = await network.dayoff.dayoffUse(this.params, headers);
 
-        this.dayoffInfo =
-          {
-            name: employeRes.result.name,
-            totalDayoff : employeRes.result.totalDayoff,
-            usedDayoff : employeRes.result.usedDayoff,
-            leftDayOff : employeRes.result.leftDayOff
-          }
-        ;
+        const { result } = response;
+        this.dayoffInfo = {
+          name: result.name,
+          totalDayoff: result.totalDayoffCount,
+          usedDayoff: result.usedDayoffCount,
+          leftDayOff: result.remainingDayoffCount,
+        };
+
         this.authData = [
           {
-            권한: response.result[0].rankName,
-            사번: response.result[0].employeeNo,
-            wid: response.result[0].wid,
-          }
+            권한: result.rankName,
+            사번: result.employeeNo,
+            wid: result.wid,
+          },
         ];
-          this.employeeData = [
+        this.employeeData = [
           {
-            이름: response.result[0].name,
-            입사년도: response.result[0].joiningDt,
-            직급: response.result[0].rankName,
-          }
+            이름: result.name,
+            입사년도: result.joiningDt,
+            직급: result.rankName,
+          },
         ];
-        this.employeeDayoffData = response.result.map(item => ({
-              연차종류: item.codeName,
-              시작날짜: item.startDayoffDt,
-              종료날짜: item.endDayoffDt,
-              기한: item.usedDayoff,
-            }));
-            
-      
+        this.employeeDayoffData = result.dayoffDetailList.map(item => ({
+          연차종류: item.codeName,
+          시작날짜: item.startDayoffDt,
+          종료날짜: item.endDayoffDt,
+          기한: item.usedDayoff,
+        }));
+
       } catch (error) {
         console.error('Failed to fetch data:', error);
       }
@@ -125,15 +123,15 @@ mounted() {
 
       try {
         const response = await holidayWorkProtocol.getSimpleEmployeeList();
-          this.infos = response.map(employee => ({
-            employeeNo: employee.employeeNo,
-            name: employee.name,
-          }));
+        this.infos = response.map(employee => ({
+          employeeNo: employee.employeeNo,
+          name: employee.name,
+        }));
       } catch (error) {
         console.error(error);
       }
     },
-}
+  }
 
 };
 
