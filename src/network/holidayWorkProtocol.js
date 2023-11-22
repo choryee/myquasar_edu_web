@@ -2,13 +2,25 @@ import Protocol from "@/network/Protocol";
 
 export default {
   HolidayWork: class {
-    constructor({holidayWorkId, employeeNo, name, workDate, memo, rankName}) {
+    constructor({holidayWorkId, employeeNo, name, workDate, workTypeId, isCustomType, workTypeName, rankName}) {
       this.holidayWorkId = holidayWorkId ? holidayWorkId : 99999999999;
       this.employeeNo = employeeNo ? employeeNo : "";
       this.name = name ? name : "";
       this.workDate = workDate ? workDate : "";
-      this.memo = memo ? memo : "";
+      this.workTypeId = workTypeId? workTypeId : 99999999999;
+      this.workTypeName = workTypeName ? workTypeName : ""
+      this.isCustomType = !!isCustomType;
       this.rankName = rankName ? rankName : "";
+    }
+  },
+  HolidayWorkRequest: class {
+    constructor({holidayWorkId, employeeNo, workDate, workTypeId, workTypeName, isCustomType}) {
+      this.holidayWorkId = holidayWorkId ? Number(holidayWorkId) : 99999999999;
+      this.employeeNo = employeeNo ? employeeNo : "";
+      this.workDate = workDate ? workDate : "";
+      this.workTypeId = workTypeId? workTypeId : 9999999;
+      this.workTypeName = workTypeName ? workTypeName : ""
+      this.isCustomType = (isCustomType !== false);
     }
   },
   async getHolidayWorkList({query = "", pageNum = 0, pageSize = 10, year, month}) {
@@ -37,11 +49,7 @@ export default {
       return false;
     }
 
-    const object = {
-      employeeNo: holidayWorkData.employeeNo,
-      workDate: holidayWorkData.workDate,
-      memo:holidayWorkData.memo
-    }
+    const object = new this.HolidayWorkRequest(holidayWorkData);
     await Protocol.POST('http://localhost:8080/holiday/work/save',
         object);
 
@@ -66,10 +74,13 @@ export default {
       alert("날짜가 선택되지 않았습니다.");
       return false;
     }
-
+    const object = new this.HolidayWorkRequest(holidayWorkData);
+    console.log('--------------------')
+    console.log(holidayWorkData);
+    console.log(object);
     await Protocol.PUT(
         `http://localhost:8080/holiday/work/modify/${holidayWorkId}`,
-        holidayWorkData);
+        object);
 
     return true;
   },
@@ -88,6 +99,16 @@ export default {
     try {
       const response = await Protocol.GET(
           `http://localhost:8080/employee/simple-info`);
+      return response.result;
+    } catch (error) {
+      return [];
+    }
+  },
+  async getDefaultWorkTypes() {
+    try {
+      const response = await Protocol.GET(
+          `http://localhost:8080/holiday/work/type`);
+
       return response.result;
     } catch (error) {
       return [];

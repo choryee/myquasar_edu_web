@@ -10,6 +10,7 @@
             :item="item"
             :header-infos="headerInfos"
             :index="index + 1"
+            :is-custom-properties="customColumnMaps[index]"
             @update-item="updateItem"
             @delete-item="deleteItem"
         />
@@ -21,6 +22,7 @@
             :item="emptyItem"
             :header-infos="headerInfos"
             :index="0"
+            :is-custom-properties="customColumnMaps[index]"
             @insert-item="insertItem"
             @update-item="updateItem"
             @delete-item="deleteItem"
@@ -45,6 +47,9 @@ export default {
   name: 'EditableTable',
   components: {EditableTableRow, EditableTableHeader},
   props: {
+    customColumnMaps:{
+      type:Array
+    },
     headerInfos: {
       type: Array,
       validate(array) {

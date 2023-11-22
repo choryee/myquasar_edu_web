@@ -34,13 +34,13 @@
         :header-infos="headerInfos"
         :table-data="holidayWorkList"
         :empty-item="emptyItem"
+        :customColumnMaps="customColumnMaps"
         @insert-item="insertItem"
         @update-item="updateItem"
         @delete-item="deleteItem"
     />
   </div>
 </template>
-
 <script>
 import holidayWorkProtocol from "@/network/holidayWorkProtocol";
 import EditableTable from "@/components/table/EditableTable.vue";
@@ -79,6 +79,16 @@ export default {
       }
       return array;
     },
+    //컬럼이 customType인지 구분하는 자료구조
+    customColumnMaps() {
+      return this.holidayWorkList.map((item) => {
+        const map = new Map();
+        if (item.isCustomType) {
+          map.set('workTypeName', true);
+        }
+        return map;
+      });
+    }
   },
   methods: {
     changeYear(e) {
@@ -106,10 +116,9 @@ export default {
       this.hasNextPage = holidayWorkListPageInfo.hasNextPage;
       this.hasPreviousPage = holidayWorkListPageInfo.hasPreviousPage;
       const holidayWorks = this.convertObjects2HolidayWorks(holidayWorkListPageInfo.content);
-
       if (Array.isArray(holidayWorks)) {
-        this.holidayWorkList = this.orderedData(this.headerInfos, holidayWorks);
-        console.log(this.holidayWorkList);
+        const arry = this.orderedData(this.headerInfos, holidayWorks);
+        this.holidayWorkList = arry;
       } else {
         this.holidayWorkList = [];
       }
@@ -121,13 +130,11 @@ export default {
         console.log(result);
         return result;
       }
-
       return [];
     },
     doNextPage() {
       this.pageNum++;
       this.searchQuery();
-
     },
     doPreviousPage() {
       this.pageNum--;
@@ -154,9 +161,11 @@ export default {
       });
       return array;
     },
-    async initSimpleEmployeeList() {
+    async initData() {
       const simpleEmployeeList = await holidayWorkProtocol.getSimpleEmployeeList();
-      this.headerInfos = this.orderedHeadersInfo(getHolidayTableWorksColumns(simpleEmployeeList));
+      const holidayWorkTypeList = await holidayWorkProtocol.getDefaultWorkTypes();
+      this.headerInfos = this.orderedHeadersInfo(getHolidayTableWorksColumns(simpleEmployeeList, holidayWorkTypeList));
+      await this.searchQuery();
     },
 
     async insertItem(holidayWorkData) {
@@ -185,8 +194,7 @@ export default {
   mounted() {
     this.pageNum = 0;
     this.query = "";
-    this.searchQuery();
-    this.initSimpleEmployeeList();
+    this.initData();
   },
 }
 </script>
