@@ -12,9 +12,7 @@
                 <th></th>
               </tr>
               </thead>
-
               <tbody>
-
               <tr>
                 <td>
                   <label class="inp_normal">
@@ -28,7 +26,6 @@
                   </label>
                 </td>
               </tr>
-
               <tr>
                 <td>
                     <span>새 비밀번호</span>
@@ -38,7 +35,6 @@
                            v-model="new_pwd" ref="new_pwd">
                     </td>
               </tr>
-
               <tr>
                 <td>
                     <span>새 비밀번호 확인</span>
@@ -48,7 +44,6 @@
                            v-model="confirm_pwd" ref="confirm_pwd">
                 </td>
               </tr>
-
               <tr>
                 <td>
                   <label class="inp_normal">
@@ -66,12 +61,10 @@
       </div>
     </template>
 
-
-
 <script>
 
 import axios from "axios";
-
+import { mapState } from 'vuex';
 
 export default {
     name: 'pw-change',
@@ -83,19 +76,21 @@ export default {
       current_pwd :'',
       new_pwd:'',
       confirm_pwd:'',
-      user_name : 'mmm'
-
+      user_name : ''
     }),
 
 
 
   created() {
-
+    this.user_name = this.$store.state.userName;
+    console.log('this.$store.state.userName>>', this.$store.state.userName)
   },
 
-  computed: {
 
-  },
+    computed: {
+      ...mapState(['setUserName']), // 'user_name'은 Vuex 스토어에 저장된 상태의 이름입니다.
+    },
+
 
   methods: {
 
@@ -124,13 +119,8 @@ export default {
             .then((res) => {
                 console.log('update res.data >> ', res);
               if (res.data.success === 200) {
-                let jwtToken = res.data.user.token;
-                //localStorage.setItem('Authorization', jwtToken);
-
-                //this.getNewToken(); //update후 새 토큰 받아야 한다 해서.
-
-                console.log('성공함...');
-
+                  alert('비밀번호가 변경되었습니다.');
+                  this.$router.push({name : 'adminInfo'});
               }
             })
             .catch((err) => {

@@ -1,13 +1,2 @@
 
-TWeb:TableWithoutCaptionCheck
-" Add a description to this table.(¼ëùÏşÿÿÿÿ8îŞĞ÷»1
-Njavascript:S1128R"&Remove this unused import of 'header'.(ø†Á¨üÿÿÿÿ8½ÂÖ½1
-Ljavascript:S1128S"$Remove this unused import of 'left'.(“ß÷µıÿÿÿÿ8Æ…û•½1
-]javascript:S1481„"9Remove the declaration of the unused 'jwtToken' variable.(ùÏ¦£8½ÂÖ½1
-Zjavascript:S1854„"6Remove this useless assignment to variable "jwtToken".(ùÏ¦£8½ÂÖ½1
-Gjavascript:S125…"Remove this commented out code.(ß¤ÁÉúÿÿÿÿ8¾ÂÖ½1
-Bjavascript:S125‡"Remove this commented out code.(˜òƒİ8¾ÂÖ½1
-Gjavascript:S125¯"Remove this commented out code.(»€šÛûÿÿÿÿ8¾ÂÖ½1
-`javascript:S6353Ö"<Use concise character class syntax '\D' instead of '[^0-9]'.(ë¥ÖÛ8¾ÂÖ½1
-Gjavascript:S125×"Remove this commented out code.(‚ØñŞûÿÿÿÿ8¾ÂÖ½1
-Bjavascript:S125Ú"Remove this commented out code.(àöÂğ8¾ÂÖ½1
+TWeb:TableWithoutCaptionCheck" Add a description to this table.(¼ëùÏşÿÿÿÿ8ö£ğã½1

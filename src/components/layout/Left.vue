@@ -66,9 +66,13 @@
 
 
           <router-link to="/adminInfo" class="nav-link">
-
             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
             관리자설정
+          </router-link>
+
+          <router-link to="/test" class="nav-link">
+            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+            테스트
           </router-link>
 
         </div>
