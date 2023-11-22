@@ -1,60 +1,91 @@
 <template>
   <tr class="hover-blue">
+    <!--순번 사용 여부-->
     <td class="ta-c" v-if="useIndex">{{ index }}</td>
+
+    <!-- 헤더 정보에 따라 반복 -->
     <template v-for="columnInfo in headerInfos">
+      <!-- 보이지않는 헤더는 필터링 -->
       <template v-if="columnInfo.isVisible">
+        <!-- 삽입 상태 일때 보여지게 될 창-->
         <template v-if="isInsert && !isUpdate">
+          <!-- 삽입 상태라도 insert 가능한 컬럼 에따라 분리-->
           <template v-if="columnInfo.canInsert">
+            <!--인풋 타입 별 분리 : text-->
             <td v-if="columnInfo.modifyType === 'text'" class="editable-td ta-c">
               <input class="form-control" type="text" v-model="item[columnInfo.propertyName]">
             </td>
+            <!--인풋 타입 별 분리 : selectBox-->
             <td v-else-if="columnInfo.modifyType === 'selectBox'" class="editable-td ta-c">
-              <select class="form-select" @change="selectBoxChangeEvent($event, columnInfo)">
-                <option>선택</option>
-                <option v-for="selectBoxItem in columnInfo.selectBoxInfo.selectBoxListItems" :key="selectBoxItem.key"
-                        :value="selectBoxItem.key">{{ selectBoxItem.view }}
-                </option>
-              </select>
-            </td>
+              <template v-if="isCustomProperty(columnInfo)">
+                <input class="form-control" type="text" @change="changeCustomValue($event, columnInfo)">
+              </template>
+              <template v-else>
+                <select class="form-select" @change="selectBoxChangeEvent($event, columnInfo)">
+                  <option>선택</option>
+                  <option v-for="selectBoxItem in columnInfo.selectBoxInfo.selectBoxListItems" :key="selectBoxItem.key"
+                          :value="selectBoxItem.key">{{ selectBoxItem.view }}
+                  </option>
+                  <option v-if="columnInfo.canCustom">직접입력</option>
+                </select>
+              </template>
+             </td>
+            <!--인풋 타입 별 분리 : date-->
             <td v-else-if="columnInfo.modifyType === 'date'" class="editable-td ta-c">
               <input class="form-control" type="date" v-model="item[columnInfo.propertyName]">
             </td>
+            <!--인풋 타입 별 분리 : 나머지 수정 불가능 한 것들-->
             <td v-else class="editable-td ta-c">
               {{ item[columnInfo.propertyName] }}
             </td>
           </template>
+          <!--삽입이 불가능 한 컬럼 -->
           <template v-else>
             <td class="editable-td ta-c">
               {{ item[columnInfo.propertyName] }}
             </td>
           </template>
         </template>
+        <!--update 상태일때 보여지게 될 컬럼 -->
         <template v-if="!isInsert && isUpdate">
+          <!--update 상태일때 라도 수정 불가능한 컬럼 필터링-->
           <template v-if="columnInfo.canModify">
+            <!--인풋 타입 별 분리 : text-->
             <td v-if="columnInfo.modifyType === 'text'" class="editable-td ta-c">
               <input class="form-control" type="text" v-model="item[columnInfo.propertyName]">
             </td>
+            <!--인풋 타입 별 분리 : selectbox-->
             <td v-else-if="columnInfo.modifyType === 'selectBox'" class="editable-td ta-c">
-              <select class="form-select" @change="selectBoxChangeEvent($event, columnInfo)">
-                <option>선택</option>
-                <option v-for="selectBoxItem in columnInfo.selectBoxInfo.selectBoxListItems" :key="selectBoxItem.key"
-                        :value="selectBoxItem.key">{{ selectBoxItem.view }}
-                </option>
-              </select>
+              <template v-if="isCustomProperties.get(columnInfo.propertyName)">
+                <input class="form-control" type="text" @change="changeCustomValue($event, columnInfo)">
+              </template>
+              <template v-else>
+                <select class="form-select" @change="selectBoxChangeEvent($event, columnInfo)">
+                  <option>선택</option>
+                  <option v-for="selectBoxItem in columnInfo.selectBoxInfo.selectBoxListItems" :key="selectBoxItem.key"
+                          :value="selectBoxItem.key">{{ selectBoxItem.view }}
+                  </option>
+                  <option v-if="columnInfo.canCustom">직접입력</option>
+                </select>
+              </template>
             </td>
+            <!--인풋 타입 별 분리 : date-->
             <td v-else-if="columnInfo.modifyType === 'date'" class="editable-td ta-c">
               <input class="form-control" type="date" v-model="item[columnInfo.propertyName]">
             </td>
+            <!--인풋 타입 별 분리 : 나머지-->
             <td v-else class="editable-td ta-c">
               {{ item[columnInfo.propertyName] }}
             </td>
           </template>
+          <!--수정 상태가 아닐때 보여지게 될 컬럼-->
           <template v-else>
             <td class="editable-td ta-c">
               {{ item[columnInfo.propertyName] }}
             </td>
           </template>
         </template>
+        <!--입력, 수정 상태가 아닐때 보여지게 될 컬럼-->
         <template v-if="!isInsert && !isUpdate">
           <td class="editable-td ta-c">
             {{ item[columnInfo.propertyName] }}
@@ -107,29 +138,64 @@ export default {
     },
     initIsInsert: {
       type: Boolean,
-    }
+    },
+    isCustomProperties: {
+      type: Map,
+    },
   },
   data: function () {
     return {
       isUpdate: false,
-      isInsert: this.initIsInsert
+      isInsert: this.initIsInsert,
     }
   },
   methods: {
+    isCustomProperty(columnInfo) {
+      return this.isCustomProperties.get(columnInfo.propertyName);
+    },
+    changeCustomValue (event, columnInfo) {
+      const value = event.target.value;
+      this.item[columnInfo.propertyName] = value;
+    },
     cancelInsertButtonClickEvent() {
       this.$emit('cancelInsert');
     },
     cancelUpdateButtonClickEvent() {
+      this.$emit('cancelUpdate');
       this.isUpdate = false;
     },
+    cleanCustomData(changeInfos) {
+      for (const changeInfo of changeInfos) {
+        this.item[changeInfo.itemPropertyName] = null;
+      }
+    },
     selectBoxChangeEvent(e, columnInfo) {
+      //값이 없으면 취소
       if (!e.target.value) return;
+      let value = e.target.value;
       const selectBoxInfo = columnInfo.selectBoxInfo;
       const changeInfos = selectBoxInfo.changeInfos;
+      //값이 선택이면 데이터 지우기
+
+      if (value === '선택'){
+        this.cleanCustomData(changeInfos);
+        return;
+      } else if (value === '직접입력') {
+        //값이 직접입력이면 값을 다 지우고 인풋박스 토글
+        this.cleanCustomData(changeInfos);
+        console.log(this.isCustomProperties);
+        this.isCustomProperties.set(columnInfo.propertyName, true);
+        console.log(this.isCustomProperties);
+        this.item.isCustomType = true;
+        return;
+      }
+
       const selectItemList = selectBoxInfo.selectBoxListItems;
-      const selectItem = selectItemList.find((item) => item.key === e.target.value);
+      const selectItem = selectItemList.find((item) => item.key === value);
+
+      //정해진 item에 맞게 데이터 변경
       if (selectItem) {
-        selectItem.change(this.item, changeInfos);
+        selectItem.doChange(this.item, changeInfos);
       }
     },
     insertButtonClickEvent() {
@@ -157,7 +223,7 @@ export default {
       const info = this.headerInfos.find((info) => info.isId);
       return this.item[info.propertyName]
     },
-  }
+  },
 
 }
 </script>

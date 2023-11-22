@@ -1,22 +1,65 @@
 import {SelectBoxListItem, TableColumn, SelectBoxChangeInfo, SelectBoxInfo} from "@/utils/EditableTableColumnUtil";
 
 /**
- * @typedef employeeList
+ * @typedef employee
  * @property {string} employeeNo - 사번
  * @property {string} name - 사원 이름
  * @property {string} rankName - 직위
  */
 
 /**
- *
- * @param employeeList : Array<employeeList> -
+ * @typedef workType
+ * @property {number} workTypeId  - 휴일출근 타입 Id
+ * @property {string} workTypeName - 휴일출근 타입 이름
+ * @property {string} isCustom - 커스텀 타입 유무
  */
-export function getHolidayTableWorksColumns(employeeList) {
+
+/**
+ *
+ * @param employeeList : Array<employee> -
+ * @param defaultWorkTypeList : Array<workType> -
+ */
+export function getHolidayTableWorksColumns(employeeList, defaultWorkTypeList) {
   if (!employeeList) {
     return [];
   }
 
-  const changeInfoList = [
+  if (!defaultWorkTypeList) {
+    return [];
+  }
+
+  const workTypeList = defaultWorkTypeList.map((item) => {
+    return {
+      workTypeId:item.workTypeId,
+      workTypeName:item.workTypeName,
+      isCustomType:item.isCustom
+    }
+  });
+
+  const workTypeNameChangeInfo = [
+      new SelectBoxChangeInfo({
+        itemPropertyName: "workTypeId",
+        selectBoxItemPropertyName: "workTypeId"}),
+    new SelectBoxChangeInfo({
+        itemPropertyName: "isCustomType",
+        selectBoxItemPropertyName: "isCustomType"}),
+    new SelectBoxChangeInfo({
+      itemPropertyName: "workTypeName",
+      selectBoxItemPropertyName: "workTypeName"})
+  ];
+
+  const workTypeNameSelectBoxList = workTypeList.map((item) => {
+    return new SelectBoxListItem({key:item.workTypeName, value:item, view: item.workTypeName});
+  });
+
+  const workTypeSelectBoxInfo = new SelectBoxInfo(
+      {
+        selectBoxListItems:workTypeNameSelectBoxList,
+        changeInfos: workTypeNameChangeInfo
+      }
+  );
+
+  const employeeNoChangeInfoList = [
       new SelectBoxChangeInfo({itemPropertyName: "employeeNo",
         selectBoxItemPropertyName: "employeeNo"}),
       new SelectBoxChangeInfo({itemPropertyName: "name",
@@ -25,14 +68,14 @@ export function getHolidayTableWorksColumns(employeeList) {
         selectBoxItemPropertyName: "rankName"}),
   ];
 
-  const selectBoxList = employeeList.map((item) => {
+  const employeeNoSelectBoxList = employeeList.map((item) => {
     return new SelectBoxListItem({key:item.employeeNo, value: item, view:`${item.employeeNo}/${item.name}`});
-  })
+  });
 
-  const selectBoxInfo = new SelectBoxInfo(
+  const employeeNoSelectBoxInfo = new SelectBoxInfo(
       {
-        selectBoxListItems: selectBoxList,
-        changeInfos: changeInfoList
+        selectBoxListItems: employeeNoSelectBoxList,
+        changeInfos: employeeNoChangeInfoList
       });
 
   return [
@@ -42,7 +85,7 @@ export function getHolidayTableWorksColumns(employeeList) {
       columnName: '사번',
       modifyType: 'selectBox',
       canModify: false,
-      selectBoxInfo: selectBoxInfo
+      selectBoxInfo: employeeNoSelectBoxInfo
     }),
     new TableColumn({
       propertyOrder: 2,
@@ -68,9 +111,23 @@ export function getHolidayTableWorksColumns(employeeList) {
     }),
     new TableColumn({
       propertyOrder: 5,
-      propertyName: 'memo',
-      columnName: '메모',
-      modifyType: "text"
+      propertyName: 'workTypeName',
+      columnName: '타입',
+      modifyType: 'selectBox',
+      selectBoxInfo: workTypeSelectBoxInfo,
+      canCustom: true
+    }),
+    new TableColumn({
+      propertyOrder:997,
+      propertyName:'workTypeId',
+      columnName: 'workTypeId',
+      isVisible: false,
+    }),
+    new TableColumn({
+      propertyOrder:998,
+      propertyName:'isCustomType',
+      columnName: 'isCustomType',
+      isVisible: false,
     }),
     new TableColumn({
       propertyOrder: 999,

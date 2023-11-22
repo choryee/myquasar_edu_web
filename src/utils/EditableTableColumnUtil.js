@@ -1,3 +1,4 @@
+
 export class SelectBoxChangeInfo {
   constructor({itemPropertyName, selectBoxItemPropertyName}) {
     this._itemPropertyName = itemPropertyName;
@@ -20,7 +21,6 @@ export class SelectBoxListItem {
    * @param value : object
    * @param view : string
    */
-
   constructor({key, value, view}) {
     this._key = key;
     this._value = value;
@@ -44,7 +44,7 @@ export class SelectBoxListItem {
    * @param item : Object
    * @param changeInfoList : Array<SelectBoxChangeInfo>
    */
-  change(item, changeInfoList) {
+  doChange(item, changeInfoList) {
     if (!item) return;
     if (!changeInfoList) return;
     for (const changeInfo of changeInfoList) {
@@ -90,6 +90,7 @@ export class TableColumn {
    * @param canInsert : boolean - 삽입가능한 컬럼인지
    * @param modifyType : string - 수정 가능했을때 수정되는 input type
    * @param selectBoxInfo : SelectBoxInfo - selectBox에 대한 변경 옵션들
+   * @param canCustom : Boolean - selectBox 직접입력가능여부
    */
   constructor({
     isId,
@@ -100,7 +101,8 @@ export class TableColumn {
     canModify,
     canInsert,
     modifyType,
-    selectBoxInfo
+    selectBoxInfo,
+    canCustom,
   }) {
     this._propertyOrder = propertyOrder ? propertyOrder : 999;
     this._isId = isId;
@@ -111,6 +113,7 @@ export class TableColumn {
     this._canInsert = canInsert || typeof canInsert === 'undefined';
     this._modifyType = typeof modifyType === 'string' ? modifyType : "text";
     this._selectBoxInfo = selectBoxInfo ? selectBoxInfo : {}
+    this._canCustom = canCustom;
   }
 
   get isId() {
@@ -147,5 +150,9 @@ export class TableColumn {
 
   get selectBoxInfo() {
     return this._selectBoxInfo;
+  }
+
+  get canCustom() {
+    return this._canCustom;
   }
 }
