@@ -37,7 +37,6 @@ import network from '@/network';
 import SimpleInfoTitle from "@/components/Title/simpleInfotitle.vue";
 import ColumTable from '@/components/table/columTable.vue';
 import holidayWorkProtocol from "@/network/holidayWorkProtocol";
-import {getHolidayTableWorksColumns} from "@/utils/TableColumnInfos/HolidayWorkTableColumns";
 export default {
   name: 'DayoffView',
   components: {

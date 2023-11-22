@@ -35,6 +35,7 @@
         :table-data="holidayWorkList"
         :empty-item="emptyItem"
         :customColumnMaps="customColumnMaps"
+        :insert-column-maps="insertNewMap"
         @insert-item="insertItem"
         @update-item="updateItem"
         @delete-item="deleteItem"
@@ -57,6 +58,7 @@ export default {
       month: null,
       query: "",
       emptyItem: new holidayWorkProtocol.HolidayWork({}),
+      insertNewMap: new Map(),
       headerInfos: [],
       holidayWorkList: [],
       hasNextPage: false,
@@ -88,7 +90,7 @@ export default {
         }
         return map;
       });
-    }
+    },
   },
   methods: {
     changeYear(e) {
@@ -123,6 +125,7 @@ export default {
         this.holidayWorkList = [];
       }
       this.emptyItem = new holidayWorkProtocol.HolidayWork({});
+      this.insertNewMap = new Map();
     },
     convertObjects2HolidayWorks(objects) {
       if (Array.isArray(objects)) {
