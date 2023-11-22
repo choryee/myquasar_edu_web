@@ -62,11 +62,7 @@ const routes = [
     name: 'pw-change',
     component: pwChangeView
   },
-  {
-    path: '/test',
-    name: 'test',
-    component: Logout
-  },
+
   {
     path: '/join',
     name: 'join',
