@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import pwChangeView from "@/views/login/pwChangeView.vue";
 import AdminInfoView from "@/views/login/AdminInfoView.vue";
+import Logout from "@/views/login/Logout.vue";
+import MemberJoin from "@/components/MemberJoin.vue";
 
 
 const routes = [
@@ -59,7 +61,18 @@ const routes = [
     path: '/pw-change',
     name: 'pw-change',
     component: pwChangeView
-  }
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: Logout
+  },
+  {
+    path: '/join',
+    name: 'jkin',
+    component: MemberJoin
+  },
+
 ]
 
 const router = createRouter({

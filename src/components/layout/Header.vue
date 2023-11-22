@@ -16,10 +16,11 @@
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="#!">Settings</a></li>
             <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+            <li><a class="dropdown-item" href="/join" >회원가입</a></li>
             <li>
               <hr class="dropdown-divider"/>
             </li>
-            <li><a class="dropdown-item" href="#!">Logout</a></li>
+            <li><a class="dropdown-item" href="#" @click="logout">로그아웃</a></li>
           </ul>
         </li>
       </ul>
@@ -28,7 +29,18 @@
 </template>
 
 <script>
+
+import axios from "axios";
+
 export default {
   name: 'Header',
+
+  methods:{
+    logout(){
+      localStorage.removeItem('Authorization');
+      alert('로그아웃 되었습니다.');
+      this.$router.push({ name: 'home' });
+    }
+  }
 }
 </script>

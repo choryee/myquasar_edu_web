@@ -15,7 +15,9 @@
               </tr>
               </thead>
 
-              <tbody v-for="(user, index) in [filteredUsers]" :key="index">
+              <tbody v-for="(user, index) in filteredUsers" :key="index">
+<!--              user.name: {{user.name}}-->
+
               <tr>
                 <td>
                   <label class="inp_normal">
@@ -101,39 +103,33 @@
                 <th>메모</th>
               </tr>
               </thead>
-
               <tbody>
                 <tr v-for="(user, index) in users" :key="index" @click="handleUserClick(user)">
                 <td>
                     <span id="employee_no " name="employee_no " ref="employee_no" :data-employee-no="user.employee_no" >
                      {{ user.employee_no }} </span>
                 </td>
-
                 <td>
                     <span id="user_role" name="user_role" ref="userRole"> {{ user.roles }} </span>
                 </td>
-
                 <td>
                     <span id="user_name" name="user_name" ref="userName"> {{ user.employee_name }} </span>
                 </td>
-
                   <td>
                       <span id="user_memo " name="user_memo " ref="user_memo "> {{ user.memo }} </span>
                   </td>
               </tr>
               </tbody>
             </table>
-
           </div>
         </div>
       </div>
     </template>
-
-
 <script>
 
 
 import axios from "axios";
+import {COMMON_INPUT_PROPS as proxiedObject} from "bootstrap-vue-3/src/composables";
 
 
 export default {
@@ -154,7 +150,7 @@ export default {
     }),
 
   created() {
-      //this.updateUserName();
+     //this.aa();
 
       axios.get('http://localhost:8080/api/v1/users/user/getAllUsers',
           {
@@ -184,26 +180,27 @@ export default {
 
   computed: {
     filteredUsers() {
-      // ROLE_ADMIN에 해당하는 사용자 필터링
       let adminUser = this.users.filter(user => user.roles.includes('ROLE_ADMIN'));
-      console.log('adminUser.name>>> ', adminUser.name);
+      console.log('adminUser.name>>> ', adminUser);
 
-      // adminUser를 일반 객체로 변환
-      const adminUserObject = { ...adminUser[0] }; // 첫 번째 객체만 고려 (filter 결과가 배열이므로)
-
-      console.log('adminUserObject>>>', adminUserObject);
-      this.$store.commit('setUserName', adminUserObject.name);
-      return adminUserObject;
+      return adminUser;
     }
-
-
   },
 
   methods: {
-    // updateUserName() {
-    //   this.$store.commit('setUserName', this.user_name);
-    //   console.log('UserName from Store>>>', this.filteredUsers);
-    // },
+      // aa(){
+      //   const targetObject = this.users.filter(user => user.roles.includes('ROLE_ADMIN'));
+      //
+      //   const handler = {
+      //     get(target, prop) {
+      //       console.log(`Accessing property: ${prop}`);
+      //       return target[prop];
+      //     }
+      //   };
+      //
+      //   const proxiedObject = new Proxy(targetObject, handler);
+      //   //console.log(proxiedObject.name);
+      // },
 
 
     excelDownload() {
@@ -217,7 +214,10 @@ export default {
             },
           })
           .then((res) => {
-             // console.log('Excel res>>', res.data);
+            if (res.status === 200) {
+
+
+            }
           })
           .catch((err) => {
             // loginError.value = true;
