@@ -69,7 +69,7 @@ const routes = [
   },
   {
     path: '/join',
-    name: 'jkin',
+    name: 'join',
     component: MemberJoin
   },
 
