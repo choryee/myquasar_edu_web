@@ -1,10 +1,10 @@
 <template>
   <div class="table-container">
-    <table>
+    <table class="common-table">
       <tbody>
       <tr v-for="(header, index) in headers" :key="index">
-        <th>{{ header }}</th>
-        <td v-for="row in tableData" :key="row[header]">{{ row[header] }}</td>
+        <th class="common-th">{{ header }}</th>
+        <td class="common-td" v-for="row in tableData" :key="row[header]">{{ row[header] }}</td>
       </tr>
       </tbody>
     </table>

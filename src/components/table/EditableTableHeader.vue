@@ -1,12 +1,12 @@
 <template>
   <thead>
   <tr>
-    <th v-if="useIndex" scope="col">순번</th>
-    <th scope="col" v-for="item of orderedHeaders">
+    <th class="ta-c" v-if="useIndex" scope="col">순번</th>
+    <th class="ta-c" scope="col" v-for="item of orderedHeaders">
       {{ item }}
     </th>
-    <th scope="col">수정</th>
-    <th scope="col">삭제</th>
+    <th class="ta-c" scope="col">수정</th>
+    <th class="ta-c" scope="col">삭제</th>
   </tr>
   </thead>
 </template>

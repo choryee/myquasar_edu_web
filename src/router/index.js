@@ -27,11 +27,6 @@ const routes = [
     component: () => import('@/views/holidayWork/HolidayWorkView.vue')
   },
   {
-    path: '/calendar',
-    name: 'calendar',
-    component: () => import('@/views/calendar/calendar.vue')
-  },
-  {
     path: '/dayoffs',
     name: 'DayoffListView',
     component: () => import('@/views/dayoff/DayoffListView.vue')
@@ -42,9 +37,19 @@ const routes = [
     component: () => import('@/views/dashBoard/DashBoardView.vue')
   },
   {
-    path: '/dayoff',
+    path: '/dayoff/',
+    name: `insertDayoff`,
+    component: ()=>import('@/views/dayoff/DayoffView.vue')
+  },
+  {
+    path: '/dayoff/:employeeNo',
     name: `dayoff`,
     component: ()=>import('@/views/dayoff/DayoffView.vue')
+  },
+  {
+    path: '/dayoff-setting',
+    name: `dayOffDefaultSetting`,
+    component: ()=>import('@/views/dayoff/DayOffSettingView.vue')
   },
   { path: '/adminInfo',
     name: 'adminInfo',

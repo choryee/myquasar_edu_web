@@ -2,14 +2,14 @@
   <div class="content-container">
     <div class="search-input-container">
       <div class="input-group mgb-1r">
-        <select v-model="year" class="year-input">
+        <select @change="changeYear" :value="year" class="year-input">
           <option :value="year" v-for="year in years">{{year}}</option>
         </select>
-        <select v-model="month" class="month-input">
-          <option :value="null">월</option>
+        <select @change="changeMonth" class="month-input">
+          <option>월</option>
           <option :value="month" v-for="month in months">{{month}}</option>
         </select>
-        <input type="text" class="form-control" v-model="query">
+        <input type="text" class="form-control" @input="changeQuery" @keydown.enter="searchQuery">
         <div class="input-group-append">
           <button type="button" class="btn btn-outline-secondary" @click="searchQuery">검색</button>
         </div>
@@ -67,7 +67,7 @@ export default {
     years() {
       const currentYear = new Date().getFullYear();
       const array = [];
-      for (let i = 2015; i <= currentYear; i++) {
+      for (let i = 2020; i <= currentYear; i++) {
         array.push(i);
       }
       return array;
@@ -81,6 +81,22 @@ export default {
     },
   },
   methods: {
+    changeYear(e) {
+      this.year = e.target.value;
+      this.searchQuery();
+    },
+    changeMonth(e) {
+      if (e.target.value === '월') {
+        this.month = null;
+        this.searchQuery();
+        return;
+      }
+      this.month = e.target.value;
+      this.searchQuery();
+    },
+    changeQuery(e) {
+      this.query = e.target.value;
+    },
     async searchQuery() {
       const holidayWorkListPageInfo = await holidayWorkProtocol.getHolidayWorkList(
           {pageSize: this.pageSize,
