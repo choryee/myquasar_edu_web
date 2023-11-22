@@ -141,6 +141,7 @@ export default {
     },
     isCustomProperties: {
       type: Map,
+      default: new Map()
     },
   },
   data: function () {
