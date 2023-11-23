@@ -1,20 +1,17 @@
 <template>
   <div class="home">
-    <MemberLogin/>
+    <TestIndex/>
     <hr/>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import MemberLogin from "@/components/MemberLogin.vue";
-import pwChangeView from "@/views/login/pwChangeView.vue";
+import TestIndex from "@/views/index/Index.vue";
 
 export default {
   name: 'HomeView',
   components: {
-    MemberLogin,
-    pwChangeView,
+    TestIndex,
    }
 }
 </script>

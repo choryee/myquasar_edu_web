@@ -1,8 +1,8 @@
 <template>
 
-    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-default default-nav">
       <!-- Navbar Brand-->
-      <a class="navbar-brand ps-3" href="index.html">엠그램</a>
+      <a class="navbar-brand ps-3" href="/"><img src="../../assets/images/Logo.png" alt="Dobby"></a>
       <!-- Sidebar Toggle-->
       <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
           class="fas fa-bars"></i></button>
@@ -44,3 +44,14 @@ export default {
   }
 }
 </script>
+
+<style>
+.bg-default{
+    --bs-bg-opacity: 1;
+    background-color: rgba(var(--bs-defalt-rgb), var(--bs-bg-opacity)) !important;
+}
+.navbar-brand img{
+  width: 60%;
+  height: 60%;
+}
+</style>

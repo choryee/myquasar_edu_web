@@ -4,6 +4,7 @@ import pwChangeView from "@/views/login/pwChangeView.vue";
 import AdminInfoView from "@/views/login/AdminInfoView.vue";
 import Logout from "@/views/login/Logout.vue";
 import MemberJoin from "@/components/MemberJoin.vue";
+import MemberLogin from "@/components/MemberLogin.vue";
 
 
 const routes = [
@@ -68,6 +69,16 @@ const routes = [
     name: 'join',
     component: MemberJoin
   },
+  {
+    path: `/login`,
+    name: 'login',
+    component: ()=> import(`@/views/login/LoginView.vue`)
+  },
+  {
+    path: `/testHome`,
+    name: "testHome",
+    component: ()=> import(`@/views/index/Index.vue`),
+  }
 
 ]
 

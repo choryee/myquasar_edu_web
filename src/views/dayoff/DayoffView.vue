@@ -9,6 +9,7 @@
   </div>
    <div class="dayoffTable">
      <SimpleInfoTitle :data="dayoffInfo"/>
+
      <div class="inner_wrap">
        <p class="title">계정 정보</p>
       <ColumTable :headers="authInfo" :tableData="authData"/>
@@ -28,8 +29,7 @@ import TableComponent from '@/components/table/table.vue'
 import network from '@/network';
 import SimpleInfoTitle from "@/components/Title/simpleInfotitle.vue";
 import ColumTable from '@/components/table/columTable.vue';
-import holidayWorkProtocol from "@/network/holidayWorkProtocol";
-import {getHolidayTableWorksColumns} from "@/utils/TableColumnInfos/HolidayWorkTableColumns";
+
 export default {
   name: 'DayoffView',
   components: {
@@ -86,6 +86,8 @@ export default {
           totalDayoff: result.totalDayoffCount,
           usedDayoff: result.usedDayoffCount,
           leftDayOff: result.remainingDayoffCount,
+          employeeNo : result.employeeNo,
+          year : this.params.year,
         };
 
         this.authData = [
