@@ -5,15 +5,7 @@
         {{ year }}
       </option>
     </select>
-    <div>
-    <label for="employeeNo">사원번호 테스트 조회</label>
-    <select id="employeeSelect" v-model="selectedEmployee">
-      <option v-for="info in infos" :key="info.employeeNo" :value="info.employeeNo">
-        {{ `${info.employeeNo}/${info.name}` }}
-      </option>
-    </select>
     <button @click="fetchDayoffRemaining">조회</button>
-    </div>
   </div>
    <div class="dayoffTable">
      <SimpleInfoTitle :data="dayoffInfo"/>
@@ -73,16 +65,19 @@ export default {
     },
   },
   mounted() {
-    this.initSimpleEmployeeList();
+    this.fetchDayoffRemaining();
   },
   methods: {
     async fetchDayoffRemaining() {
       this.params.employeeNo = this.selectedEmployee;
 
       const headers = {};
+      const currentPath = window.location.pathname;
 
+      const parts = currentPath.split('/');
+      const employeeNo = parts[parts.length - 1];
       try {
-        const response = await network.dayoff.dayoffUse(this.params, headers);
+        const response = await network.dayoff.dayoffUse(employeeNo,this.params, headers);
 
         const { result } = response;
         this.dayoffInfo = {
@@ -117,18 +112,6 @@ export default {
         console.error('Failed to fetch data:', error);
       }
 
-    },
-    async initSimpleEmployeeList(){
-
-      try {
-        const response = await holidayWorkProtocol.getSimpleEmployeeList();
-        this.infos = response.map(employee => ({
-          employeeNo: employee.employeeNo,
-          name: employee.name,
-        }));
-      } catch (error) {
-        console.error(error);
-      }
     },
   }
 

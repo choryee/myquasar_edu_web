@@ -36,11 +36,12 @@ export default{
         dayoffWorkDelete(params, header){
             return Protocol.DELETE('dayoff/work/delete', params, header)
         },
-        dayoffUse(params, header){
-            return Protocol.GET('dayoff/employee', params, header)
+        dayoffUse(employeeNo,params, header){
+            const url = `dayoff/employee/${employeeNo}`
+            return Protocol.GET(url, params, header)
         },
         dayoffRemaining(params, header){
-            return Protocol.GET('dayoff/employee/remaining', params, header)
+            return Protocol.GET( params, header)
         },
         dayoffSetting(params,header){
             return Protocol.POST('dayoff/setting',params,header);
