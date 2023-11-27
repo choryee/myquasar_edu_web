@@ -17,16 +17,19 @@
             </td>
             <!--인풋 타입 별 분리 : selectBox-->
             <td v-else-if="columnInfo.modifyType === 'selectBox'" class="editable-td ta-c">
-              <template v-if="isCustomProperty(columnInfo)">
-                <input class="form-control" type="text" @change="changeCustomValue($event, columnInfo)">
+              <template v-if="isCustomProperties.get(columnInfo.propertyName)">
+                <div class="return-box-container">
+                  <input class="form-control" type="text" :value="item[columnInfo.propertyName]" @change="changeCustomValue($event, columnInfo)">
+                  <img class="icon-button clickable" src="@/assets/images/return-icon.png" @click="returningCustom(columnInfo)">
+                </div>
               </template>
               <template v-else>
-                <select class="form-select" @change="selectBoxChangeEvent($event, columnInfo)">
+                <select class="form-select" :value="item[columnInfo.propertyName]" @change="selectBoxChangeEvent($event, columnInfo)">
                   <option>선택</option>
                   <option v-for="selectBoxItem in columnInfo.selectBoxInfo.selectBoxListItems" :key="selectBoxItem.key"
                           :value="selectBoxItem.key">{{ selectBoxItem.view }}
                   </option>
-                  <option v-if="columnInfo.canCustom">직접입력</option>
+                  <option v-if="columnInfo.canCustom" value="'직접입력'">직접입력</option>
                 </select>
               </template>
              </td>
@@ -57,13 +60,15 @@
             <!--인풋 타입 별 분리 : selectbox-->
             <td v-else-if="columnInfo.modifyType === 'selectBox'" class="editable-td ta-c">
               <template v-if="isCustomProperties.get(columnInfo.propertyName)">
-                <input class="form-control" type="text" @change="changeCustomValue($event, columnInfo)">
+                <div class="return-box-container">
+                  <input class="form-control" type="text" :value="item[columnInfo.propertyName]" @change="changeCustomValue($event, columnInfo)">
+                  <img class="icon-button clickable" src="@/assets/images/return-icon.png" @click="returningCustom(columnInfo)">
+                </div>
               </template>
               <template v-else>
-                <select class="form-select" @change="selectBoxChangeEvent($event, columnInfo)">
-                  <option>선택</option>
+                <select class="form-select" :value="item[columnInfo.propertyName]" @change="selectBoxChangeEvent($event, columnInfo)">
                   <option v-for="selectBoxItem in columnInfo.selectBoxInfo.selectBoxListItems" :key="selectBoxItem.key"
-                          :value="selectBoxItem.key">{{ selectBoxItem.view }}
+                          :value="selectBoxItem.key">{{ selectBoxItem.key }}
                   </option>
                   <option v-if="columnInfo.canCustom">직접입력</option>
                 </select>
@@ -151,8 +156,10 @@ export default {
     }
   },
   methods: {
-    isCustomProperty(columnInfo) {
-      return this.isCustomProperties.get(columnInfo.propertyName);
+    returningCustom(columnInfo) {
+      this.isCustomProperties.set(columnInfo.propertyName, false);
+      columnInfo.selectBoxInfo.offCustomHandler(this.item);
+      this.$forceUpdate();
     },
     changeCustomValue (event, columnInfo) {
       const value = event.target.value;
@@ -165,29 +172,19 @@ export default {
       this.$emit('cancelUpdate');
       this.isUpdate = false;
     },
-    cleanCustomData(changeInfos) {
-      for (const changeInfo of changeInfos) {
-        this.item[changeInfo.itemPropertyName] = null;
-      }
-    },
     selectBoxChangeEvent(e, columnInfo) {
       //값이 없으면 취소
-      if (!e.target.value) return;
+      if (typeof e.target.value === "undefined") return;
       let value = e.target.value;
       const selectBoxInfo = columnInfo.selectBoxInfo;
       const changeInfos = selectBoxInfo.changeInfos;
       //값이 선택이면 데이터 지우기
 
-      if (value === '선택'){
-        this.cleanCustomData(changeInfos);
-        return;
-      } else if (value === '직접입력') {
+      if (value === '직접입력') {
         //값이 직접입력이면 값을 다 지우고 인풋박스 토글
-        this.cleanCustomData(changeInfos);
-        console.log(this.isCustomProperties);
         this.isCustomProperties.set(columnInfo.propertyName, true);
-        console.log(this.isCustomProperties);
-        this.item.isCustomType = true;
+        columnInfo.selectBoxInfo.onCustomHandler(this.item);
+        this.$forceUpdate();
         return;
       }
 
