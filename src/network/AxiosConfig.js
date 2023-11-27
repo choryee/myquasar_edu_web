@@ -1,14 +1,13 @@
 import axios from 'axios'
-import store from '@/store/index';
 
 const defaultApiInstance = axios.create({
     baseURL: process.env.VUE_APP_API_BASE_URL,
     headers: {
-        'Authorization': ''
+        Authorization: ''
     }
 })
 defaultApiInstance.interceptors.request.use(config => {
-    const accessToken = store.getters['account/getAccessToken']
+    const accessToken = localStorage.getItem('Authorization');
     if (accessToken)
         config.headers['Authorization'] = accessToken
     return config
