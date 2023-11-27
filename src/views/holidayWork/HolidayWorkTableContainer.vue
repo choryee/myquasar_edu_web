@@ -15,6 +15,9 @@
         </div>
       </div>
       <div class="paging-button-container">
+        <select @change="changePageSize" :value="pageSize" class="page-size-select-input mgr-1r">
+          <option :value="item" v-for="item in pageSizes">{{item}}</option>
+        </select>
         <template v-if="hasPreviousPage">
           <button type="button" class="btn btn-info mgb-1r mgr-1r" @click="doPreviousPage">이전</button>
         </template>
@@ -54,7 +57,7 @@ export default {
     return {
       year: new Date().getFullYear(),
       pageNum:0,
-      pageSize:10,
+      pageSize:30,
       month: null,
       query: "",
       emptyItem: new holidayWorkProtocol.HolidayWork({}),
@@ -66,6 +69,9 @@ export default {
     }
   },
   computed:{
+    pageSizes() {
+      return [10,20,30,50];
+    },
     years() {
       const currentYear = new Date().getFullYear();
       const array = [];
@@ -93,6 +99,12 @@ export default {
     },
   },
   methods: {
+    changePageSize(event) {
+      if (event.target.value) {
+        this.pageSize = event.target.value;
+        this.searchQuery();
+      }
+    },
     changeYear(e) {
       this.year = e.target.value;
       this.searchQuery();
