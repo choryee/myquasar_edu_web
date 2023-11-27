@@ -130,7 +130,6 @@ export default {
     convertObjects2HolidayWorks(objects) {
       if (Array.isArray(objects)) {
         const result = objects.map((item) => new holidayWorkProtocol.HolidayWork(item));
-        console.log(result);
         return result;
       }
       return [];
@@ -177,6 +176,7 @@ export default {
       if (result) {
         await this.searchQuery();
       }
+      this.insertNewMap = new Map();
     },
     async updateItem(holidayWorkId, holidayWorkData) {
       if (!holidayWorkId) alert("workId가 없습니다.")
