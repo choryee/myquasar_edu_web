@@ -53,6 +53,11 @@ const routes = [
     name: `dayOffDefaultSetting`,
     component: ()=>import('@/views/dayoff/DayOffSettingView.vue')
   },
+  {
+    path: '/pattern/',
+    name: 'pattern',
+    component: ()=>import('@/views/calendarPattern/CalendarPatternView.vue')
+  },
   { path: '/adminInfo',
     name: 'adminInfo',
     component: AdminInfoView

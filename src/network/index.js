@@ -64,5 +64,13 @@ export default{
         calenderPatternDelete(params, header){
             return Protocol.DELETE('/calender/pattern/delete', params, header)
         }
+    },
+    calendarPattern : {
+        calendarPatternInsert(params, header) {
+            return Protocol.POST('pattern/insert', params, header)
+        },
+        calendarPatternList(params,header) {
+            return Protocol.GET('pattern/list', params, header)
+        },
     }
 }
