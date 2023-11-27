@@ -22,7 +22,7 @@
             :item="emptyItem"
             :header-infos="headerInfos"
             :index="0"
-            :is-custom-properties="customColumnMaps[index]"
+            :is-custom-properties="insertColumnMaps"
             @insert-item="insertItem"
             @update-item="updateItem"
             @delete-item="deleteItem"
@@ -48,7 +48,10 @@ export default {
   components: {EditableTableRow, EditableTableHeader},
   props: {
     customColumnMaps:{
-      type:Array
+      type:Array,
+    },
+    insertColumnMaps:{
+      type:Map,
     },
     headerInfos: {
       type: Array,

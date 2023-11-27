@@ -55,7 +55,18 @@ export function getHolidayTableWorksColumns(employeeList, defaultWorkTypeList) {
   const workTypeSelectBoxInfo = new SelectBoxInfo(
       {
         selectBoxListItems:workTypeNameSelectBoxList,
-        changeInfos: workTypeNameChangeInfo
+        changeInfos: workTypeNameChangeInfo,
+        onCustomHandler : function (item) {
+          item.workTypeId = 999999;
+          item.workTypeName = "";
+          item.isCustomType = true;
+        },
+        offCustomHandler : function (item) {
+          if (Array.isArray(this.selectBoxListItems) && this.selectBoxListItems.length > 0) {
+            this.selectBoxListItems[0].doChange(item, this.changeInfos);
+          }
+          item.isCustomType = false;
+        },
       }
   );
 
