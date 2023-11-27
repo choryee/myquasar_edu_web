@@ -10,22 +10,23 @@
           <button type="button" class="btn btn-outline-secondary" @click="getEmployeeDayoffInfo">검색</button>
         </div>
       </div>
-      <div class="paging-button-container">
+      <div class="paging-button-container mgb-1r">
+        <img class="mgr-1r icon-button clickable spin" src="@/assets/images/return-icon.png" @click="refreshDayoff">
         <select @change="changePageSize" :value="pageSize" class="page-size-select-input mgr-1r">
           <option :value="item" v-for="item in pageSizes">{{item}}</option>
         </select>
-        <button type="button" class="btn btn-success mgb-1r mgr-1r" @click="goNewEmployee">사원 입력</button>
+        <button type="button" class="btn btn-success mgr-1r" @click="goNewEmployee">사원 입력</button>
         <template v-if="hasPreviousPage">
-          <button type="button" class="btn btn-info mgb-1r mgr-1r" @click="doPreviousPage">이전</button>
+          <button type="button" class="btn btn-info" @click="doPreviousPage">이전</button>
         </template>
         <template v-else>
-          <button type="button" class="btn btn-secondary mgb-1r mgr-1r">이전</button>
+          <button type="button" class="btn btn-secondary mgr-1r">이전</button>
         </template>
         <template v-if="hasNextPage">
-          <button type="button" class="btn btn-info mgb-1r" @click="doNextPage">다음</button>
+          <button type="button" class="btn btn-info" @click="doNextPage">다음</button>
         </template>
         <template v-else>
-          <button type="button" class="btn btn-secondary mgb-1r">다음</button>
+          <button type="button" class="btn btn-secondar">다음</button>
         </template>
       </div>
     </div>
@@ -43,7 +44,7 @@
 <script>
 import employeeDayoffProtocol from "@/network/employeeDayoffProtocol";
 import ClickableRowTable from "@/components/table/ClickableTable.vue";
-
+import dayoffProtocol from "@/network/dayoffProtocol";
 export default {
   name: 'DayoffListTable',
   components: {ClickableRowTable},
@@ -85,6 +86,11 @@ export default {
     },
     goNewEmployee() {
       this.$router.push(`/dayoff/`);
+    },
+    async refreshDayoff() {
+      await dayoffProtocol.refreshDayoff();
+      await this.getEmployeeDayoffInfo();
+      alert("새로고침 되었습니다.");
     },
     async getEmployeeDayoffInfo() {
       const result = await employeeDayoffProtocol.getEmployeeDayoffInfo({

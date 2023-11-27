@@ -37,7 +37,7 @@ export default{
             return Protocol.DELETE('dayoff/work/delete', params, header)
         },
         dayoffUse(employeeNo,params, header){
-            const url = `dayoff/employee/${employeeNo}`
+            const url = `dayoff/employee/`
             return Protocol.GET(url, params, header)
         },
         dayoffRemaining(params, header){
@@ -52,7 +52,7 @@ export default{
         },
         getDayoffDefault(params,header){
             return Protocol.GET('dayoff/setting/list');
-        }
+        },
     },
     calender : {
         calenderPatternInsert(params, header){
