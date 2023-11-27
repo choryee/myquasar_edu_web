@@ -148,3 +148,13 @@
   width: 1.5rem;
   height: 1.5rem;
 }
+
+@keyframes rotate_image {
+  100%{
+    transform: rotate(-360deg);
+  }
+}
+
+.spin:hover {
+  animation: rotate_image 3s linear infinite; transform-origin: 50% 50%;
+}

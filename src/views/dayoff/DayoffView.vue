@@ -163,6 +163,7 @@ export default {
 
       const parts = currentPath.split('/');
       const employeeNo = parts[parts.length - 1];
+      this.params.employeeNo = employeeNo;
       try {
         const response = await network.dayoff.dayoffUse(employeeNo, this.params, headers);
 
