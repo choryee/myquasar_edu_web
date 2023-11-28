@@ -1,3 +1,5 @@
+import {br} from "@fullcalendar/core/internal-common";
+
 export class NetworkError {
     constructor(desc) {
         if(!desc) {
@@ -28,6 +30,7 @@ export class ServerError {    //300 ~ 500 에러 발생 시 처리용 커스텀 
                 case 401:
                     alert("로그인을 해주세요.");
                     // router.push({name: 'WebLogin'});    //401에러 발생 시 로그인 시키고 메인화면으로 이동시킴
+                    break;
                 case 403:
                     alert("허용되지 않은 접근입니다.");
                     break;
