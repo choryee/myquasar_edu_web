@@ -17,13 +17,16 @@
         <div id="loginBox">
           <div id="loginBoxTitle"></div>
           <div id="inputBox">
-            <div >
+
+            <form @submit.prevent="login">
               <div class="input-form-box"><span>아이디 </span><input type="text" name="username" class="form-control" v-model="username"></div>
               <div class="input-form-box"><span>비밀번호 </span><input type="password" name="password" class="form-control" v-model="password"></div>
-              <div class="button-login-box" >
-                <button type="button" class="btn btn-primary btn-xs" style="width:100%" @click="login()">로그인</button>
+              <div class="button-login-box">
+                <button type="submit" class="btn btn-primary btn-xs" style="width:100%">로그인</button>
               </div>
-            </div>
+            </form>
+
+
           </div>
         </div>
       </div>
@@ -57,44 +60,15 @@ export default {
             if (res.status === 200) {
               let jwtToken = res.headers.get('Authorization');
               localStorage.setItem('Authorization', jwtToken);
-              //this.getUser();
-              alert('로그인 성공했습니다.');
-
+              this.$router.push({name: 'adminInfo'});
             }
           })
           .catch((err) => {
             console.log('login error >>', err);
-            alert('로그인 실패했습니다.');
-            this.username='';
-            this.password='';
-
+            this.loginError = true;
+            throw new Error(err);
           });
     }, // login()
-
-    async getUser(){
-      console.log(this.username, this.password);
-      await axios.post('http://localhost:8080/api/v1/users/user/getUser', {
-        name : this.username,
-        password : this.password
-      },
-          {
-        headers: {
-          Authorization: localStorage.getItem('Authorization')
-        }
-      })
-          .then(res=>{
-            console.log('getUser res>> ', res);
-            if(this.username !== res.data.data.name || this.password !== res.data.data.password){
-              alert('입력하신 정보가 틀립니다.')
-            }else {
-              this.$router.push({name: 'adminInfo'});
-            }
-          })
-          .catch(err=>{
-            console.log(err);
-          })
-
-    }
 
   }
 }

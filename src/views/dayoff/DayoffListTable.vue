@@ -24,6 +24,7 @@
         <template v-else>
           <button type="button" class="btn btn-secondary mgb-1r">다음</button>
         </template>
+        <button type="button" class="btn btn-success mgb-1r mgr-1r" @click="excelDownload">엑셀 다운로드</button>
       </div>
     </div>
     <ClickableRowTable :table-data="tableInfo" :headers="columns"

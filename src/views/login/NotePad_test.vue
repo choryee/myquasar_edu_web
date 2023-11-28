@@ -9,7 +9,7 @@ export default {
   methods: {
     openWindow() {
       const newin = window.open('', 'width=200', 'height=300');
-      newin.document.write('<head><title>View Image111</title></head><body onclick="self.close()">');
+      newin.document.write('<head><title>NotePad</title></head><body onclick="self.close()">');
     }
   }
 }

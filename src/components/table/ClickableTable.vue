@@ -21,7 +21,7 @@
       </thead>
       <tbody>
       <tr v-for="(row, index) in tableData" :key="index" class="ta-c hover-blue clickable" @click="clickEvent(clickAbleEventKeys[index])">
-        <td v-for="(value, key) in row" :key="key">{{ value }}</td>
+        <td v-for="(value, key) in row" :key="key" >{{ value }}</td>
       </tr>
       </tbody>
     </table>
@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: 'ClickableRowTable',
   props: {
