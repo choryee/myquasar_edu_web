@@ -2,7 +2,7 @@
   <div class="content-container">
     <div class="search-input-container">
       <div class="input-group mgb-1r">
-        <select @change="changeYear" :value="year" class="year-input">
+        <select @change="changeYear" :value="year" class="select-input">
           <option :value="year" v-for="year in years">{{year}}</option>
         </select>
         <select @change="changeMonth" class="month-input">
@@ -15,6 +15,9 @@
         </div>
       </div>
       <div class="paging-button-container">
+        <select @change="changePageSize" :value="pageSize" class="page-size-select-input mgr-1r">
+          <option :value="item" v-for="item in pageSizes">{{item}}</option>
+        </select>
         <template v-if="hasPreviousPage">
           <button type="button" class="btn btn-info mgb-1r mgr-1r" @click="doPreviousPage">이전</button>
         </template>
@@ -35,6 +38,7 @@
         :table-data="holidayWorkList"
         :empty-item="emptyItem"
         :customColumnMaps="customColumnMaps"
+        :insert-column-maps="insertNewMap"
         @insert-item="insertItem"
         @update-item="updateItem"
         @delete-item="deleteItem"
@@ -53,10 +57,11 @@ export default {
     return {
       year: new Date().getFullYear(),
       pageNum:0,
-      pageSize:10,
+      pageSize:30,
       month: null,
       query: "",
       emptyItem: new holidayWorkProtocol.HolidayWork({}),
+      insertNewMap: new Map(),
       headerInfos: [],
       holidayWorkList: [],
       hasNextPage: false,
@@ -64,6 +69,9 @@ export default {
     }
   },
   computed:{
+    pageSizes() {
+      return [10,20,30,50];
+    },
     years() {
       const currentYear = new Date().getFullYear();
       const array = [];
@@ -88,9 +96,15 @@ export default {
         }
         return map;
       });
-    }
+    },
   },
   methods: {
+    changePageSize(event) {
+      if (event.target.value) {
+        this.pageSize = event.target.value;
+        this.searchQuery();
+      }
+    },
     changeYear(e) {
       this.year = e.target.value;
       this.searchQuery();
@@ -123,11 +137,11 @@ export default {
         this.holidayWorkList = [];
       }
       this.emptyItem = new holidayWorkProtocol.HolidayWork({});
+      this.insertNewMap = new Map();
     },
     convertObjects2HolidayWorks(objects) {
       if (Array.isArray(objects)) {
         const result = objects.map((item) => new holidayWorkProtocol.HolidayWork(item));
-        console.log(result);
         return result;
       }
       return [];
@@ -174,6 +188,7 @@ export default {
       if (result) {
         await this.searchQuery();
       }
+      this.insertNewMap = new Map();
     },
     async updateItem(holidayWorkId, holidayWorkData) {
       if (!holidayWorkId) alert("workId가 없습니다.")

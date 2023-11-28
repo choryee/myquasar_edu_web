@@ -2,27 +2,31 @@
   <div class="content-container">
     <div class="search-input-container">
       <div class="input-group mgb-1r">
-        <select @change="changeYear" :value="year" class="year-input">
-          <option :value="year" v-for="year in years">{{year}}</option>
+        <select @change="changeYear" :value="year" class="select-input">
+          <option :value="item" v-for="item in years">{{item}}</option>
         </select>
         <input type="text" class="form-control" @input="changeQuery" @keydown.enter="getEmployeeDayoffInfo">
         <div class="input-group-append">
           <button type="button" class="btn btn-outline-secondary" @click="getEmployeeDayoffInfo">검색</button>
         </div>
       </div>
-      <div class="paging-button-container">
-        <button type="button" class="btn btn-success mgb-1r mgr-1r" @click="goNewEmployee">사원 입력</button>
+      <div class="paging-button-container mgb-1r">
+        <img class="mgr-1r icon-button clickable spin" src="@/assets/images/return-icon.png" @click="refreshDayoff">
+        <select @change="changePageSize" :value="pageSize" class="page-size-select-input mgr-1r">
+          <option :value="item" v-for="item in pageSizes">{{item}}</option>
+        </select>
+        <button type="button" class="btn btn-success mgr-1r" @click="goNewEmployee">사원 입력</button>
         <template v-if="hasPreviousPage">
-          <button type="button" class="btn btn-info mgb-1r mgr-1r" @click="doPreviousPage">이전</button>
+          <button type="button" class="btn btn-info" @click="doPreviousPage">이전</button>
         </template>
         <template v-else>
-          <button type="button" class="btn btn-secondary mgb-1r mgr-1r">이전</button>
+          <button type="button" class="btn btn-secondary mgr-1r">이전</button>
         </template>
         <template v-if="hasNextPage">
-          <button type="button" class="btn btn-info mgb-1r" @click="doNextPage">다음</button>
+          <button type="button" class="btn btn-info" @click="doNextPage">다음</button>
         </template>
         <template v-else>
-          <button type="button" class="btn btn-secondary mgb-1r">다음</button>
+          <button type="button" class="btn btn-secondar">다음</button>
         </template>
       </div>
     </div>
@@ -40,7 +44,7 @@
 <script>
 import employeeDayoffProtocol from "@/network/employeeDayoffProtocol";
 import ClickableRowTable from "@/components/table/ClickableTable.vue";
-
+import dayoffProtocol from "@/network/dayoffProtocol";
 export default {
   name: 'DayoffListTable',
   components: {ClickableRowTable},
@@ -51,7 +55,7 @@ export default {
     return {
       year: new Date().getFullYear(),
       pageNum:0,
-      pageSize:10,
+      pageSize:30,
       info:[],
       query: "",
       sort:null,
@@ -66,6 +70,12 @@ export default {
     changeQuery(event) {
       this.query = event.target.value;
     },
+    changePageSize(event) {
+      if (event.target.value) {
+        this.pageSize = event.target.value;
+        this.getEmployeeDayoffInfo();
+      }
+    },
     changeYear(e) {
       this.year = e.target.value;
       this.getEmployeeDayoffInfo();
@@ -76,6 +86,11 @@ export default {
     },
     goNewEmployee() {
       this.$router.push(`/dayoff/`);
+    },
+    async refreshDayoff() {
+      await dayoffProtocol.refreshDayoff();
+      await this.getEmployeeDayoffInfo();
+      alert("새로고침 되었습니다.");
     },
     async getEmployeeDayoffInfo() {
       const result = await employeeDayoffProtocol.getEmployeeDayoffInfo({
@@ -119,6 +134,9 @@ export default {
         array.push(i);
       }
       return array;
+    },
+    pageSizes() {
+      return [10,20,30,50];
     },
     tableInfo() {
       if (this.info != null) {

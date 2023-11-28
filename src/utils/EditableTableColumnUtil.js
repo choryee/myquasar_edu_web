@@ -58,10 +58,14 @@ export class SelectBoxInfo {
    *
    * @param selectBoxListItems : Array<SelectBoxListItem>
    * @param changeInfos : Array<SelectBoxChangeInfo>
+   * @param onCustomHandler : function custom을 on 했을때 수행되는 기능
+   * @param offCustomHandler : function custom을 off 했을때 수행되는 기능
    */
-  constructor({selectBoxListItems, changeInfos}) {
+  constructor({selectBoxListItems, changeInfos, onCustomHandler, offCustomHandler}) {
     this._selectBoxListItems = selectBoxListItems;
     this._changeInfos = changeInfos;
+    this.onCustomHandler = onCustomHandler;
+    this.offCustomHandler = offCustomHandler;
   }
 
   /**
