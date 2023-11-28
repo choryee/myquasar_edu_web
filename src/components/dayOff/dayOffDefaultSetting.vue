@@ -4,8 +4,8 @@
       <label :for="`year-${year}`">{{ yearLabel(year) }}</label>
       <input :id="`year-${year}`" :disabled="!isEditable" v-model="default_dayoff[year]" />
     </div>
-    <button @click="toggleEdit">{{ isEditable ? '수정 완료' : '수정하기' }}</button>
-    <button v-if="isEditable" @click="cancelEdit">수정 취소</button>
+    <button class="put-btn btn mgr-1r" @click="toggleEdit">{{ isEditable ? '수정 완료' : '수정하기' }}</button>
+    <button class="cancel-btn btn mgr-1r" v-if="isEditable" @click="cancelEdit">수정 취소</button>
   </div>
 </template>
 
@@ -83,6 +83,16 @@ export default {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+}
+.put-btn{
+  background-color: #0dcaf0;
+  width: 120px;
+  color: white;
+}
+.cancel-btn{
+  background-color: red;
+  width: 120px;
+  color: white;
 }
 .yearItem label {
   margin-right: 10px;

@@ -40,7 +40,7 @@ export default{
             return Protocol.DELETE('dayoff/work/delete', params, header)
         },
         dayoffUse(employeeNo,params, header){
-            const url = `dayoff/employee/`
+            const url = `dayoff/employee/${employeeNo}`
             return Protocol.GET(url, params, header)
         },
         dayoffRemaining(params, header){
