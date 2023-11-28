@@ -1,4 +1,3 @@
-import {br} from "@fullcalendar/core/internal-common";
 
 export class NetworkError {
     constructor(desc) {
