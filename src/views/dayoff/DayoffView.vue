@@ -173,6 +173,8 @@ export default {
           totalDayoff: result.totalDayoffCount,
           usedDayoff: result.usedDayoffCount,
           leftDayOff: result.remainingDayoffCount,
+          employeeNo : result.employeeNo,
+          year : this.params.year,
         };
 
         this.authData = [

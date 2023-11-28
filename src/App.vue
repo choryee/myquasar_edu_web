@@ -1,17 +1,19 @@
 <template>
-
-  <body class="sb-nav-fixed">
-    <Header />
-    <div id="layoutSidenav">
-      <Left />
-      <div id="layoutSidenav_content">
-        <main>
-          <router-view/>
-        </main>
-      </div>
+  <body class="sb-nav-fixed" v-if="!isIndexOrLogin" >
+  <Header />
+  <div id="layoutSidenav">
+    <Left/>
+    <div id="layoutSidenav_content">
+      <main>
+        <router-view/>
+      </main>
     </div>
+  </div>
   </body>
 
+  <main v-else>
+    <router-view/>
+  </main>
 </template>
 
 <style>
@@ -26,6 +28,11 @@ import Left from "@/components/layout/Left.vue";
 
 export default {
   name: 'App',
+  data() {
+    return {
+      isIndexOrLogin: false,
+    };
+  },
   mounted() {
     this.loadScripts();
   },
@@ -47,7 +54,22 @@ export default {
         scriptElement.src = script;
         document.body.appendChild(scriptElement);
       });
+    },
+    checkIfIndexOrLogin() {
+      // 현재 경로가 인덱스나 로그인인지 확인하는 메서드입니다.
+      const currentPath = this.$route.path;
+      return currentPath === '/' || currentPath === '/login';
     }
-  }
+  } ,watch: {
+    // $route 객체를 감시하여 라우트 변경 시마다 조건을 업데이트합니다.
+    '$route': function() {
+      this.isIndexOrLogin = this.checkIfIndexOrLogin();
+    }
+  },
+  created() {
+    // 컴포넌트가 생성될 때 초기 조건을 설정합니다.
+    this.isIndexOrLogin = this.checkIfIndexOrLogin();
+  },
+
 };
 </script>

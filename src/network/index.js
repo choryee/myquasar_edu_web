@@ -17,15 +17,18 @@ export default{
             return Protocol.GET('employee/list', params, header)
         },
         employeeDelete(params, header){
-            return Protocol.DELETE('employee/delete/', params, header)
+            return Protocol.DELETE('employee/delete', params, header)
         },
         employeeUpdate(params, header){
-            return Protocol.PUT('employee/update/', params, header)
+            return Protocol.PUT('employee/update', params, header)
+        },
+        employeeDayoffSetting(params,header){
+            return Protocol.PUT("employee/setting",params,header)
         }
     },
     dayoff : {
         dayoffObligation(params, header){
-            return Protocol.POST('dayoff/obligation/', params, header)
+            return Protocol.POST('dayoff/obligation', params, header)
         },
         dayoffWorkSave(params, header){
             return Protocol.POST('dayoff/work/save', params, header)
@@ -47,7 +50,6 @@ export default{
             return Protocol.POST('dayoff/setting',params,header);
         },
         updateDayoffSetting(params,header){
-            console.log(params);
             return Protocol.PUT('dayoff/setting/update',params,header);
         },
         getDayoffDefault(params,header){
