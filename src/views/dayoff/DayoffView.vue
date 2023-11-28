@@ -1,13 +1,13 @@
 <template>
-  <div class="input-field">
-    <select v-model="params.year">
-      <option v-for="year in years" :key="year" :value="year">
-        {{ year }}
-      </option>
-    </select>
-    <button @click="fetchDayoffRemaining">조회</button>
-  </div>
     <div class="button-container">
+      <div class="input_field">
+        <select v-model="params.year">
+          <option v-for="year in years" :key="year" :value="year">
+            {{ year }}
+          </option>
+        </select>
+      </div>
+      <button class="src_button btn mgb-1r mgr-1r" @click="fetchDayoffRemaining">조회</button>
       <div v-if="firstButton && $route.path !== '/dayoff/'">
         <button class="btn btn-success mgb-1r mgr-1r" type="button" @click="updateEmployeeMode">수정</button>
         <button class="btn btn-danger mgb-1r mgr-1r" type="button" @click="back">뒤로가기</button>
@@ -95,7 +95,6 @@ import TableComponent from '@/components/table/table.vue'
 import network from '@/network';
 import SimpleInfoTitle from "@/components/Title/simpleInfotitle.vue";
 import ColumTable from '@/components/table/columTable.vue';
-import holidayWorkProtocol from "@/network/holidayWorkProtocol";
 import axios from "axios";
 import router from "@/router";
 
@@ -108,13 +107,12 @@ export default {
   },
   data() {
     return {
-      authInfo: ['권한', '사번', 'wid'],
+      authInfo: ['권한', '사번', '네이버웍스ID'],
       employeeImfo: ['이름', '입사년도', '직급'],
       tableHeaders: ['연차종류', '시작날짜', '종료날짜', '기한'],
       authData: [],
       employeeData: [],
       employeeDayoffData: [],
-      selectedEmployee: '',
       infos: [],
       dayoffInfo: {},
       params: {
@@ -158,19 +156,16 @@ export default {
   },
   methods: {
     async fetchDayoffRemaining() {
-      this.params.employeeNo = this.selectedEmployee;
-
-      const currentPath = window.location.pathname;
-
-      const parts = currentPath.split('/');
-      const employeeNo = parts[parts.length - 1];
+      const employeeNo = this.$route.params.employeeNo;
       this.params.employeeNo = employeeNo;
+
       try {
-        const response = await network.dayoff.dayoffUse(employeeNo,this.params, this.headers);
+        const response = await network.dayoff.dayoffUse(employeeNo,this.params);
         const {result} = response;
         this.dayoffInfo = {
           name: result.name,
           totalDayoff: result.totalDayoffCount,
+          dutyDayoff: result.dutyDayoffCount,
           usedDayoff: result.usedDayoffCount,
           leftDayOff: result.remainingDayoffCount,
           employeeNo : result.employeeNo,
@@ -181,7 +176,7 @@ export default {
           {
             권한: result.rankName,
             사번: result.employeeNo,
-            wid: result.wid,
+            네이버웍스ID: result.wid,
           },
         ];
         this.employeeData = [
@@ -191,12 +186,20 @@ export default {
             직급: result.rankName,
           },
         ];
-        this.employeeDayoffData = result.dayoffDetailList.map(item => ({
-          연차종류: item.codeName,
-          시작날짜: item.startDayoffDt,
-          종료날짜: item.endDayoffDt,
-          기한: item.usedDayoff,
-        }));
+        this.employeeDayoffData = result.dayoffDetailList
+            .map(item => ({
+              연차종류: item.codeName,
+              시작날짜: item.startDayoffDt,
+              종료날짜: item.endDayoffDt,
+              기한: item.usedDayoff,
+            }))
+            .concat(result.dayoffDutyList.map(item => ({
+              연차종류: item.title,
+              시작날짜: item.dutyDate,
+              종료날짜: item.dutyDate,
+              기한: 1,
+            })))
+            .sort((a, b) => new Date(b.시작날짜) - new Date(a.시작날짜)); // "시작날짜"를 기준으로 내림차순 정렬
 
       } catch (error) {
         console.error('Failed to fetch data:', error);
@@ -310,13 +313,17 @@ export default {
   width: 90%;
   margin: 20px auto;
 }
-
-.input-field {
-  display: flex;
-  justify-content: space-around;
-  padding: 30px;
+.input_field select{
+  height: 37px;
+  border-radius: 5px;
+  margin-right: 15px;
 }
-
+.src_button{
+  background-color: #0dcaf0;
+  border: unset;
+  border-radius: 5px;
+  color: white;
+}
 .title {
   font-size: 16px;
   font-weight: bold;

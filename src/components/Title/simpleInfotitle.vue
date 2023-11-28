@@ -1,12 +1,16 @@
 <template>
+  <h1 class="yearText">{{data.year}}</h1>
   <div class="simpleInfoTitle">
     <p>{{ data.name }}</p>
-    <p>(지급 연차:
+    <p class="totalDayoff">(지급 연차:
       <span v-if="!editing">{{ data.totalDayoff }}</span>
       <input v-model="editedData.totalDayoff" v-else :placeholder="data.totalDayoff">
     </p>
-    <p>사용연차: {{ data.usedDayoff }}</p>
-    <p>남은연차: {{ data.leftDayOff }})</p>
+    <div>
+      <span class="dutyDayoff">[의무연차:{{data.dutyDayoff}}]</span>
+    <p class="usedDayoff">사용연차: {{ data.usedDayoff }}</p>
+    </div>
+    <p class="leftDayoff">남은연차: {{ data.leftDayOff }})</p>
     <button @click="toggleEditing" class="settingButtons" v-if="!editing">
       <img src="../../assets/images/option.png" alt="편집">
     </button>
@@ -64,12 +68,14 @@ export default {
     cancelEditing() {
       this.setEditing()
     },
-     saveEditedData() {
-      this.params.settingDayoff = this.editedData.totalDayoff;
-      const header ={};
-      network.employee.employeeDayoffSetting(this.params,header);
-      this.setEditing()
-      window.location.reload();
+    saveEditedData() {
+      if (typeof this.editedData.totalDayoff === 'number') {
+        this.params.settingDayoff = this.editedData.totalDayoff;
+        const header = {};
+        network.employee.employeeDayoffSetting(this.params, header);
+        this.setEditing();
+        window.location.reload();
+      } else alert('totalDayoff 값은 숫자이어야 합니다.');
     },
     resetEditing(){
       this.params.settingDayoff = 0;
@@ -93,6 +99,24 @@ export default {
   width: 90%;
   margin:auto;
 }
+.yearText{
+  width: 90%;
+  margin:auto;
+  font-weight: bold;
+}
+.dutyDayoff{
+  font-size: 10px;
+  font-weight: bold;
+  color: #0d6efd;
+  position: absolute;
+  margin-left: 5%
+}
+.usedDayoff{
+  color: #0d6efd;
+}
+.leftDayoff{
+  color: red;
+}
 .simpleInfoTitle p {
   font-size: 24px;
   font-weight: bold;
@@ -114,4 +138,5 @@ export default {
   width: 35px;
   height: 30px;
 }
+
 </style>
