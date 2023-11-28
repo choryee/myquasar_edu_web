@@ -120,6 +120,8 @@ export default {
       params: {
         employeeNo: '',
         year: new Date().getFullYear(),
+      },headers: {
+        Authorization: localStorage.getItem('Authorization')
       },
       formData: {
         rankNo: '',
@@ -158,15 +160,13 @@ export default {
     async fetchDayoffRemaining() {
       this.params.employeeNo = this.selectedEmployee;
 
-      const headers = {};
       const currentPath = window.location.pathname;
 
       const parts = currentPath.split('/');
       const employeeNo = parts[parts.length - 1];
       this.params.employeeNo = employeeNo;
       try {
-        const response = await network.dayoff.dayoffUse(employeeNo, this.params, headers);
-
+        const response = await network.dayoff.dayoffUse(employeeNo,this.params, this.headers);
         const {result} = response;
         this.dayoffInfo = {
           name: result.name,
