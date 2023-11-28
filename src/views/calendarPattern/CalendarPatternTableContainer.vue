@@ -51,7 +51,7 @@
             </template>
             <template v-else>
               <td>
-                <button class="btn btn-warning" type="button" @click="modifyPattern(pattern.patternIdx,pattern.patternForm)">수정1</button>
+                <button class="btn btn-warning" type="button" @click="modifyPattern(pattern.patternIdx,pattern.patternForm)">수정</button>
               </td>
               <td>
                 <button class="btn btn-danger" type="button" @click="cancelModify(pattern)">취소</button>
@@ -207,16 +207,20 @@ export default {
     },
     async searchForm() {
       // 검색어를 입력하지 않은 경우, 모든 패턴을 가져옴
+
       if (!this.searchQuery) {
+        this.page = 1; // 페이지 초기화
         await this.calendarPatternList();
         return;
       }
       try {
+        this.page = 1;
         const response = await network.calendarPattern.calendarPatternList({
           page: this.page,
           pageSize: this.pageSize,
           searchQuery: this.searchQuery,
         }, {});
+
         this.patterns = response.result;
       }catch (error) {
         console.log('Error fetching calendar patterns',error);

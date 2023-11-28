@@ -10,18 +10,7 @@
           <router-link class="nav-link" style="text-decoration:none" to="/dayoffs">
           연차사용내역조회
           </router-link>
-          <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
-             aria-expanded="false" aria-controls="collapseLayouts">
-            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-            사원관리
-            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-          </a>
-          <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-            <nav class="sb-sidenav-menu-nested nav">
-              <a class="nav-link" href="layout-static.html">Static Navigation</a>
-              <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
-            </nav>
-          </div>
+
           <a class="nav-link collapsed" href="#"
              aria-expanded="false" aria-controls="collapsePages">
             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
@@ -39,6 +28,11 @@
           </router-link>
 
 
+          <router-link  class="nav-link collapsed"  to="/pattern">
+            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+            캘린더 패턴 관리
+            <div class="sb-sidenav-collapse-arrow"></div>
+          </router-link>
           <router-link to="/adminInfo" class="nav-link">
             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
             관리자설정
