@@ -3,7 +3,6 @@
   <div class="login_wrap" :style="{ opacity: loginOpacity }">
   <div class="left">
   <img src="../../assets/images/emgramLogo.png" alt="emgram">
-  <img src="../../assets/images/dobby.jpg" alt="dobby">
   </div>
   <div class="login_form_wrap">
     <h1>연차 관리 시스템</h1>

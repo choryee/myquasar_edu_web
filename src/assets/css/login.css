@@ -1,4 +1,4 @@
-body {
+.body_wrap {
     display: flex;
     justify-content: center;
     align-items: center;
