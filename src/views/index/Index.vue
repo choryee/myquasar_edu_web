@@ -39,11 +39,11 @@ export default {
     },
     methods: {
       addBlurEffect() {
-        const wrap = document.querySelector('.wrap');
+        const wrap = document.querySelector('.dobby_wrap');
         wrap.style.filter = 'blur(3px)';
       },
       removeBlurEffect() {
-        const wrap = document.querySelector('.wrap');
+        const wrap = document.querySelector('.dobby_wrap');
         wrap.style.filter = 'blur(0px)';
         setTimeout(() => {
           this.addBlurEffect();
