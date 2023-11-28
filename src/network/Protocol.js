@@ -1,6 +1,12 @@
 import defaultAPI from '@/network/AxiosConfig'
 import {ServerError, NetworkError} from '@/network/ErrorHandler'
 
+/**
+ * 200 or not
+ * @param axiosMethod
+ * @param resolve
+ * @param reject
+ */
 function processing(axiosMethod, resolve, reject){
     axiosMethod.then(res=>{
         disposeResult(res, resolve, reject)
@@ -8,11 +14,25 @@ function processing(axiosMethod, resolve, reject){
         reject(new ServerError(err))
     })
 }
+
+/**
+ * 200번 성공시 처리
+ * @param res
+ * @param resolve
+ * @param reject
+ */
 function disposeResult(res, resolve, reject){
-    if(res.data.hasOwnProperty('resultCode'))
+    if(res.data.hasOwnProperty('resultCode')) {
         res.data.resultCode === 0
             ? resolve(res.data)
-            : reject(new NetworkError(res.data.desc))
+            : alert(res.data?.message);
+    } else {
+        if (res.data.hasOwnProperty("message")) {
+            alert(res.data.message);
+        } else {
+            alert("네트워크 에러");
+        }
+    }
 }
 
 export default{

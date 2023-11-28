@@ -127,17 +127,19 @@ export default {
             pageNum: this.pageNum,
             query:this.query, month:this.month, year:this.year});
 
-      this.hasNextPage = holidayWorkListPageInfo.hasNextPage;
-      this.hasPreviousPage = holidayWorkListPageInfo.hasPreviousPage;
-      const holidayWorks = this.convertObjects2HolidayWorks(holidayWorkListPageInfo.content);
-      if (Array.isArray(holidayWorks)) {
-        const arry = this.orderedData(this.headerInfos, holidayWorks);
-        this.holidayWorkList = arry;
-      } else {
-        this.holidayWorkList = [];
+      if (holidayWorkListPageInfo) {
+        this.hasNextPage = holidayWorkListPageInfo.hasNextPage;
+        this.hasPreviousPage = holidayWorkListPageInfo.hasPreviousPage;
+        const holidayWorks = this.convertObjects2HolidayWorks(holidayWorkListPageInfo.content);
+        if (Array.isArray(holidayWorks)) {
+          this.holidayWorkList = this.orderedData(this.headerInfos, holidayWorks);
+        } else {
+          this.holidayWorkList = [];
+        }
+        this.emptyItem = new holidayWorkProtocol.HolidayWork({});
+        this.insertNewMap = new Map();
       }
-      this.emptyItem = new holidayWorkProtocol.HolidayWork({});
-      this.insertNewMap = new Map();
+
     },
     convertObjects2HolidayWorks(objects) {
       if (Array.isArray(objects)) {
@@ -177,7 +179,11 @@ export default {
     },
     async initData() {
       const simpleEmployeeList = await holidayWorkProtocol.getSimpleEmployeeList();
+      if (!simpleEmployeeList) return;
+
       const holidayWorkTypeList = await holidayWorkProtocol.getDefaultWorkTypes();
+
+      if (!holidayWorkTypeList) return;
       this.headerInfos = this.orderedHeadersInfo(getHolidayTableWorksColumns(simpleEmployeeList, holidayWorkTypeList));
       await this.searchQuery();
     },
