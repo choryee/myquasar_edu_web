@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import pwChangeView from "@/views/login/pwChangeView.vue";
 import AdminInfoView from "@/views/login/AdminInfoView.vue";
-import Logout from "@/views/login/Logout.vue";
+import Logout from "@/views/login/Test.vue";
 import MemberJoin from "@/components/MemberJoin.vue";
 import MemberLogin from "@/components/MemberLogin.vue";
 
@@ -54,10 +54,12 @@ const routes = [
     name: `dayOffDefaultSetting`,
     component: ()=>import('@/views/dayoff/DayOffSettingView.vue')
   },
+
   {
     path: '/pattern',
     name: 'pattern',
     component: ()=>import('@/views/calendarPattern/CalendarPatternView.vue')
+
   },
   { path: '/adminInfo',
     name: 'adminInfo',

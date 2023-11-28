@@ -3,8 +3,6 @@
         <div id="content" class="pwChange">
           <div id="" class="inner">
             <h2 class="blind">비밀번호 변경</h2>
-
-            <!-- 부트스트랩 테이블 적용 -->
             <table class="table">
               <thead>
               <tr>
@@ -62,16 +60,11 @@
     </template>
 
 <script>
-
 import axios from "axios";
 import { mapState } from 'vuex';
 
 export default {
     name: 'pw-change',
-    components: {
-        // header,
-        // left
-    },
     data: () => ({
       current_pwd :'',
       new_pwd:'',
@@ -79,22 +72,17 @@ export default {
       user_name : ''
     }),
 
-
-
   created() {
     this.user_name = this.$store.state.userName;
     console.log('this.$store.state.userName>>', this.$store.state.userName)
   },
 
-
     computed: {
-      ...mapState(['setUserName']), // 'user_name'은 Vuex 스토어에 저장된 상태의 이름입니다.
+      ...mapState(['setUserName']), // 'user_name'은 Vuex 스토어에 저장된 상태의 이름
     },
-
 
   methods: {
 
-      /* 비밀번호 버튼 클릭 이벤트 */
       async pwChange() {
         if(this.current_pwd === this.new_pwd){
           alert('현재 비밀번호와 동일합니다.');
@@ -105,60 +93,29 @@ export default {
           return;
         }
 
-        await axios.post('http://localhost:8080/api/v1/users/user/update',
-            {
-              name: this.user_name,
-              password: this.new_pwd,
-              token : localStorage.getItem('Authorization')
-                 },
-            {
-              headers: {
-                Authorization: localStorage.getItem('Authorization')
-              }
-            })
-            .then((res) => {
-                console.log('update res.data >> ', res);
-              if (res.data.success === 200) {
-                  alert('비밀번호가 변경되었습니다.');
-                  this.$router.push({name : 'adminInfo'});
-              }
-            })
-            .catch((err) => {
-              this.loginError = true;
-              throw new Error(err);
-            });
-      }, // login()
-
-        async getNewToken(){
-                localStorage.removeItem('Authorization');
-
-          await axios.post('http://localhost:8080/login', {
+      await axios.post('http://localhost:8080/api/v1/users/user/update',
+          {
             name: this.user_name,
-            password: this.new_pwd
+            password: this.new_pwd,
+            token : localStorage.getItem('Authorization')
+               },
+          {
+            headers: {
+              Authorization: localStorage.getItem('Authorization')
+            }
           })
-              .then((res) => {
-                if (res.status === 200) {
-                  let jwtToken = res.headers.get('Authorization');
-                  localStorage.setItem('Authorization', jwtToken);
-
-                  console.log('result.data >> ', res);
-                  console.log('받은 토큰 jwtToken>> ', jwtToken);
-                  this.loginSuccess = true;
-
-                  // Call the users method here
-                  this.users();
-                }
-              })
-              .catch((err) => {
-                console.log('login error >>', err);
-                this.loginError = true;
-                throw new Error(err);
-              });
-        },
+          .then((res) => {
+              console.log('update res.data >> ', res);
+            if (res.data.success === 200) {
+                alert('비밀번호가 변경되었습니다.');
+                this.$router.push({name : 'adminInfo'});
+            }
+          })
+          .catch((err) => {
+            this.loginError = true;
+            throw new Error(err);
+          });
     },
-
-    watch: {
-
-    }
+    },
 }
 </script>

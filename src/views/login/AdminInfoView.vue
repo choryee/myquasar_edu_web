@@ -6,7 +6,6 @@
           <div id="" class="inner">
             <h2 class="blind">계정정보</h2>
 
-            <!-- 부트스트랩 테이블 적용 -->
             <table class="table">
               <thead>
               <tr>
@@ -73,7 +72,6 @@
                   </label>
                 </td>
               </tr>
-
               </tbody>
             </table>
 
@@ -108,15 +106,12 @@
                     <span id="employee_no " name="employee_no " ref="employee_no" :data-employee-no="user.employee_no" >
                      {{ user.employee_no }} </span>
                 </td>
-
                 <td>
-                    <span id="user_role" name="user_role" ref="userRole"> {{ user.roles }} </span>
+                  <span id="user_role" name="user_role" ref="userRole"> {{ user.roles }} </span>
                 </td>
-
                 <td>
                     <span id="user_name" name="user_name" ref="userName"> {{ user.employee_name }} </span>
                 </td>
-
                   <td>
                       <span id="user_memo " name="user_memo " ref="user_memo "> {{ user.memo }} </span>
                   </td>
@@ -131,8 +126,6 @@
 
 
 <script>
-
-
 import axios from "axios";
 
 
@@ -150,12 +143,10 @@ export default {
         employee_no : '',
         user_memo:'',
         users: [],
-
     }),
 
   created() {
       //this.updateUserName();
-
       axios.get('http://localhost:8080/api/v1/users/user/getAllUsers',
           {
             headers: {
@@ -195,23 +186,15 @@ export default {
       this.$store.commit('setUserName', adminUserObject.name);
       return adminUserObject;
     }
-
-
   },
 
   methods: {
-    // updateUserName() {
-    //   this.$store.commit('setUserName', this.user_name);
-    //   console.log('UserName from Store>>>', this.filteredUsers);
-    // },
-
 
     excelDownload() {
       console.log('excelDownload 클릭됨..')
 
       axios.get('http://localhost:8080/api/v1/users/excel/download',
-
-          { // 8080/login은 아예 컨트럴러 안 탐.
+          {
             headers: {
               Authorization: localStorage.getItem('Authorization'),
             },
@@ -233,7 +216,7 @@ export default {
           {
             employee_no: user.employee_no
           },
-          { // 8080/login은 아예 컨트럴러 안 탐.
+          {
             headers: {
               Authorization: localStorage.getItem('Authorization'),
             },
@@ -254,33 +237,33 @@ export default {
       this.$router.push({ name: 'pw-change' });
     },
 
-      /* 비밀번호 버튼 클릭 이벤트 */
-      async pwChange() {
-        console.log(' pwd-number>>', this.pwd_number);
 
-        await axios.post('http://localhost:8080/api/v1/users/user/update',{
-              name: this.user_name,
-              password: this.pwd_number,
-            },
-            {
-              headers: {
-                Authorization: localStorage.getItem('Authorization')
-              }
-            })
-            .then((res) => {
-                console.log('result.data >> ', res);
-              if (res.data === 'ok') {
-                console.log('성공함...');
+    async pwChange() {
+      console.log(' pwd-number>>', this.pwd_number);
 
-                // Call the users method here
-                //this.users();
-              }
-            })
-            .catch((err) => {
-              this.loginError = true;
-              throw new Error(err);
-            });
-      }, // login()
+      await axios.post('http://localhost:8080/api/v1/users/user/update',{
+            name: this.user_name,
+            password: this.pwd_number,
+          },
+          {
+            headers: {
+              Authorization: localStorage.getItem('Authorization')
+            }
+          })
+          .then((res) => {
+              console.log('result.data >> ', res);
+            if (res.data === 'ok') {
+              console.log('성공함...');
+
+              // Call the users method here
+              //this.users();
+            }
+          })
+          .catch((err) => {
+            this.loginError = true;
+            throw new Error(err);
+          });
+    },
     },
 }
 </script>

@@ -87,33 +87,6 @@ onMounted(async () => {
       });
 }); //onMount()
 
-
-// const saveContent = async () => {
-//   //const contentToSave = editor.getHTML();
-//   const contentToSave = generatedText.value;
-//   console.log('generatedText>> ', generatedText.value);
-//   console.log('props.username>>', props.username);
-//   await axios
-//       .post(
-//           'http://localhost:8080/api/v1/users/user/memo',
-//           {
-//             name: props.username,
-//             memo: contentToSave,
-//           },
-//           {
-//             headers: {
-//               Authorization: localStorage.getItem('Authorization'),
-//             },
-//           }
-//       )
-//       .then((res) => {
-//         console.log('save memo res>> ', res);
-//       })
-//       .catch((err) => {
-//         console.log('err>> ', err);
-//       });
-// };
-
 </script>
 
 
