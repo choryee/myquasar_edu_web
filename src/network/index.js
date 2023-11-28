@@ -72,5 +72,13 @@ export default{
         calendarPatternList(params,header) {
             return Protocol.GET('pattern/list', params, header)
         },
+        calendarPatternModify(patternIdx,params,header) {
+            const url = `pattern/modify/${patternIdx}`;
+            return Protocol.POST(url,params,header)
+        },
+        calendarPatternDelete(patternIdx,params,header) {
+            const url =`pattern/delete/${patternIdx}`;
+            return Protocol.GET(url,params,header)
+        }
     }
 }
