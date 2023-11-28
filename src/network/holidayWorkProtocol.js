@@ -29,9 +29,11 @@ export default {
       if (query) url = url + `&query=${query}`;
       if (year) url = url + `&year=${year}`;
       if (month) url = url + `&month=${month}`;
+      console.log('asdasd')
       const response = await Protocol.GET(url);
       return response.result;
     } catch (error) {
+      error.processingError();
     }
   },
   async insertHolidayWork(holidayWorkData) {
@@ -49,50 +51,60 @@ export default {
       return false;
     }
 
-    const object = new this.HolidayWorkRequest(holidayWorkData);
-    await Protocol.POST('http://localhost:8080/holiday/work/save',
-        object);
+    try{
+      const object = new this.HolidayWorkRequest(holidayWorkData);
+      await Protocol.POST('http://localhost:8080/holiday/work/save',
+          object);
+
+    }catch (error) {
+      error.processingError();
+    }
 
     return true;
   },
   async updateHolidayWork(holidayWorkId, holidayWorkData) {
-    if (typeof holidayWorkId !== 'number') {
-      console.log('holidayWorkId가 number형식이 아닙니다.')
-      return false;
-    }
-    if (!holidayWorkData instanceof this.HolidayWork) {
-      console.log('수정 할 데이터가 HolidayWork 형식이 아닙니다.');
-      return false;
-    }
+    try{
+      if (typeof holidayWorkId !== 'number') {
+        console.log('holidayWorkId가 number형식이 아닙니다.')
+        return false;
+      }
+      if (!holidayWorkData instanceof this.HolidayWork) {
+        console.log('수정 할 데이터가 HolidayWork 형식이 아닙니다.');
+        return false;
+      }
 
-    if (!holidayWorkData.employeeNo) {
-      alert("사번이 선택되지 않았습니다.");
-      return false;
-    }
+      if (!holidayWorkData.employeeNo) {
+        alert("사번이 선택되지 않았습니다.");
+        return false;
+      }
 
-    if (!holidayWorkData.workDate) {
-      alert("날짜가 선택되지 않았습니다.");
-      return false;
-    }
-    const object = new this.HolidayWorkRequest(holidayWorkData);
-    console.log('--------------------')
-    console.log(holidayWorkData);
-    console.log(object);
-    await Protocol.PUT(
-        `http://localhost:8080/holiday/work/modify/${holidayWorkId}`,
-        object);
+      if (!holidayWorkData.workDate) {
+        alert("날짜가 선택되지 않았습니다.");
+        return false;
+      }
+      const object = new this.HolidayWorkRequest(holidayWorkData);
+      await Protocol.PUT(
+          `http://localhost:8080/holiday/work/modify/${holidayWorkId}`,
+          object);
 
-    return true;
+      return true;
+    }catch (error) {
+      error.processingError();
+    }
   },
   async deleteHolidayWork(holidayWorkId) {
-    if (typeof holidayWorkId !== 'number') {
-      console.log('holidayWorkId가 number형식이 아닙니다.')
-      return false;
-    }
-    await Protocol.DELETE(
-        `http://localhost:8080/holiday/work/delete/${holidayWorkId}`);
+    try {
+      if (typeof holidayWorkId !== 'number') {
+        console.log('holidayWorkId가 number형식이 아닙니다.')
+        return false;
+      }
+      await Protocol.DELETE(
+          `http://localhost:8080/holiday/work/delete/${holidayWorkId}`);
 
-    return true;
+      return true;
+    } catch (error) {
+      error.processingError();
+    }
 
   },
   async getSimpleEmployeeList() {
@@ -101,7 +113,7 @@ export default {
           `http://localhost:8080/employee/simple-info`);
       return response.result;
     } catch (error) {
-      return [];
+      error.processingError();
     }
   },
   async getDefaultWorkTypes() {
@@ -111,7 +123,7 @@ export default {
 
       return response.result;
     } catch (error) {
-      return [];
+      error.processingError();
     }
   }
 }
