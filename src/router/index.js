@@ -3,8 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import pwChangeView from "@/views/login/pwChangeView.vue";
 import AdminInfoView from "@/views/login/AdminInfoView.vue";
 import Logout from "@/views/login/Test.vue";
-import MemberJoin from "@/components/MemberJoin.vue";
-import MemberLogin from "@/components/MemberLogin.vue";
+import MemberJoin from "@/views/login/MemberJoin.vue";
+import MemberLogin from "@/views/login/MemberLogin.vue";
 
 
 const routes = [

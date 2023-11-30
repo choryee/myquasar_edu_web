@@ -1,5 +1,5 @@
 <template>
-  <div className="home">
+  <div class="home">
     <TestIndex/>
     <MemberLogin/>
     <hr/>
@@ -14,12 +14,15 @@ import TestIndex from "@/views/index/Index.vue";
 import MemberLogin from "@/views/login/MemberLogin.vue";
 
 
+
 export default {
   name: 'HomeView',
   components: {
-    MemberLogin,
-    TestIndex
 
-  }
+    TestIndex,
+
+    MemberLogin
+
+   }
 }
 </script>

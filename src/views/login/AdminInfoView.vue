@@ -1,10 +1,8 @@
-
-    <!--    <div id="content" class="pwChange" style="display: none">-->
     <template>
-      <div>
+      <div id="content">
         <div id="content" class="pwChange">
           <div id="" class="inner">
-            <h2 class="blind">계정정보</h2>
+            <h2 class="blind">[관리자 계정정보]</h2>
 
             <table class="table">
               <thead>
@@ -189,19 +187,22 @@ export default {
   },
 
   methods: {
-
     excelDownload() {
-      console.log('excelDownload 클릭됨..')
-
-      axios.get('http://localhost:8080/api/v1/users/excel/download',
+        axios.get('http://localhost:8080/api/v1/users/excel/download',
+          {responseType: 'arraybuffer'},
           {
             headers: {
               Authorization: localStorage.getItem('Authorization'),
             },
           })
-          .then((res) => {
-             // console.log('Excel res>>', res.data);
-          })
+          .then(result => {
+                console.log(result)
+                const url = window.URL.createObjectURL(new Blob([result.data], { type: result.headers["content-type"] }))
+                const link = document.createElement("a")
+                link.href = url
+                link.download = "example.xlsx"
+                link.click()
+                window.URL.revokeObjectURL(url)})
           .catch((err) => {
             // loginError.value = true;
             console.error(err);
@@ -267,3 +268,11 @@ export default {
     },
 }
 </script>
+<style>
+#content {
+  width: 80%; /* Adjust the width as needed */
+  margin: auto;
+  margin: 2% auto 0;
+}
+
+</style>

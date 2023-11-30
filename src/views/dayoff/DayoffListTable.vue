@@ -26,9 +26,12 @@
           <button type="button" class="btn btn-info" @click="doNextPage">다음</button>
         </template>
         <template v-else>
-          <button type="button" class="btn btn-secondar">다음</button>
+          <button type="button" class="btn btn-secondary mgr-1r">다음</button>
         </template>
-        <button type="button" class="btn btn-success mgb-1r mgr-1r" @click="excelDownload">엑셀 다운로드</button>
+
+
+        <button type="button" class="btn btn-success mgr-1r" @click="excelDownload">엑셀 다운로드</button>
+
       </div>
     </div>
     <ClickableRowTable :table-data="tableInfo" :headers="columns"
@@ -46,6 +49,7 @@
 import employeeDayoffProtocol from "@/network/employeeDayoffProtocol";
 import ClickableRowTable from "@/components/table/ClickableTable.vue";
 import dayoffProtocol from "@/network/dayoffProtocol";
+import axios from "axios";
 export default {
   name: 'DayoffListTable',
   components: {ClickableRowTable},
@@ -125,7 +129,32 @@ export default {
     },
     clickEvent(key) {
       this.$router.push(`/dayoff/${key}`);
+    },
+
+    excelDownload() {
+      axios.get('http://localhost:8080/api/v1/users/excel/download',
+          {responseType: 'arraybuffer'},
+          {
+            headers: {
+              Authorization: localStorage.getItem('Authorization'),
+            },
+          })
+          .then(result => {
+            console.log(result)
+            const url = window.URL.createObjectURL(new Blob([result.data], { type: result.headers["content-type"] }))
+            const link = document.createElement("a")
+            link.href = url
+            link.download = "example.xlsx"
+            link.click()
+            window.URL.revokeObjectURL(url)})
+          .catch((err) => {
+            // loginError.value = true;
+            console.error(err);
+          });
     }
+
+
+
   },
   computed: {
     years() {

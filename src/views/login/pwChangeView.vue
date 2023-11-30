@@ -1,61 +1,36 @@
     <template>
       <div>
-        <div id="content" class="pwChange">
-          <div id="" class="inner">
-            <h2 class="blind">비밀번호 변경</h2>
-            <table class="table">
-              <thead>
-              <tr>
-                <th></th>
-                <th></th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr>
-                <td>
-                  <label class="inp_normal">
-                    <span>현재 비밀번호</span>
-                  </label>
-                </td>
-                <td>
-                  <label class="inp_normal">
-                    <input type="text" id="current_pwd" name="current_pwd" placeholder="현재 비밀번호"
-                           v-model="current_pwd" ref="current_pwd">
-                  </label>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                    <span>새 비밀번호</span>
-                </td>
-                    <td>
-                    <input type="text" id="new_pwd" name="new_pwd" placeholder="새 비밀번호"
-                           v-model="new_pwd" ref="new_pwd">
-                    </td>
-              </tr>
-              <tr>
-                <td>
-                    <span>새 비밀번호 확인</span>
-                </td>
-                  <td>
-                    <input type="text" id="confirm_pwd" name="confirm_pwd" placeholder="새 비밀번호 확인"
-                           v-model="confirm_pwd" ref="confirm_pwd">
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <label class="inp_normal">
-                    <button type="submit" id="pwd_search_btn" name="pwd_search_btn" class="btn btn-info"
-                            @click="pwChange">비밀번호 변경
-                    </button>
-                    <span></span>
-                  </label>
-                </td>
-              </tr>
-              </tbody>
-            </table>
+        <div align="center">
+
+
+        </div>
+        <div id="container" >
+          <div id="loginBox" >
+            <div id="loginBoxTitle">비밀번호 변경</div>
+            <div id="inputBox" >
+              <div >
+                <div class="input-form-box" ><span >현재 비밀번호 </span><input type="password" name="current_pwd" class="form-control" v-model="current_pwd"></div>
+
+                <div class="input-form-box"><span>새 비밀번호
+              </span><input type="password" name="new_pwd" id="pw" class="form-control" v-model="new_pwd">
+                  <br/>
+                </div>
+                <div>
+                  <span>( 6글짜이상 12글짜이하, !@#$%을 반드시 포함 )</span>
+                </div>
+                <br/>
+
+                <div class="input-form-box"><span>새 비밀번호 확인 </span><input type="password" name="confirm_pwd" class="form-control" v-model="confirm_pwd">
+
+                </div>
+                <div class="button-login-box" >
+                  <button type="submit" class="btn btn-warning btn-xs" style="width:100%" @click="pwChange">비밀변호 변경</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+
       </div>
     </template>
 

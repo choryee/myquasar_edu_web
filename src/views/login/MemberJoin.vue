@@ -5,7 +5,7 @@
     </div>
     <br/>
     <div>
-      <h3>회원가입</h3>
+
     </div>
   </div>
   <br/>
@@ -16,7 +16,7 @@
 
       <div id="container">
         <div id="loginBox">
-          <div id="loginBoxTitle"></div>
+          <div id="loginBoxTitle">회원가입</div>
           <div id="inputBox">
             <div >
               <div class="input-form-box"><span>아이디 </span><input type="text" name="username" class="form-control" v-model="username"></div>
