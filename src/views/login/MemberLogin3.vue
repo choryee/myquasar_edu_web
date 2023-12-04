@@ -34,7 +34,6 @@
 
 <script>
 import axios from 'axios'
-import LoginAdminProtocol from "@/network/LoginAdminProtocol";
 
 export default {
   name: 'MemberLogin',
@@ -48,12 +47,9 @@ export default {
       employee_no: ''
     }
   },
-
   methods: {
-    async login(params) {
+    async login() {
       console.log(this.username, this.password);
-
-
       await axios.post('http://localhost:8080/login', { // 8080/login은 아예 컨트럴러 안 탐.<-이것은 탐.
         name: this.username,
         password: this.password

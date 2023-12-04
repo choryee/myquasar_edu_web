@@ -1,6 +1,6 @@
 <template>
   <div className="home">
-    <TestIndex/>
+<!--    <TestIndex/>-->
     <MemberLogin/>
     <hr/>
   </div>
@@ -18,7 +18,7 @@ export default {
   name: 'HomeView',
   components: {
     MemberLogin,
-    TestIndex
+    //TestIndex
 
   }
 }
