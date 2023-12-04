@@ -8,6 +8,7 @@ const defaultApiInstance = axios.create({
 })
 defaultApiInstance.interceptors.request.use(config => {
     const accessToken = localStorage.getItem('Authorization');
+    console.log('accessToken>>', accessToken);
     if (accessToken)
         config.headers['Authorization'] = accessToken
     return config

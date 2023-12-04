@@ -125,6 +125,7 @@
 
 <script>
 import axios from "axios";
+import LoginAdminProtocol from "@/network/LoginAdminProtocol";
 
 
 export default {
@@ -242,28 +243,29 @@ export default {
     async pwChange() {
       console.log(' pwd-number>>', this.pwd_number);
 
-      await axios.post('http://localhost:8080/api/v1/users/user/update',{
-            name: this.user_name,
-            password: this.pwd_number,
-          },
-          {
-            headers: {
-              Authorization: localStorage.getItem('Authorization')
-            }
-          })
-          .then((res) => {
-              console.log('result.data >> ', res);
-            if (res.data === 'ok') {
-              console.log('성공함...');
 
-              // Call the users method here
-              //this.users();
-            }
-          })
-          .catch((err) => {
-            this.loginError = true;
-            throw new Error(err);
-          });
+      // await axios.post('http://localhost:8080/api/v1/users/user/update',{
+      //       name: this.user_name,
+      //       password: this.pwd_number,
+      //     },
+      //     {
+      //       headers: {
+      //         Authorization: localStorage.getItem('Authorization')
+      //       }
+      //     })
+      //     .then((res) => {
+      //         console.log('result.data >> ', res);
+      //       if (res.data === 'ok') {
+      //         console.log('성공함...');
+      //
+      //         // Call the users method here
+      //         //this.users();
+      //       }
+      //     })
+      //     .catch((err) => {
+      //       this.loginError = true;
+      //       throw new Error(err);
+      //     });
     },
     },
 }

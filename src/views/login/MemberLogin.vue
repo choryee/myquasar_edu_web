@@ -51,8 +51,18 @@ export default {
 
   methods: {
     async login(params) {
-      console.log(this.username, this.password);
-
+      // console.log(this.username, this.password);
+      // const response=LoginAdminProtocol.login({
+      //   name: this.username,
+      //   password: this.password
+      // })
+      // if(response.result) {
+      //   let jwtToken = response.headers.get('Authorization');
+      //   localStorage.setItem('Authorization', jwtToken);
+      //   //this.getUser();
+      //   alert('로그인 성공했습니다.');
+      //   this.$router.push({ name: 'adminInfo' });
+      // }
 
       await axios.post('http://localhost:8080/login', { // 8080/login은 아예 컨트럴러 안 탐.<-이것은 탐.
         name: this.username,
