@@ -25,3 +25,31 @@ D
 src/network/index.js,d\6\d66e59d404a65c56f6594b825065666c309f0c15
 G
 src/network/Protocol.js,e\3\e34eb62a5cdb7a7e89b30121b429fb9a8c684a8a
+4
+.env,3\c\3c84dcdc6bbe3d7817c49dcdc327b926fea1808a
+P
+ src/components/layout/Header.vue,3\d\3d5585b6bb1b637c7da502ce37c169710dafb2f7
+H
+src/views/login/Test.vue,f\d\fd4963aec4d3371afd200ce9ba302cca2c5b100a
+B
+src/utils/utils.js,8\3\834ac17c5746ea7353922890b8abc29952856cc2
+M
+src/views/login/LoginView.vue,7\5\75def2f296706b105319e127f3587a4a8d0b614f
+W
+'src/components/table/ClickableTable.vue,b\9\b911a0e8858b93d07e4d147c2a66a9df2b5d8c8d
+O
+src/views/dayoff/DayoffView.vue,3\b\3b2fd74ea31d3f481d7024dbcbbeae42c517b3bc
+J
+src/network/AxiosConfig.js,9\b\9bda831031c898481532ebfcf367b6ff580c1b8f
+K
+src/network/ErrorHandler.js,8\0\801c1debd9d8ab07308cc883512aef4379e2e475
+M
+src/network/dayoffProtocol.js,7\5\75c4c82908e2538a5e1208b767c4c941286a8310
+R
+"src/network/holidayWorkProtocol.js,2\8\28fed87bc9a820efd77bf9a07c7252956d8d8091
+c
+3src/views/holidayWork/HolidayWorkTableContainer.vue,4\0\40b71b6b0d75d1c8e586088f3bb7a5eb7fdd7743
+P
+ src/network/dashBoardProtocol.js,2\0\201c48bf7c4a59c620cd8e93abb9d85536fcbde2
+U
+%src/views/dashBoard/DashBoardView.vue,7\b\7b88651bb5cb544f429b9775ea6e10a376c8f165
