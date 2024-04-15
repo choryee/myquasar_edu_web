@@ -35,6 +35,7 @@
 <script>
 import axios from 'axios'
 import LoginAdminProtocol from "@/network/LoginAdminProtocol";
+import {useRoute} from "vue-router";
 
 export default {
   name: 'MemberLogin',
@@ -45,7 +46,8 @@ export default {
       username: '',
       password: '',
       error: false,
-      employee_no: ''
+      employee_no: '',
+      user:{}
     }
   },
 
@@ -64,27 +66,51 @@ export default {
       //   this.$router.push({ name: 'adminInfo' });
       // }
 
-      await axios.post('http://localhost:8080/login', { // 8080/login은 아예 컨트럴러 안 탐.<-이것은 탐.
+      // 8080/login은 아예 컨트럴러 안 탐.<-이것은 탐. but, 서버의 @PostMapping("/login")는 안 탐.
+      await axios.post('http://localhost:8080/login', {
         name: this.username,
         password: this.password
       })
           .then((res) => {
             if (res.status === 200) {
+              console.log('login res>>>', res);
+
               let jwtToken = res.headers.get('Authorization');
               localStorage.setItem('Authorization', jwtToken);
               //this.getUser();
-              alert('로그인 성공했습니다.');
+
+              this.getEmployeeNo();
+              //alert('로그인 성공했습니다.');
               this.$router.push({ name: 'adminInfo' });
             }
           })
           .catch((err) => {
             console.log('login error >>', err);
-            alert('로그인 실패했습니다.');
+            alert('로그인 실패했습니다.11');
             this.username='';
             this.password='';
 
           });
     }, // login()
+
+    async getEmployeeNo(){
+      await axios.post('http://localhost:8080/getEmployeeNo',{
+        name : this.username
+      },
+          {
+            headers: {
+              Authorization: localStorage.getItem('Authorization')
+            }
+          })
+          .then(res=>{
+            console.log('res.data.result>>', res.data.result);
+            //this.employee_no = res.data.result;
+            this.user = res.data.result;
+            console.log('this.user>>', this.user);
+            this.$store.commit('setEmployeeNumber', this.user.employee_no);// store는 화면이 바뀌면, 초기화 되버림.
+            sessionStorage.setItem('setUser', JSON.stringify(this.user));
+          })
+    },
 
     async getUser(){
       console.log(this.username, this.password);
@@ -108,10 +134,8 @@ export default {
           .catch(err=>{
             console.log(err);
           })
-
     }
-
-  }
+  }// method
 }
 </script>
 <style>

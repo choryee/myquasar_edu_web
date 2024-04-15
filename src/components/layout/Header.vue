@@ -38,7 +38,7 @@ export default {
   methods:{
     logout(){
       localStorage.removeItem('Authorization');
-      alert('로그아웃 되었습니다.');
+      //alert('로그아웃 되었습니다.');
       this.$router.push({ name: 'home' });
     }
   }

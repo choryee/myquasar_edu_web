@@ -8,9 +8,10 @@
         </select>
       </div>
       <button class="src_button btn mgb-1r mgr-1r" @click="fetchDayoffRemaining">조회</button>
+
       <div v-if="firstButton && $route.path !== '/dayoff/'">
         <button class="btn btn-success mgb-1r mgr-1r" type="button" @click="updateEmployeeMode">수정</button>
-        <button class="btn btn-danger mgb-1r mgr-1r" type="button" @click="back">뒤로가기</button>
+        <button class="btn btn-danger mgb-1r mgr-1r" type="button" @click="back">뒤로가기11</button>
       </div>
       <div v-if="secondButton">
         <button class="btn btn-success mgb-1r mgr-1r" type="button" @click="updateEmployee">수정</button>
@@ -20,22 +21,27 @@
         <button class="btn btn-secondary mgb-1r mgr-1r" type="button" @click="updateCancel">취소</button>
       </div>
     </div>
-  <div v-if="$route.params.employeeNo &&!editMode">
+
+  <div v-if="this.params.employeeNo && !editMode">
     <div class="dayoffTable">
       <SimpleInfoTitle :data="dayoffInfo"/>
+
       <div class="inner_wrap">
         <p class="title">계정 정보</p>
         <ColumTable :headers="authInfo" :tableData="authData"/>
       </div>
+
       <div class="inner_wrap">
         <p class="title">사원 정보</p>
-        <ColumTable :headers="employeeImfo" :tableData="employeeData"/>
+        <ColumTable :headers="employeeInfo" :tableData="employeeData"/>
       </div>
+
       <div class="inner_wrap">
         <TableComponent :headers="tableHeaders" :tableData="employeeDayoffData"/>
       </div>
     </div>
   </div>
+
   <div v-else>
     <!-- 등록  -->
     <div v-if="!editMode">
@@ -43,6 +49,7 @@
         <button class="btn btn-info mgb-1r" type="button" @click="insertEmployee">등록</button>
       </div>
     </div>
+
     <div class="dayoffTable">
       <div class="inner_wrap">
         <p class="title">계정 정보</p>
@@ -65,6 +72,7 @@
           </tr>
         </table>
       </div>
+
       <div class="inner_wrap">
         <p class="title">사원 정보</p>
         <table class="common-table">
@@ -97,8 +105,9 @@ import SimpleInfoTitle from "@/components/Title/simpleInfotitle.vue";
 import ColumTable from '@/components/table/columTable.vue';
 import axios from "axios";
 import router from "@/router";
+import {mapState} from "vuex";
 
-export default {
+export default { // http://localhost:3000/dayoff/
   name: 'DayoffView',
   components: {
     SimpleInfoTitle,
@@ -108,7 +117,7 @@ export default {
   data() {
     return {
       authInfo: ['권한', '사번', '네이버웍스ID'],
-      employeeImfo: ['이름', '입사년도', '직급'],
+      employeeInfo: ['이름', '입사년도', '직급'],
       tableHeaders: ['연차종류', '시작날짜', '종료날짜', '기한'],
       authData: [],
       employeeData: [],
@@ -118,7 +127,10 @@ export default {
       params: {
         employeeNo: '',
         year: new Date().getFullYear(),
-      },headers: {
+      },
+      user:{},
+      //employeeNo:'',
+      headers: {
         Authorization: localStorage.getItem('Authorization')
       },
       formData: {
@@ -147,27 +159,57 @@ export default {
       }
       return array;
     },
+
+    ...mapState(['employeeNo'])
   },
+
+  created() {
+
+  },
+
   mounted() {
+    const getUser = sessionStorage.getItem('setUser');
+    console.log('sessionStorage.getItem>> ', JSON.parse(getUser));
+    this.user = JSON.parse(getUser);
+    console.log('this.user>> ', this.user);
+
     this.fetchDayoffRemaining();
-    console.log('editMode:', this.editMode);
-    console.log('$route.path:', this.$route.path);
-    console.log('Condition:', !this.editMode || this.$route.path !== '/dayoff/');
+    console.log('editMode : ', this.editMode);
+    console.log('$route.path : ', this.$route.path);
+    console.log('$route.params : ', this.$route.params);
+    console.log('Condition : ', !this.editMode || this.$route.path !== '/dayoff/');
   },
+
   methods: {
     async fetchDayoffRemaining() {
-      const employeeNo = this.$route.params.employeeNo;
-      this.params.employeeNo = employeeNo;
+    //  현재 활성화된 라우트의 URL에서 `employeeNo`라는 경로 매개변수의 값을 가져와서, `employeeNo` 변수에 할당하는 것입니다.
+      //const employeeNo = this.$route.params.employeeNo;
+      let employeeNoo= this.$store.state.employeeNo;
+      let employeeFromSession = this.user.employee_no;
+      console.log('employeeFromSession>> ', employeeFromSession);
+      this.params.employeeNo = employeeFromSession;
+      //this.params.employeeNo = 'M073';
 
       try {
-        const response = await network.dayoff.dayoffUse(employeeNo,this.params);
-        const {result} = response;
-        this.dayoffInfo = {
+        // const url = `dayoff/employee/${employeeNo}
+// http://localhost:8080/dayoff/employee/?year=2024 400 (Bad Request)
+        //const response = await network.dayoff.dayoffUse(employeeNo,this.params);
+        const response = await network.dayoff.dayoffUse(this.params);
+        const {result} = response; //구조분해할당 임.
+        console.log('dayoffUse response>>', response);
+
+        // result가 존재하지 않는 경우
+        if (!result) {
+          throw new Error('API 응답에 result 속성이 존재하지 않습니다.');
+        }
+
+        this.dayoffInfo = { //this.dayoffInfo는 원래 위에 dayoffInfo={}롤 빈 객체만 선언된거라,
+          //아래처럼하면, 새로운키:값으로 새로 추가하는 꼴임.240408
           name: result.name,
-          totalDayoff: result.totalDayoffCount,
+          totalDayoff: result.totalDayoff,
           dutyDayoff: result.dutyDayoffCount,
-          usedDayoff: result.usedDayoffCount,
-          leftDayOff: result.remainingDayoffCount,
+          usedDayoff: result.usedDayoff,
+          leftDayOff: result.totalDayoff - result.usedDayoff,
           employeeNo : result.employeeNo,
           year : this.params.year,
         };
@@ -186,25 +228,26 @@ export default {
             직급: result.rankName,
           },
         ];
-        this.employeeDayoffData = result.dayoffDetailList
-            .map(item => ({
-              연차종류: item.codeName,
-              시작날짜: item.startDayoffDt,
-              종료날짜: item.endDayoffDt,
-              기한: item.usedDayoff,
-            }))
-            .concat(result.dayoffDutyList.map(item => ({
-              연차종류: item.title,
-              시작날짜: item.dutyDate,
-              종료날짜: item.dutyDate,
-              기한: 1,
-            })))
-            .sort((a, b) => new Date(b.시작날짜) - new Date(a.시작날짜)); // "시작날짜"를 기준으로 내림차순 정렬
+        // this.employeeDayoffData = result.dayoffDetailList
+        //     .map(item => ({
+        //       연차종류: item.codeName,
+        //       시작날짜: item.startDayoffDt,
+        //       종료날짜: item.endDayoffDt,
+        //       기한: item.usedDayoff,
+        //     }))
+            // .concat(result.dayoffDutyList.map(item => ({
+            //   연차종류: item.title,
+            //   시작날짜: item.dutyDate,
+            //   종료날짜: item.dutyDate,
+            //   기한: 1,
+            // })))
+            // .sort((a, b) => new Date(b.시작날짜) - new Date(a.시작날짜)); // "시작날짜"를 기준으로 내림차순 정렬
 
       } catch (error) {
-        console.error('Failed to fetch data:', error);
-      }
-    },
+        console.error('Failed to fetch data 가져오기 실패 :', error);
+      }// try
+    },//fetchDayoffRemaining()
+
     insertEmployee() {
       if(confirm("사원 정보를 저장하시겠습니까?")) {
         console.log('전송할 데이터', this.formData);
@@ -219,6 +262,7 @@ export default {
             })
       }
     },
+
     async deleteEmployee() {
       if (confirm(this.$route.params.employeeNo + " 이 사원 정보를 삭제하시겠습니까?")) {
         const employeeNo = this.$route.params.employeeNo;
@@ -233,6 +277,7 @@ export default {
         }
       }
     },
+
     async updateEmployeeMode() {
       const employeeNo = this.$route.params.employeeNo;
       console.log("employeeNo", employeeNo);
@@ -274,6 +319,7 @@ export default {
         }
       }
     },
+
     async updateEmployee() {
       if (confirm(this.$route.params.employeeNo + "이 사원 정보를 수정하시겠습니까?")) {
         const employeeNo = this.$route.params.employeeNo;
@@ -290,12 +336,14 @@ export default {
             })
       }
     },
+
     updateCancel() {
       this.editMode = false;
       this.buttonCancel = false;
       this.secondButton = false;
       this.firstButton = true;
     },
+
     back() {
       router.back();
     }

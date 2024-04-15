@@ -7,8 +7,12 @@
           <router-link class="nav-link" style="text-decoration:none" to="/dash-board">
             대시보드
           </router-link>
+
           <router-link class="nav-link" style="text-decoration:none" to="/dayoffs">
           연차사용내역조회
+          </router-link>
+          <router-link class="nav-link" style="text-decoration:none" to="/dayoff">
+            연차정보조회
           </router-link>
 
           <a class="nav-link collapsed" href="#"
@@ -38,6 +42,9 @@
             관리자설정
           </router-link>
 
+          <router-link class="nav-link" style="text-decoration:none" to="/test">
+            테스트
+          </router-link>
 
 
         </div>

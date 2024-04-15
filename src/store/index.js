@@ -1,5 +1,4 @@
 import { createStore } from 'vuex'
-import {holidayWorkStore} from "@/store/module/HolidayWorkStore";
 
 export default createStore({
   state: {
@@ -8,8 +7,11 @@ export default createStore({
   },
   mutations: {
       setUserName(state, userName) {
-      state.userName = userName;
-    },
+        state.userName = userName;
+      },
+      setEmployeeNumber(state, employeeNo){
+        state.employeeNo = employeeNo;
+      }
   },
   actions: {
   },

@@ -9,6 +9,7 @@ export default {
             error.processingError();
         }
     },
+
     async adminChangePwd(params){
         try {
             let url = 'http://localhost:8080/api/v1/users/user/update';

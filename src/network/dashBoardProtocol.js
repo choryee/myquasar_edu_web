@@ -20,6 +20,7 @@ export default {
       this.recentUseDayoffCreateDt = recentUseDayoffCreateDt ? recentUseDayoffCreateDt : "";
     }
   },
+
   async getDashBoardInfo({year}) {
     try {
       let url = `http://localhost:8080/dashboard/info`;

@@ -152,10 +152,8 @@ export default {
             console.error(err);
           });
     }
-
-
-
   },
+
   computed: {
     years() {
       const currentYear = new Date().getFullYear();

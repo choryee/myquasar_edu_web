@@ -6,24 +6,29 @@
       <span v-if="!editing">{{ data.totalDayoff }}</span>
       <input v-model="editedData.totalDayoff" v-else :placeholder="data.totalDayoff">
     </p>
+
     <div>
       <span class="dutyDayoff">[의무연차:{{data.dutyDayoff}}]</span>
     <p class="usedDayoff">사용연차: {{ data.usedDayoff }}</p>
     </div>
+
     <p class="leftDayoff">남은연차: {{ data.leftDayOff }})</p>
     <button @click="toggleEditing" class="settingButtons" v-if="!editing">
       <img src="../../assets/images/option.png" alt="편집">
     </button>
+
     <!-- 연차 정보 수정 필드 -->
     <div v-if="editing">
       <button @click="saveEditedData" class="settingButtons">
         <img src="../../assets/images/save.png" alt="저장">
         저장
       </button>
+
       <button @click="cancelEditing" class="settingButtons">
         <img src="../../assets/images/cancel.png" alt="취소">
         취소
       </button>
+
       <button @click="resetEditing" class="settingButtons">
         <img src="../../assets/images/reset.png" alt="취소">
         초기화
@@ -31,10 +36,6 @@
     </div>
   </div>
 </template>
-
-
-
-
 <script>
 import { BubbleMenu } from "@tiptap/vue-3";
 import network from '@/network';

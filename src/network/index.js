@@ -1,6 +1,11 @@
 import Protocol from '@/network/Protocol'
 
 export default{
+    adminExcel :{
+        adminAllInfo(){
+            return Protocol.GET('/api/v1/users/user/getAllUsers');
+        }
+    },
     auth : {
         login(params, header){
             return Protocol.POST('login', params, header)
@@ -39,8 +44,10 @@ export default{
         dayoffWorkDelete(params, header){
             return Protocol.DELETE('dayoff/work/delete', params, header)
         },
-        dayoffUse(employeeNo,params, header){
-            const url = `dayoff/employee/${employeeNo}`
+        //dayoffUse(employeeNo, params, header){
+        dayoffUse(params, header){
+            //const url = `dayoff/employee/${employeeNo}`
+            const url = `dayoff/employee/`;
             return Protocol.GET(url, params, header)
         },
         dayoffRemaining(params, header){

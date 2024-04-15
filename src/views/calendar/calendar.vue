@@ -1,11 +1,14 @@
 <template>
   <div class="container-fluid px-4">
-    <h1 class="mt-4">캘린더</h1>
+    <h1 class="mt-4">캘린더 calendar.vue </h1>
     <FullCalendar :options="calendarOptions"/>
   </div>
 </template>
 
 <script>
+//http://localhost:3000/dayoffs
+
+
 import axios from 'axios'
 import FullCalendar from "@fullcalendar/vue3";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -27,7 +30,6 @@ export default {
     }
   },
   created() {
-
   },
   mounted() {
     this.calendarList();
@@ -36,7 +38,10 @@ export default {
     calendarList() {
       axios.get('http://localhost:8080/calendar')
           .then(res => {
-            this.calendarOptions.events = res.data.map(event => ({
+     // this.calendarOptions.events이 형태는 객체.키 형태임.
+     // res.data.map이것은 배열에 대해서만 사용가능하고, 반환도 배열형태이다.
+     //그래서, events: [],에 들어가는 것. 240408
+            this.calendarOptions.events = res.data.map( event => ({
               title: event.eventName,
               start: event.startDt,
               end: event.endDt,
