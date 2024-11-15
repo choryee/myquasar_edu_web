@@ -9,7 +9,7 @@
           </router-link>
 
           <router-link class="nav-link" style="text-decoration:none" to="/dayoffs">
-          연차사용내역조회
+          연차사용내역조회(caldendar)
           </router-link>
           <router-link class="nav-link" style="text-decoration:none" to="/dayoff">
             연차정보조회
@@ -30,7 +30,6 @@
               <div class="sb-nav-link-icon"></div>
               휴일출근관리
           </router-link>
-
 
           <router-link  class="nav-link collapsed"  to="/pattern">
             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>

@@ -1,14 +1,14 @@
 <template>
   <body class="sb-nav-fixed" v-if="!isIndexOrLogin" >
-  <Header />
-  <div id="layoutSidenav">
-    <Left/>
-    <div id="layoutSidenav_content">
-      <main>
-        <router-view/>
-      </main>
+    <Header />
+    <div id="layoutSidenav">
+      <Left/>
+      <div id="layoutSidenav_content">
+        <main>
+          <router-view/>
+        </main>
+      </div>
     </div>
-  </div>
   </body>
 
   <main v-else>
@@ -19,13 +19,13 @@
 <style>
 @import "../src/assets/css/styles.css";
 </style>
+
 <script setup>
 import Header from "@/components/layout/Header.vue";
 import Left from "@/components/layout/Left.vue";
-
 </script>
-<script>
 
+<script>
 export default {
   name: 'App',
   data() {

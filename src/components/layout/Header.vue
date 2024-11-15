@@ -1,5 +1,4 @@
 <template>
-
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-default default-nav">
       <!-- Navbar Brand-->
       <a class="navbar-brand ps-3" href="/"><img src="../../assets/images/Logo.png" alt="Dobby"></a>
@@ -25,16 +24,12 @@
         </li>
       </ul>
     </nav>
-
 </template>
 
 <script>
-
 import axios from "axios";
-
 export default {
   name: 'Header',
-
   methods:{
     logout(){
       localStorage.removeItem('Authorization');

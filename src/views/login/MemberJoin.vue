@@ -1,11 +1,10 @@
 <template>
   <div align="center">
     <div>
-      <h1>연차관리시스템</h1>
+      <h1>관리시스템 join</h1>
     </div>
     <br/>
     <div>
-
     </div>
   </div>
   <br/>

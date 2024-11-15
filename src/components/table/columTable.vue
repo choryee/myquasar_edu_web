@@ -11,8 +11,13 @@
   </div>
 </template>
 
-
 <script>
+// authInfo: ['권한', '사번', '네이버웍스ID'], :headers="authInfo"
+// authData: [], :tableData="authData"
+// <ColumTable :headers="authInfo" :tableData="authData"/>
+// ===>> authData['권한']
+
+
 export default {
   name: 'ColumTable',
   props: { // 부모에서 받은 것
@@ -24,7 +29,7 @@ export default {
       type: Array,
       required: true
     }
-  }
+  }//props
 };
 </script>
 

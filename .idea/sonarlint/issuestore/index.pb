@@ -83,3 +83,5 @@ M
 src/views/test/TestChild1.vue,c\3\c39f5be044173b5f4b706f24d4f7988c8fb49f94
 ;
 src/App.vue,5\4\5441d5289c77ce615f0e420c266cdee5d78f3ecd
+=
+vue.config.js,c\9\c94b35d94c062ff277eb444f039c125faf894bdc

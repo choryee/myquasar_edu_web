@@ -1,6 +1,7 @@
 <template>
   <div className="home">
 <!--    <TestIndex/>-->
+
     <MemberLogin/>
     <hr/>
   </div>
@@ -19,7 +20,11 @@ export default {
   components: {
     MemberLogin,
     //TestIndex
-
+  },
+  data(){
+    return {
+      token:localStorage.getItem('Authorization')
+    }
   }
 }
 </script>

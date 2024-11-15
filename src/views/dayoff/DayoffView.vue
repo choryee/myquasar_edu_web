@@ -161,10 +161,9 @@ export default { // http://localhost:3000/dayoff/
     },
 
     ...mapState(['employeeNo'])
-  },
+  }, //computed
 
   created() {
-
   },
 
   mounted() {

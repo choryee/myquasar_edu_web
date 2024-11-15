@@ -2,8 +2,8 @@
   <br/>
   <div align="center">
     <div>
-      <h1>연차관리시스템</h1>
-      <span><img src="../../assets/images/emgramLogo.png" alt=""></span>
+      <h1>관리시스템</h1>
+<!--      <span><img src="../../assets/images/emgramLogo.png" alt=""></span>-->
     </div>
     <br/>
     <div class="unprotected" v-if="loginError">
@@ -67,6 +67,9 @@ export default {
       // }
 
       // 8080/login은 아예 컨트럴러 안 탐.<-이것은 탐. but, 서버의 @PostMapping("/login")는 안 탐.
+      // JwtAuthenticationFilter를 이 프로제긑에서 사용하므로, 241115
+      // /login이라고, 클에서 요청 보내도, 내가 만든 컨트롤러의 /login를 타지 않고, JwtAuthenticationFilter가 로그인처리를 가로채 처리한다.
+
       await axios.post('http://localhost:8080/login', {
         name: this.username,
         password: this.password
@@ -74,14 +77,13 @@ export default {
           .then((res) => {
             if (res.status === 200) {
               console.log('login res>>>', res);
-
               let jwtToken = res.headers.get('Authorization');
               localStorage.setItem('Authorization', jwtToken);
               //this.getUser();
-
-              this.getEmployeeNo();
+              //this.getEmployeeNo();
               //alert('로그인 성공했습니다.');
               this.$router.push({ name: 'adminInfo' });
+              //this.$router.push({ name: '/testView1' });
             }
           })
           .catch((err) => {

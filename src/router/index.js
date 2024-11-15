@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import pwChangeView from "@/views/login/pwChangeView.vue";
 import AdminInfoView from "@/views/login/AdminInfoView.vue";
+import testView1 from "@/views/test/testView1.vue";
 import Logout from "@/views/login/Test.vue";
 import MemberJoin from "@/views/login/MemberJoin.vue";
 import MemberLogin from "@/views/login/MemberLogin.vue";
@@ -16,7 +17,8 @@ const routes = [
   {
     path: `/test`,
     name: "testView1",
-    component: ()=> import(`@/views/test/testView1.vue`),
+    //component: ()=> import(`@/views/test/testView1.vue`),
+    component: testView1
   },
   {
     path: '/ex/network',

@@ -1,8 +1,6 @@
     <template>
       <div>
         <div align="center">
-
-
         </div>
         <div id="container" >
           <div id="loginBox" >
@@ -30,7 +28,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </template>
 
@@ -58,9 +55,7 @@ export default {
   },
 
   methods: {
-
     async pwChange() {
-
       if (this.current_pwd === this.new_pwd) {
         alert('현재 비밀번호와 동일합니다.');
         return;
